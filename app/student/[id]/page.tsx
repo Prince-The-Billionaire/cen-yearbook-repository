@@ -4,6 +4,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { FaTwitter, FaPhoneAlt, FaFilePdf, FaQuoteLeft, FaQuoteRight, FaMoon, FaSun } from "react-icons/fa";
 import { useParams } from "next/navigation";
+import Link from "next/link";
+import { FaX } from "react-icons/fa6";
+import { X } from "lucide-react";
+import { PiXLogo } from "react-icons/pi";
+
 
 export default function StudentProfile() {
   // -- DYNAMIC ROUTING & THEME --
@@ -40,8 +45,7 @@ export default function StudentProfile() {
   ];
 
   const igPosts = [
-    "https://www.instagram.com/p/DGCi76oNbPA/embed",
-    "https://www.instagram.com/p/DGCi76oNbPA/embed" // Replaced with 2nd actual post link if available
+    "https://www.instagram.com/p/DT7lBlnDeLw/embed" // Replaced with 2nd actual post link if available
   ];
 
   const levels = ["100 Lvl", "200 Lvl", "300 Lvl", "400 Lvl"];
@@ -53,7 +57,21 @@ export default function StudentProfile() {
           NAVBAR & DARK MODE TOGGLE
       ========================================= */}
       <nav className="fixed top-0 left-0 w-full z-[100] px-6 py-4 flex justify-between items-center bg-opacity-50 backdrop-blur-md pointer-events-auto">
-        <div className="text-xl font-bold tracking-widest">navbar/</div>
+        <div className="flex items-center gap-2 cursor-pointer">
+        {/* make it a link that goes back to the yearbook  */}
+        <Link href="/yearbook">
+          <img 
+            src="/logo.png" 
+            alt="Logo" 
+            className="w-12 h-12 md:w-16 md:h-16 object-contain hover:scale-105 transition-transform duration-300" 
+          />
+        </Link>
+        </div>
+
+        {/* Main Title - Applied the matching vertical silver gradient */}
+        <h1 className="text-xl md:text-2xl font-bold tracking-widest uppercase bg-gradient-to-b from-slate-100 via-gray-400 to-zinc-600 bg-clip-text text-transparent cursor-pointer">
+        Comp Engr
+        </h1>
         <button 
           onClick={() => setIsDarkMode(!isDarkMode)} 
           className={`p-3 rounded-full shadow-lg transition-colors ${isDarkMode ? 'bg-gray-800 text-yellow-400 hover:bg-gray-700' : 'bg-white text-gray-800 hover:bg-gray-100'}`}
@@ -94,8 +112,8 @@ export default function StudentProfile() {
           />
         </div>
 
-        <div className="mt-8 text-center relative z-50">
-          <h1 className={`text-5xl md:text-7xl font-black tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{studentName}</h1>
+        <div className="mt-12 text-center relative z-50">
+          <h1 className={`text-5xl md:text-7xl mt-12 font-black tracking-tight ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>{studentName}</h1>
           <p className="text-2xl text-gray-500 italic mt-2">"The Architect"</p>
         </div>
       </div>
@@ -141,13 +159,19 @@ export default function StudentProfile() {
         {/* X (TWITTER) & UNIQUE TWEET */}
         <div className="w-full flex flex-col items-start md:items-center gap-8">
           <div className="flex items-center gap-3">
-             <FaTwitter className={`w-8 h-8 ${isDarkMode ? 'text-white' : 'text-black'}`} />
-             <a href="https://twitter.com/alexisosell" className="text-2xl font-bold hover:underline">@alexisosell</a>
+             <PiXLogo className={`w-8 h-8 ${isDarkMode ? 'text-white' : 'text-black'}`} />
+             <a href="https://x.com/alexisosell" className="text-2xl font-bold hover:underline">@alexisosell</a>
           </div>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} className={`w-full max-w-md rounded-2xl shadow-md border-2 p-2 ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-100'}`}>
-            <blockquote className="twitter-tweet" data-theme={isDarkMode ? "dark" : "light"}>
-              <a href="https://twitter.com/alexisosell/status/2096718115371454498"></a>
-            </blockquote>
+            <iframe
+            src={`https://x.com/alexisosell/status/2096718115371454498`}
+            className="w-full max-w-[550px] min-h-[250px] border-0 mx-auto block rounded-xl overflow-hidden"
+            title="X Post Embed"
+            scrolling="no"
+            frameBorder="0"
+            allowFullScreen={true}
+            />
+
           </motion.div>
         </div>
 

@@ -1,59 +1,11 @@
 "use client";
 import React from 'react';
 import Link from 'next/link';
+import { students } from '@/data/studentsData';
 
-const students = [
-  {
-    id: 1,
-    name: 'Sarah Jenkins',
-    handle: '@sarahj_designs',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
-  },
-  {
-    id: 2,
-    name: 'Michael Chen',
-    handle: '@mchen_dev',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
-  },
-  {
-    id: 3,
-    name: 'Aisha Patel',
-    handle: '@aisha.creates',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
-  },
-  {
-    id: 4,
-    name: 'David Okafor',
-    handle: '@david_o',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
-  },
-  {
-    id: 5,
-    name: 'Emma Wilson',
-    handle: '@emmacodes',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
-  },
-  {
-    id: 6,
-    name: 'James Rodriguez',
-    handle: '@jrod_99',
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
-  },
-  {
-    id: 7,
-    name: 'Chloe Kim',
-    handle: '@chloe_k',
-    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
-  },
-  {
-    id: 8,
-    name: 'Alexis Osell',
-    handle: '@alexis_builds',
-    image: 'https://images.unsplash.com/photo-1513956589380-bad6acb9b9d4?w=800&q=80'
-  }
-];
 
 const Yearbook = () => {
+
   return (
     <div className="min-h-screen bg-[#121212] py-12 px-4 sm:px-6 lg:px-8">
       
@@ -65,17 +17,17 @@ const Yearbook = () => {
             </span>
           </h1>
           <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-400 sm:mt-4">
-            The amazing C and 2026 set.
+            The amazing Class of 2026 set.
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           
-          {students.map((student) => (
+          {Object.values(students).map((student) => (
             <Link
               // Dynamic routing passing the name into the URL slug
               href={`/student/${encodeURIComponent(student.name)}`}
-              key={student.id}
+              key={student.name}
               className="
                 group relative bg-[#1c1c1c] rounded-2xl overflow-hidden cursor-pointer block
                 border border-gray-800
@@ -85,7 +37,7 @@ const Yearbook = () => {
             >
               <div className="aspect-w-3 aspect-h-4 w-full h-72 overflow-hidden">
                 <img
-                  src={student.image}
+                  src={student.profilePic}
                   alt={student.name}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 grayscale group-hover:grayscale-0"
                 />
@@ -103,7 +55,7 @@ const Yearbook = () => {
                     className="w-4 h-4 mr-2 opacity-70 group-hover:opacity-100 transition-opacity" 
                   />
                   <p className="text-sm font-medium text-gray-400 group-hover:text-gray-200 transition-colors duration-300">
-                    {student.handle}
+                    {student.igHandle}
                   </p>
                 </div>
               </div>

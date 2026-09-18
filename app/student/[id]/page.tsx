@@ -360,7 +360,7 @@ export default function StudentProfile() {
         <div className="w-full py-20 flex flex-col items-start md:items-center gap-12">
            <motion.h2 
              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-             className="text-[4rem] md:text-[8rem] font-black italic tracking-tighter text-left md:text-center leading-none bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 via-yellow-300 to-yellow-600 drop-shadow-sm"
+             className="text-[4rem] md:text-[8rem] font-black italic tracking-tighter text-left md:text-center leading-none bg-clip-text text-transparent bg-gradient-to-r from-black via-slate-600 to-slate-200 drop-shadow-sm"
            >
              {student.finalquote}
            </motion.h2>

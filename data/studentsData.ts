@@ -126,5 +126,39 @@ export const students: Record<string, StudentData> = {
       passionGif: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjFlZXpxeTBka2p3endkaTh3N2FsaTk3eWtoNHptcDUxbm0wNTJtaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Lpnz8YT4atwwmlxmAy/giphy.gif",
       finalquote: "See how far you've brought me"
     },
+    "Udonwa Onouha": {
+      name: "Udonwa Onouha",
+      nickname: "The Weird Weeb",
+      profilePic: "/udo_3.JPG",
+      orbitImages: [
+        "/udo_1.JPG",
+        "/udo_2.JPG",
+        "/udo_3.JPG",
+        "/udo_4.JPG",
+        "/udo_5.JPG",
+        
+      ],
+      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+      spotifyTrackId: "7L11sChfu9a3OmthtWszaz",
+      phoneDisplay: "+234",
+      phoneLink: "+234",
+      igHandle: "b_kudos_",
+      igPosts: [],
+      xHandle: "nil",
+      xTweetId: "",
+      favFoodImg: "",
+      quote: "Sayonnara",
+      slang: "Life Sha",
+      slangImg: "/prince_fav_food.jpg",
+      bestEraArray: [ "500 Lvl","400 Lvl", "300Lvl","200 Lvl","100 Lvl" ], 
+      leastFavCourse: "CEN 434",
+      favLecturerName: "Dr. Tiwalade",
+      favLecturerImg: "https://images.unsplash.com/photo-156025<PASSWORD>-<PASSWORD>?w=１５０&q=８０",
+      dreamPath: "Game Developer",
+      dreamPathIcon: "/bright_job.jpg",
+      passionGif: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExazJuMWdsdXFrcW9lcnVtZnVmMWlrbXZtZG9wdjdoM3Vqd25pMzhsbSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/qb1eHxhUHLdsc/giphy.gif",
+      finalquote: "I'm still Standing"
+    },
+
   // Add more students here following the exact same structure...
 };

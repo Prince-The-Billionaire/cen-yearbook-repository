@@ -78,7 +78,7 @@ export const students: Record<string, StudentData> = {
       phoneDisplay: "091 598 226 19",
       phoneLink: "+2349159822619",
       igHandle: "im_princedaniel",
-      igPosts: ["https://www.instagram.com/p/DGCi76oNbPA/embed","https://www.instagram.com/p/DdMWx3agPHh/embed"],
+      igPosts: ["https://www.instagram.com/p/DGCi76oNbPA/embed"],
       xHandle: "The_Ideal_guy",
       xTweetId: "1979535539914367292",
       favFoodImg: "/prince_fav_food.jpg",
@@ -93,6 +93,38 @@ export const students: Record<string, StudentData> = {
       dreamPathIcon: "/prince_job.jpg",
       passionGif: "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3M2RpN28xaHFsaTBscDk4ZXY4dHd6bjNjZmE1Y20ybHMxamVudm8yeiZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/fMA7Fauj1uWhrTqzTU/giphy.gif",
       finalquote: "6 7 "
-    }
+    },
+    "Bright Inim": {
+      name: "Bright Inim",
+      nickname: "The Nepo Baby",
+      profilePic: "/bright_1.jpg",
+      orbitImages: [
+        "/bright_1.jpg",
+        "/bright_2.jpg",
+        "/bright_3.jpg",
+        "/bright_4.jpg",
+        "/bright_5.jpg",
+      ],
+      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+      spotifyTrackId: "7L11sChfu9a3OmthtWszaz",
+      phoneDisplay: "+234",
+      phoneLink: "+234",
+      igHandle: "b_kudos_",
+      igPosts: [],
+      xHandle: "nil",
+      xTweetId: "",
+      favFoodImg: "",
+      quote: "Live by scriptures Love God Laugh(rejoice)",
+      slang: "OMOO",
+      slangImg: "/prince_fav_food.jpg",
+      bestEraArray: [ "500 Lvl","400 Lvl", "300Lvl","200 Lvl","100 Lvl" ], 
+      leastFavCourse: "GEC 213",
+      favLecturerName: "Dr. Kennedy",
+      favLecturerImg: "https://images.unsplash.com/photo-156025<PASSWORD>-<PASSWORD>?w=１５０&q=８０",
+      dreamPath: "Robotics Engineer",
+      dreamPathIcon: "/bright_job.jpg",
+      passionGif: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjFlZXpxeTBka2p3endkaTh3N2FsaTk3eWtoNHptcDUxbm0wNTJtaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Lpnz8YT4atwwmlxmAy/giphy.gif",
+      finalquote: "See how far you've brought me"
+    },
   // Add more students here following the exact same structure...
 };

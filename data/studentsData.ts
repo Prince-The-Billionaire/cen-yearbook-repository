@@ -27,6 +27,10 @@ export interface StudentData {
   finalquote: string;
 }
 
+
+
+
+
 export const students: Record<string, StudentData> = {
   "OYEBANJI JOSUHA": {
     name: "OYEBANJI JOSUHA",
@@ -319,6 +323,39 @@ export const students: Record<string, StudentData> = {
     dreamPathIcon: "",
     passionGif: "",
     finalquote: "Dont Worry Be Happy [Bobby Mcferrin]"
+  },
+  "Princewill Daniel": {
+      name: "Princewill Daniel",
+      nickname: "The Mafia Boss ",
+      profilePic: "/prince_yearbook.png",
+      orbitImages: [
+        "/prince_1.jpg",
+        "/prince_2.jpg",
+        "/prince_3.jpg",
+        "/prince_4.png",
+        "/prince_group_1.png",
+        "/prince_6.png",
+      ],
+      audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+      spotifyTrackId: "6HidGH3rmgyk47386l4p37",
+      phoneDisplay: "091 598 226 19",
+      phoneLink: "+2349159822619",
+      igHandle: "im_princedaniel",
+      igPosts: ["https://www.instagram.com/p/DGCi76oNbPA/embed"],
+      xHandle: "The_Ideal_guy",
+      xTweetId: "1979535539914367292",
+      favFoodImg: "/prince_fav_food.jpg",
+      quote: "Push your self beyond the limits",
+      slang: "LET'S GET THAT BREAD",
+      slangImg: "/prince_fav_food.jpg",
+      bestEraArray: ["1００ Lvl", "２００ Lvl", "３００ Lvl", "４００ Lvl"], 
+      leastFavCourse: "EIE 323",
+      favLecturerName: "Dr. Kennedy",
+      favLecturerImg: "https://images.unsplash.com/photo-156025<PASSWORD>-<PASSWORD>?w=１５０&q=８０",
+      dreamPath: "CEO/ Entrepreneur",
+      dreamPathIcon: "/prince_job.jpg",
+      passionGif: "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3M2RpN28xaHFsaTBscDk4ZXY4dHd6bjNjZmE1Y20ybHMxamVudm8yeiZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/fMA7Fauj1uWhrTqzTU/giphy.gif",
+      finalquote: "6 7 "
   },
   "Aziegbe Israel Osarumwense": {
     name: "Aziegbe Israel Osarumwense",

@@ -326,7 +326,7 @@ export const students: Record<string, StudentData> = {
   },
   "Princewill Daniel": {
       name: "Princewill Daniel",
-      nickname: "The Mafia Boss ",
+      nickname: "Prince D ",
       profilePic: "/prince_yearbook.png",
       orbitImages: [
         "/prince_1.jpg",

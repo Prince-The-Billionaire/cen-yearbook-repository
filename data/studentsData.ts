@@ -162,20 +162,20 @@ export const students: Record<string, StudentData> = {
     passionGif: "",
     finalquote: "See how far you have brought me."
   },
-  "NGORKA UCHECHUKWU GERALD": {
-    name: "NGORKA UCHECHUKWU GERALD",
+  "Ngorka Uchechukwu Gerald": {
+    name: "Ngorka Uchechukwu Gerald",
     nickname: "Jerry-Z",
-    profilePic: "",
-    orbitImages: [],
+    profilePic: "/gerald_1.jpg",
+    orbitImages: ['/gerald_2.jpg', '/gerald_3.jpg', '/gerald_4.jpg', '/gerald_5.jpg', '/gerald_6.jpg'],
     audioUrl: "",
-    spotifyTrackId: "",
+    spotifyTrackId: "0FB5ILDICqwK6xj7W1RP9u",
     phoneDisplay: "Nil",
     phoneLink: "",
     igHandle: "ger._.rald",
     igPosts: [],
     xHandle: "Nil",
     xTweetId: "",
-    favFoodImg: "",
+    favFoodImg: "/gerald_food.jpg",
     quote: "Why worship legends when you know that you can join them",
     slang: "“I don’t understand”",
     slangImg: "",
@@ -183,9 +183,9 @@ export const students: Record<string, StudentData> = {
     leastFavCourse: "",
     favLecturerName: "Dr. Omoruyi",
     favLecturerImg: "",
-    dreamPath: "Anywhere money dey",
+    dreamPath: "A Global Star",
     dreamPathIcon: "",
-    passionGif: "",
+    passionGif: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3A2djZwY2IxOWlsNGN4Mnk0ZHV1N2dlYTB4NXpuNWVxMW9xdnlpcyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xTiTnqUxyWbsAXq7Ju/giphy.gif",
     finalquote: "Graduation song"
   },
   "Adeyemo David Oluwadamilare": {

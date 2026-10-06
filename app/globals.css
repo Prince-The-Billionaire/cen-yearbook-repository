@@ -1,27 +1,61 @@
 @import "tailwindcss";
 
+/* Theme switch used by the student profile page: <div data-theme="dark"> */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 :root {
-  --background: #ffffff;
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+html[data-theme="light"] {
+  --background: #fafafa;
   --foreground: #171717;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  /* The landing page deliberately maps sans/mono to Playfair. */
   --font-sans: var(--font-playfair-display);
   --font-mono: var(--font-playfair-display);
+  /* Modern UI face used by the yearbook directory and profile pages. */
+  --font-ui: var(--font-geist-sans);
+  --font-display: var(--font-playfair-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--foreground);
-  color: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/*
+ * The home page is built from hard-coded black/white sections, so its light
+ * theme is the dark design colour-inverted. Filters on the root element don't
+ * affect fixed positioning. Photos, video and anything marked .keep-colors are
+ * inverted back so they look normal.
+ */
+html[data-theme="light"]:has(.landing-root) {
+  --background: #050505;
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html[data-theme="light"]:has(.landing-root) :is(img, video, .keep-colors) {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html[data-theme="light"]:has(.landing-root) .keep-colors img {
+  filter: none;
 }

@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { useRouter } from "next/navigation";
-import { AudioWaveform, VolumeX, ArrowDown, X, Menu } from "lucide-react";
+import { AudioWaveform, VolumeX, ArrowDown } from "lucide-react";
 
 const photosData = [
   {
@@ -100,7 +100,6 @@ const photosData = [
 export default function Hero() {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hoveredPhotoId, setHoveredPhotoId] = useState<number | null>(null);
   const [isSoundOn, setIsSoundOn] = useState(true);
   const router = useRouter();
@@ -231,7 +230,6 @@ export default function Hero() {
     if (!isLoaded) return;
 
     const ctx = gsap.context(() => {
-      gsap.set(".sub-tag", { opacity: 0, y: 15 });
       gsap.set([".word-we", ".word-are", ".word-cen"], {
         opacity: 0,
         y: 40,
@@ -248,13 +246,6 @@ export default function Hero() {
       });
 
       const mainTl = gsap.timeline({ delay: 0.1 });
-
-      mainTl.to(".sub-tag", {
-        opacity: 1,
-        y: 0,
-        duration: 0.4,
-        ease: "power2.out",
-      });
 
       // Sequential reveal of words
       mainTl.to(".word-we", {
@@ -350,23 +341,12 @@ export default function Hero() {
           {/* HEADER BAR */}
           <header className="relative z-30 flex items-center justify-between w-full">
             <span className="font-mono text-xs tracking-widest uppercase text-zinc-400">
-              [CEN CLASS OF 2026]
+              [CEN CLASS OF 2025/2026]
             </span>
-            <button
-              onClick={() => setIsMenuOpen(true)}
-              className="p-2 hover:bg-white/10 rounded-full transition-colors flex items-center gap-2 font-mono text-xs tracking-widest uppercase"
-            >
-              <Menu className="w-5 h-5" />
-              <span className="hidden sm:inline">MENU</span>
-            </button>
           </header>
 
           {/* MAIN TITLE BLOCK WITH GRADIENT FIX */}
           <main className="relative z-20 my-auto py-28 sm:py-0 text-center flex flex-col items-center justify-center pointer-events-none">
-            <p className="sub-tag text-xs sm:text-sm font-mono tracking-[0.3em] text-white/70 mb-4 uppercase">
-              [WE BECAME A FAMILY]
-            </p>
-
             <h1 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter leading-none uppercase">
               <span className="word-we inline-block">
                 <span className="bg-gradient-to-b from-white via-slate-200 to-zinc-500 bg-clip-text text-transparent filter drop-shadow-[0_2px_12px_rgba(255,255,255,0.2)]">
@@ -386,6 +366,7 @@ export default function Hero() {
                 </span>
               </span>
             </h1>
+
           </main>
 
           {/* RADIAL 3D PHOTOS */}
@@ -458,71 +439,6 @@ export default function Hero() {
               <ArrowDown className="w-4 h-4 animate-bounce text-white" />
             </div>
           </footer>
-
-          {/* HAMBURGER MENU DRAWER */}
-          <AnimatePresence>
-            {isMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex justify-end"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <motion.div
-                  initial={{ x: "100%" }}
-                  animate={{ x: 0 }}
-                  exit={{ x: "100%" }}
-                  transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                  onClick={(e) => e.stopPropagation()}
-                  className="w-full sm:w-96 bg-zinc-950 h-full border-l border-white/10 p-8 flex flex-col justify-between"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs tracking-widest text-zinc-400">
-                      NAVIGATION
-                    </span>
-                    <button
-                      onClick={() => setIsMenuOpen(false)}
-                      className="p-2 hover:bg-white/10 rounded-full transition-colors"
-                    >
-                      <X className="w-5 h-5 text-white" />
-                    </button>
-                  </div>
-
-                  <nav className="flex flex-col gap-6 text-2xl font-bold font-serif">
-                    <a
-                      href="/yearbook"
-                      className="hover:translate-x-2 transition-transform hover:text-zinc-300"
-                    >
-                      Yearbook
-                    </a>
-                    <a
-                      href="#olympics"
-                      className="hover:translate-x-2 transition-transform hover:text-zinc-300"
-                    >
-                      Olympics & Events
-                    </a>
-                    <a
-                      href="#moments"
-                      className="hover:translate-x-2 transition-transform hover:text-zinc-300"
-                    >
-                      Random Moments
-                    </a>
-                    <a
-                      href="#people"
-                      className="hover:translate-x-2 transition-transform hover:text-zinc-300"
-                    >
-                      People Directory
-                    </a>
-                  </nav>
-
-                  <p className="text-xs font-mono opacity-40 uppercase">
-                    Computer Engineering Class of 2026
-                  </p>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       )}
     </div>

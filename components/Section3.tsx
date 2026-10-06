@@ -1,22 +1,27 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
+import { allStudents, hasValue } from "@/lib/students";
 
 interface Person {
   id: string;
   name: string;
   image: string;
+  href: string;
 }
 
-const peopleData: Person[] = [
-  { id: "1", name: "ADEYEMO DAVID", image: "/course_guys.jpg" },
-  { id: "2", name: "CHINWE IBE", image: "/course_girls.jpg" },
-  { id: "3", name: "DANIEL PRINCE", image: "/course_trad.jpg" },
-  { id: "4", name: "EMMANUEL OKON", image: "/course_guys.jpg" },
-  { id: "5", name: "SARAH ADAMS", image: "/course_girls.jpg" },
-  { id: "6", name: "VICTOR AMADI", image: "/course_trad.jpg" },
-];
+// Real graduates: everyone in the yearbook who has a profile photo.
+const peopleData: Person[] = allStudents
+  .filter((student) => hasValue(student.profilePic))
+  .map((student) => ({
+    id: student.slug,
+    name: student.name.toUpperCase(),
+    image: student.profilePic,
+    href: `/student/${student.slug}`,
+  }));
 
 // Triplicated array for seamless infinite marquee loop
 const marqueeList = [...peopleData, ...peopleData, ...peopleData];
@@ -32,9 +37,9 @@ export default function ThePeople() {
           {/* SUBTEXT */}
           <div className="lg:col-span-4 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal max-w-md">
             <p>
-              Before the gesture, there is a sound. Before the form, an echo.
-              Indigo gathers these invisible traces and transforms them into
-              jewelry: five tales exploring matter, time and intimacy.
+              Behind every project, all-nighter and shared meal is a face. These
+              are the people who made the Computer Engineering set of
+              2025/2026 what it is. Pick one to read their story.
             </p>
           </div>
 
@@ -47,9 +52,12 @@ export default function ThePeople() {
               </span>
             </h2>
 
-            <span className="font-mono text-xs tracking-widest uppercase text-slate-500 hover:text-slate-950 transition-colors cursor-pointer self-start sm:self-auto">
+            <Link
+              href="/yearbook"
+              className="font-mono text-xs tracking-widest uppercase text-slate-500 hover:text-slate-950 transition-colors self-start sm:self-auto"
+            >
               [VIEW ALL]
-            </span>
+            </Link>
           </div>
         </header>
 
@@ -67,8 +75,9 @@ export default function ThePeople() {
               const isAnyHovered = hoveredId !== null;
 
               return (
-                <div
+                <Link
                   key={uniqueKey}
+                  href={person.href}
                   onMouseEnter={() => setHoveredId(uniqueKey)}
                   onMouseLeave={() => setHoveredId(null)}
                   className="flex flex-col items-center group cursor-pointer w-[200px] sm:w-[260px] md:w-[320px] shrink-0"
@@ -92,10 +101,12 @@ export default function ThePeople() {
                         : "grayscale-0 opacity-100 z-10"
                     }`}
                   >
-                    <img
+                    <Image
                       src={person.image}
                       alt={person.name}
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="(min-width: 768px) 320px, (min-width: 640px) 260px, 200px"
+                      className="object-cover"
                     />
                   </motion.div>
 
@@ -111,7 +122,7 @@ export default function ThePeople() {
                   >
                     {person.name}
                   </span>
-                </div>
+                </Link>
               );
             })}
           </div>

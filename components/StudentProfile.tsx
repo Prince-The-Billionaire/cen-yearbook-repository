@@ -204,24 +204,6 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
                 </p>
               )}
 
-              {eras.length > 0 && (
-                <div className="mt-6">
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                    {eras.length > 1 ? "Best eras" : "Best era"}
-                  </p>
-                  <ul className="flex flex-wrap justify-center gap-2 md:justify-start">
-                    {eras.map((era) => (
-                      <li
-                        key={era}
-                        className="rounded-full bg-indigo-500/10 px-3 py-1 text-sm font-medium text-indigo-600 dark:bg-indigo-400/15 dark:text-indigo-300"
-                      >
-                        {era}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
               {hasSocials && (
                 <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
                   {hasPhone && (
@@ -297,13 +279,28 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
             )}
 
             {hasValue(student.finalquote) && (
-              <Section label="Graduation song" className="md:col-span-2">
+              <Section label="Graduation song" className={eras.length > 0 ? "" : "md:col-span-2"}>
                 <div className="flex items-center gap-4">
                   <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500 text-white">
                     <Music className="h-6 w-6" aria-hidden />
                   </span>
                   <p className="font-display text-2xl font-bold leading-snug sm:text-3xl">{student.finalquote}</p>
                 </div>
+              </Section>
+            )}
+
+            {eras.length > 0 && (
+              <Section label={eras.length > 1 ? "Best eras" : "Best era"}>
+                <ul className="flex flex-wrap gap-2">
+                  {eras.map((era) => (
+                    <li
+                      key={era}
+                      className="rounded-full bg-indigo-500/10 px-4 py-2 text-lg font-semibold text-indigo-600 dark:bg-indigo-400/15 dark:text-indigo-300"
+                    >
+                      {era}
+                    </li>
+                  ))}
+                </ul>
               </Section>
             )}
 

@@ -8,6 +8,12 @@ export const hasValue = (value?: string | null): value is string =>
 
 export const cleanHandle = (handle: string) => handle.trim().replace(/^@/, "");
 
+/** Normalises survey answers like "300Lvl" or full-width "２００ Lvl" to "300 Level". */
+export const formatLevel = (raw: string) => {
+  const match = raw.normalize("NFKC").match(/([1-5])\s?00/);
+  return match ? `${match[1]}00 Level` : raw.trim();
+};
+
 export const slugify = (name: string) =>
   name
     .toLowerCase()

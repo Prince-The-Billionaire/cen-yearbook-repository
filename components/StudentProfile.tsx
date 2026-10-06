@@ -11,6 +11,7 @@ import {
   ChevronLeft,
   ChevronRight,
   GraduationCap,
+  Music,
   Phone,
   Share2,
   X,
@@ -18,7 +19,7 @@ import {
 import { FaInstagram } from "react-icons/fa";
 import { PiXLogo } from "react-icons/pi";
 import Avatar from "@/components/Avatar";
-import { cleanHandle, hasValue, type Student } from "@/lib/students";
+import { cleanHandle, formatLevel, hasValue, type Student } from "@/lib/students";
 import { useTheme } from "@/lib/theme";
 
 interface NeighbourLink {
@@ -41,6 +42,25 @@ const FOCUS =
 /** Remote images (e.g. GIPHY) can come from any host, so skip the optimizer for them. */
 const isRemote = (src: string) => /^https?:\/\//.test(src);
 
+/** Small round/rounded image that quietly disappears if its URL is broken. */
+function Thumb({ src, className, sizes }: { src: string; className: string; sizes: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return null;
+  return (
+    <div className={`relative shrink-0 overflow-hidden ${className}`}>
+      <Image
+        src={src}
+        alt=""
+        fill
+        sizes={sizes}
+        unoptimized={isRemote(src)}
+        onError={() => setFailed(true)}
+        className="object-cover object-top"
+      />
+    </div>
+  );
+}
+
 function Section({ label, children, className = "" }: { label: string; children: ReactNode; className?: string }) {
   return (
     <motion.section
@@ -62,10 +82,13 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
   const [shareState, setShareState] = useState<"idle" | "copied">("idle");
 
   const gallery = student.orbitImages.filter(hasValue);
-  const eras = student.bestEraArray.filter(hasValue);
+  const eras = [...new Set(student.bestEraArray.filter(hasValue).map(formatLevel))];
   const igHandle = hasValue(student.igHandle) ? cleanHandle(student.igHandle) : null;
   const xHandle = hasValue(student.xHandle) ? cleanHandle(student.xHandle) : null;
-  const hasPhone = hasValue(student.phoneDisplay) && hasValue(student.phoneLink);
+  const hasPhone =
+    hasValue(student.phoneDisplay) &&
+    hasValue(student.phoneLink) &&
+    student.phoneLink.replace(/\D/g, "").length >= 7; // ignore stubs like "+234"
   const hasSong = hasValue(student.spotifyTrackId) || hasValue(student.audioUrl);
   const hasSocials = igHandle || xHandle || hasPhone;
   const hasEmbeds = student.igPosts.some(hasValue) || hasValue(student.xTweetId);
@@ -182,16 +205,21 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
               )}
 
               {eras.length > 0 && (
-                <ul className="mt-6 flex flex-wrap justify-center gap-2 md:justify-start" aria-label="Best era">
-                  {eras.map((era) => (
-                    <li
-                      key={era}
-                      className="rounded-full bg-indigo-500/10 px-3 py-1 text-sm font-medium text-indigo-600 dark:bg-indigo-400/15 dark:text-indigo-300"
-                    >
-                      {era}
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-6">
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
+                    {eras.length > 1 ? "Best eras" : "Best era"}
+                  </p>
+                  <ul className="flex flex-wrap justify-center gap-2 md:justify-start">
+                    {eras.map((era) => (
+                      <li
+                        key={era}
+                        className="rounded-full bg-indigo-500/10 px-3 py-1 text-sm font-medium text-indigo-600 dark:bg-indigo-400/15 dark:text-indigo-300"
+                      >
+                        {era}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
 
               {hasSocials && (
@@ -250,7 +278,7 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
           {/* DETAIL CARDS */}
           <div className="grid items-start gap-5 md:grid-cols-2">
             {hasSong && (
-              <Section label="On repeat" className="md:col-span-2">
+              <Section label="Favourite song" className="md:col-span-2">
                 {hasValue(student.spotifyTrackId) && (
                   <iframe
                     title={`${student.name}'s favourite song on Spotify`}
@@ -262,9 +290,20 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   />
                 )}
-                {hasValue(student.audioUrl) && (
-                  <audio controls preload="none" src={student.audioUrl} className="mt-4 w-full" />
+                {!hasValue(student.spotifyTrackId) && hasValue(student.audioUrl) && (
+                  <audio controls preload="none" src={student.audioUrl} className="w-full" />
                 )}
+              </Section>
+            )}
+
+            {hasValue(student.finalquote) && (
+              <Section label="Graduation song" className="md:col-span-2">
+                <div className="flex items-center gap-4">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500 text-white">
+                    <Music className="h-6 w-6" aria-hidden />
+                  </span>
+                  <p className="font-display text-2xl font-bold leading-snug sm:text-3xl">{student.finalquote}</p>
+                </div>
               </Section>
             )}
 
@@ -275,16 +314,7 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
                     {student.slang}
                   </p>
                   {hasValue(student.slangImg) && (
-                    <div className="relative h-20 w-20 shrink-0 rotate-6 overflow-hidden rounded-2xl">
-                      <Image
-                        src={student.slangImg}
-                        alt=""
-                        fill
-                        sizes="80px"
-                        unoptimized={isRemote(student.slangImg)}
-                        className="object-cover"
-                      />
-                    </div>
+                    <Thumb src={student.slangImg} sizes="80px" className="h-20 w-20 rotate-6 rounded-2xl" />
                   )}
                 </div>
               </Section>
@@ -294,16 +324,7 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
               <Section label="Dream path">
                 <div className="flex items-center gap-4">
                   {hasValue(student.dreamPathIcon) && (
-                    <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full ring-2 ring-indigo-500 ring-offset-2 ring-offset-white dark:ring-offset-zinc-900">
-                      <Image
-                        src={student.dreamPathIcon}
-                        alt=""
-                        fill
-                        sizes="56px"
-                        unoptimized={isRemote(student.dreamPathIcon)}
-                        className="object-cover object-top"
-                      />
-                    </div>
+                    <Thumb src={student.dreamPathIcon} sizes="56px" className="h-14 w-14 rounded-full ring-2 ring-indigo-500 ring-offset-2 ring-offset-white dark:ring-offset-zinc-900" />
                   )}
                   <p className="text-xl font-semibold leading-snug sm:text-2xl">{student.dreamPath}</p>
                 </div>
@@ -314,16 +335,7 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
               <Section label="Favourite lecturer">
                 <div className="flex items-center gap-4">
                   {hasValue(student.favLecturerImg) && (
-                    <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full">
-                      <Image
-                        src={student.favLecturerImg}
-                        alt=""
-                        fill
-                        sizes="64px"
-                        unoptimized={isRemote(student.favLecturerImg)}
-                        className="object-cover"
-                      />
-                    </div>
+                    <Thumb src={student.favLecturerImg} sizes="64px" className="h-16 w-16 rounded-full" />
                   )}
                   <p className="text-xl font-semibold sm:text-2xl">{student.favLecturerName}</p>
                 </div>
@@ -426,23 +438,6 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
                 )}
               </div>
             </section>
-          )}
-
-          {/* FAREWELL */}
-          {hasValue(student.finalquote) && (
-            <motion.section
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="py-24 text-center"
-            >
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">
-                Parting words
-              </p>
-              <p className="mx-auto max-w-4xl bg-gradient-to-r from-zinc-900 via-zinc-600 to-zinc-400 bg-clip-text font-display text-4xl font-bold italic leading-tight text-transparent dark:from-white dark:via-zinc-300 dark:to-zinc-500 sm:text-6xl">
-                {student.finalquote}
-              </p>
-            </motion.section>
           )}
 
           {/* PREV / NEXT */}

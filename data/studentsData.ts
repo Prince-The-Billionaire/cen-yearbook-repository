@@ -24,6 +24,7 @@ export interface StudentData {
   dreamPath: string;
   dreamPathIcon: string;
   passionGif: string;
+  // Despite the name, this holds the student's graduation song ("Title - Artist").
   finalquote: string;
 }
 

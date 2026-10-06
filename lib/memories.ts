@@ -63,9 +63,9 @@ export function toMemoryItem(resource: CloudinaryResource, cloudName: string): M
 }
 
 /**
- * Newest-first list of everything tagged `memories` (override with
- * CLOUDINARY_MEMORIES_TAG). Returns [] if Cloudinary isn't configured or fails,
- * so the rest of the site keeps working.
+ * Newest-first list of everything in the `memories` folder or tagged `memories`
+ * (rename with CLOUDINARY_MEMORIES_FOLDER). Returns [] if Cloudinary isn't
+ * configured or fails, so the rest of the site keeps working.
  */
 export async function getMemories(): Promise<MemoryItem[]> {
   const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
@@ -76,7 +76,10 @@ export async function getMemories(): Promise<MemoryItem[]> {
     return process.env.NODE_ENV === "production" ? [] : SAMPLE_ITEMS;
   }
 
-  const tag = process.env.CLOUDINARY_MEMORIES_TAG || "memories";
+  const name = process.env.CLOUDINARY_MEMORIES_FOLDER || "memories";
+  // `asset_folder` is the folder in Cloudinary's dynamic-folder mode; the
+  // public_id prefix covers accounts using fixed folders and subfolders.
+  const expression = `asset_folder="${name}" OR public_id:${name}/* OR tags="${name}"`;
   const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString("base64");
   const items: MemoryItem[] = [];
   let cursor: string | undefined;
@@ -87,7 +90,7 @@ export async function getMemories(): Promise<MemoryItem[]> {
         method: "POST",
         headers: { Authorization: `Basic ${auth}`, "Content-Type": "application/json" },
         body: JSON.stringify({
-          expression: `tags="${tag}"`,
+          expression,
           sort_by: [{ created_at: "desc" }],
           max_results: PAGE_SIZE,
           with_field: ["context"],

@@ -33,7 +33,7 @@ export default function Yearbook() {
             </span>
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-lg text-zinc-600 dark:text-zinc-400">
-            Pick a face to read their story.
+            Pick a graduate to view their profile.
           </p>
 
           <div className="relative mx-auto mt-8 max-w-md">

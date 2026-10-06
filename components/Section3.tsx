@@ -37,9 +37,8 @@ export default function ThePeople() {
           {/* SUBTEXT */}
           <div className="lg:col-span-4 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal max-w-md">
             <p>
-              Behind every project, all-nighter and shared meal is a face. These
-              are the people who made the Computer Engineering set of
-              2025/2026 what it is. Pick one to read their story.
+              The graduates of the Computer Engineering set of 2025/2026. Pick
+              a profile to see their photos and details.
             </p>
           </div>
 

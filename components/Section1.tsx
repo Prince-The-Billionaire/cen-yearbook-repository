@@ -96,9 +96,9 @@ export default function WhoWeAre() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 text-left text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed tracking-wide font-normal">
           <div className="sec2-col">
             <p>
-              From our first lecture to our final exam, the Computer
-              Engineering set of 2025/2026 learned together, struggled together
-              and celebrated together.
+              The Computer Engineering set of 2025/2026: from the first lecture
+              to the final exam, five years of coursework, practicals and
+              projects.
             </p>
           </div>
           <div className="sec2-col">
@@ -109,9 +109,8 @@ export default function WhoWeAre() {
           </div>
           <div className="sec2-col">
             <p>
-              This yearbook keeps the faces, the favourite moments and the
-              words we want to be remembered by: one profile for every
-              graduate.
+              This yearbook is a record of the set: a profile for every
+              graduate, with their photos, favourites and contact details.
             </p>
           </div>
         </div>

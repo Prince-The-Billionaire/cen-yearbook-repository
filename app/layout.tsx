@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     template: "%s | CEN Yearbook",
   },
   description:
-    "The Computer Engineering Class of 2026 yearbook: the story of our set and a profile page for every graduate.",
+    "The Computer Engineering Class of 2026 yearbook: a profile page for every graduate.",
 };
 
 export const viewport: Viewport = {

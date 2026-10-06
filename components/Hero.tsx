@@ -435,7 +435,7 @@ export default function Hero() {
             </button>
 
             <div className="flex items-center gap-2 opacity-80 font-mono text-xs">
-              <span>SCROLL TO REMEMBER</span>
+              <span>SCROLL DOWN</span>
               <ArrowDown className="w-4 h-4 animate-bounce text-white" />
             </div>
           </footer>

@@ -75,12 +75,14 @@ export default function MemoriesGallery({ items }: { items: MemoryItem[] }) {
   const filters: { id: Filter; label: string; count: number }[] = [
     { id: "all", label: "All", count: items.length },
     { id: "image", label: "Photos", count: photoCount },
-    ...(videoCount > 0 ? [{ id: "video" as const, label: "Videos", count: videoCount }] : []),
+    { id: "video", label: "Videos", count: videoCount },
   ];
+  // Filters only help when there is a mix of photos and videos.
+  const showFilters = photoCount > 0 && videoCount > 0;
 
   return (
     <MotionConfig reducedMotion="user">
-      {filters.length > 2 && (
+      {showFilters && (
         <div className="mb-8 flex flex-wrap justify-center gap-2" role="group" aria-label="Filter memories">
           {filters.map((option) => (
             <button

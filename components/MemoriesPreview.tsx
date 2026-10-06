@@ -1,14 +1,15 @@
 import Link from "next/link";
+import { Play } from "lucide-react";
 import MemoryImage from "@/components/MemoryImage";
 import { getMemories } from "@/lib/memories";
 
 const PREVIEW_COUNT = 6;
 
-/** Home-page teaser for the Memories gallery. Renders nothing if there are no photos yet. */
+/** Home-page teaser for the Memories gallery (photos and videos). Renders nothing if empty. */
 export default async function MemoriesPreview() {
   const memories = await getMemories();
-  const photos = memories.filter((item) => item.type === "image").slice(0, PREVIEW_COUNT);
-  if (photos.length === 0) return null;
+  const preview = memories.slice(0, PREVIEW_COUNT);
+  if (preview.length === 0) return null;
 
   return (
     <section
@@ -34,11 +35,11 @@ export default async function MemoriesPreview() {
         </header>
 
         <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
-          {photos.map((item) => (
+          {preview.map((item) => (
             <li key={item.id}>
               <Link
                 href="/memories"
-                aria-label="View all memories"
+                aria-label={item.type === "video" ? "Watch video in memories" : "View photo in memories"}
                 className="group relative block aspect-[4/5] overflow-hidden rounded-sm bg-slate-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
               >
                 <MemoryImage
@@ -46,6 +47,13 @@ export default async function MemoriesPreview() {
                   sizes="(min-width: 768px) 33vw, 50vw"
                   className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                 />
+                {item.type === "video" && (
+                  <span className="absolute inset-0 flex items-center justify-center bg-black/20">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-black shadow-lg">
+                      <Play className="ml-0.5 h-5 w-5 fill-current" aria-hidden />
+                    </span>
+                  </span>
+                )}
               </Link>
             </li>
           ))}

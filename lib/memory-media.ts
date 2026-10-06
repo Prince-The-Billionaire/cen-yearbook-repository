@@ -7,6 +7,10 @@ export interface MemoryItem {
   width: number;
   height: number;
   caption?: string;
+  /** File format, e.g. "webp" or "png". */
+  format?: string;
+  /** Original filename without Cloudinary's random suffix; used for download names. */
+  name?: string;
   createdAt: string;
   /** Cloudinary public id, e.g. "memories/farewell-lunch". Absent for local sample items. */
   publicId?: string;
@@ -34,6 +38,14 @@ export function memoryPosterUrl(item: MemoryItem, width: number) {
 export function memoryVideoUrl(item: MemoryItem) {
   if (item.localSrc) return item.localSrc;
   return base(item, "video", "f_auto,q_auto");
+}
+
+/** Original file (no resizing or re-encoding) as a forced download. */
+export function memoryDownloadUrl(item: MemoryItem) {
+  if (item.localSrc) return item.localSrc;
+  const safeName = (item.name ?? "sticker").replace(/[^A-Za-z0-9_-]+/g, "_");
+  const extension = item.format ? `.${item.format}` : "";
+  return `${base(item, item.type, `fl_attachment:${safeName}`)}${extension}`;
 }
 
 export const memoryLabel = (item: MemoryItem) => item.caption || "Class memory";

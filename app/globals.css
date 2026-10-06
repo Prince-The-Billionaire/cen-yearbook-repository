@@ -35,6 +35,23 @@ body {
   overflow-x: hidden;
 }
 
+/* Checkerboard behind transparent stickers. */
+.checker {
+  background-color: #f4f4f5;
+  background-image:
+    linear-gradient(45deg, #e4e4e7 25%, transparent 25%, transparent 75%, #e4e4e7 75%),
+    linear-gradient(45deg, #e4e4e7 25%, transparent 25%, transparent 75%, #e4e4e7 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+html[data-theme="dark"] .checker {
+  background-color: #1b1b1f;
+  background-image:
+    linear-gradient(45deg, #26262b 25%, transparent 25%, transparent 75%, #26262b 75%),
+    linear-gradient(45deg, #26262b 25%, transparent 25%, transparent 75%, #26262b 75%);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

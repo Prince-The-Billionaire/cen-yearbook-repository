@@ -1,29 +1,31 @@
-// Server-only: reads the Memories list from Cloudinary using the API secret.
+// Server-only: reads the Memories albums from Cloudinary using the API secret.
 // Do not import this file from a client component.
+import { albums, getAlbumBySlug, type Album } from "@/data/albums";
 import type { MemoryItem } from "@/lib/memory-media";
 
 const PAGE_SIZE = 100;
-const MAX_PAGES = 5; // up to 500 items
+const MAX_PAGES = 10; // up to 1000 files across all albums
 
-// How long Next may reuse the Cloudinary response. The pages that call
-// getMemories() set the same number in `export const revalidate` (it must be a
+// How long Next may reuse the Cloudinary response. The pages that call these
+// functions set the same number in `export const revalidate` (it must be a
 // literal there). Cloudinary's Admin/Search API allows 500 calls per hour, and
-// 2 minutes uses well under a third of that.
+// every album is fetched with a single search, so 2 minutes is far below that.
 const REVALIDATE_SECONDS = 120;
 
 interface CloudinaryResource {
   public_id: string;
   asset_id?: string;
+  asset_folder?: string;
   resource_type: string;
-  width?: number;
-  height?: number;
-  created_at: string;
   format?: string;
   display_name?: string;
   filename?: string;
   /** Content hash: identical files share an etag even if uploaded twice. */
   etag?: string;
   bytes?: number;
+  width?: number;
+  height?: number;
+  created_at: string;
   // Search API returns either { custom: {...} } or the flat key/value map.
   context?: { custom?: Record<string, string> } & Record<string, unknown>;
 }
@@ -31,6 +33,11 @@ interface CloudinaryResource {
 interface SearchResponse {
   resources?: CloudinaryResource[];
   next_cursor?: string;
+}
+
+export interface AlbumContent {
+  album: Album;
+  items: MemoryItem[];
 }
 
 /** Shown in development only, so the layout can be reviewed before Cloudinary is set up. */
@@ -70,6 +77,30 @@ const originalName = (resource: CloudinaryResource) =>
   (resource.display_name ?? resource.filename ?? resource.public_id.split("/").pop() ?? "")
     .replace(/_[a-z0-9]{6}$/, "");
 
+export function toMemoryItem(resource: CloudinaryResource, cloudName: string): MemoryItem | null {
+  if (resource.resource_type !== "image" && resource.resource_type !== "video") return null;
+  if (!resource.width || !resource.height) return null;
+  if (resource.format && NON_MEDIA_FORMATS.has(resource.format.toLowerCase())) return null;
+
+  const context = resource.context?.custom ?? resource.context ?? {};
+  const caption = [context.caption, context.alt].find(
+    (value): value is string => typeof value === "string" && value.trim() !== "",
+  );
+
+  return {
+    id: resource.asset_id ?? resource.public_id,
+    type: resource.resource_type,
+    width: resource.width,
+    height: resource.height,
+    caption: caption?.trim(),
+    format: resource.format,
+    name: originalName(resource),
+    createdAt: resource.created_at,
+    publicId: resource.public_id,
+    cloudName,
+  };
+}
+
 function toEntry(resource: CloudinaryResource, cloudName: string): Entry | null {
   const item = toMemoryItem(resource, cloudName);
   if (!item) return null;
@@ -95,49 +126,38 @@ export function arrangeMemories(entries: Entry[]): MemoryItem[] {
     .map((entry) => entry.item);
 }
 
-export function toMemoryItem(resource: CloudinaryResource, cloudName: string): MemoryItem | null {
-  if (resource.resource_type !== "image" && resource.resource_type !== "video") return null;
-  if (!resource.width || !resource.height) return null;
-  if (resource.format && NON_MEDIA_FORMATS.has(resource.format.toLowerCase())) return null;
+/** The folder a resource lives in: dynamic-folder accounts set asset_folder, fixed-folder ones prefix the public_id. */
+const folderOf = (resource: CloudinaryResource) =>
+  (resource.asset_folder ?? resource.public_id.split("/").slice(0, -1).join("/")).toLowerCase();
 
-  const context = resource.context?.custom ?? resource.context ?? {};
-  const caption = [context.caption, context.alt].find(
-    (value): value is string => typeof value === "string" && value.trim() !== "",
-  );
-
-  return {
-    id: resource.asset_id ?? resource.public_id,
-    type: resource.resource_type,
-    width: resource.width,
-    height: resource.height,
-    caption: caption?.trim(),
-    createdAt: resource.created_at,
-    publicId: resource.public_id,
-    cloudName,
-  };
-}
-
-/**
- * Everything in the `memories` folder or tagged `memories` (rename with
- * CLOUDINARY_MEMORIES_FOLDER), de-duplicated and sorted by filename. Returns []
- * if Cloudinary isn't configured or fails, so the rest of the site keeps working.
- */
-export async function getMemories(): Promise<MemoryItem[]> {
+/** Fetches all albums with one search and groups the files by folder. */
+async function loadAlbums(): Promise<AlbumContent[]> {
   const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
   const apiKey = process.env.CLOUDINARY_API_KEY;
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
 
   if (!cloudName || !apiKey || !apiSecret) {
-    return process.env.NODE_ENV === "production" ? [] : SAMPLE_ITEMS;
+    // Production hides everything; dev shows sample photos in the "others" album.
+    return albums.map((album) => ({
+      album,
+      items: process.env.NODE_ENV !== "production" && album.slug === "others" ? SAMPLE_ITEMS : [],
+    }));
   }
 
-  const name = process.env.CLOUDINARY_MEMORIES_FOLDER || "memories";
   // `asset_folder` is the folder in Cloudinary's dynamic-folder mode; the
-  // public_id prefix covers accounts using fixed folders and subfolders.
-  const expression = `asset_folder="${name}" OR public_id:${name}/* OR tags="${name}"`;
+  // public_id prefix covers accounts using fixed folders.
+  const expression = albums
+    .map((album) => `asset_folder="${album.folder}" OR public_id:${album.folder}/*`)
+    .join(" OR ");
   const auth = Buffer.from(`${apiKey}:${apiSecret}`).toString("base64");
-  const entries: Entry[] = [];
+  const entriesByFolder = new Map<string, Entry[]>();
   let cursor: string | undefined;
+
+  const collect = () =>
+    albums.map((album) => ({
+      album,
+      items: arrangeMemories(entriesByFolder.get(album.folder.toLowerCase()) ?? []),
+    }));
 
   try {
     for (let page = 0; page < MAX_PAGES; page++) {
@@ -159,7 +179,9 @@ export async function getMemories(): Promise<MemoryItem[]> {
       const data = (await response.json()) as SearchResponse;
       for (const resource of data.resources ?? []) {
         const entry = toEntry(resource, cloudName);
-        if (entry) entries.push(entry);
+        if (!entry) continue;
+        const folder = folderOf(resource);
+        entriesByFolder.set(folder, [...(entriesByFolder.get(folder) ?? []), entry]);
       }
 
       cursor = data.next_cursor;
@@ -167,8 +189,19 @@ export async function getMemories(): Promise<MemoryItem[]> {
     }
   } catch (error) {
     console.error("[memories] Could not load from Cloudinary:", error);
-    return arrangeMemories(entries); // whatever loaded before the failure (possibly empty)
+    return collect(); // whatever loaded before the failure (possibly empty)
   }
 
-  return arrangeMemories(entries);
+  return collect();
+}
+
+/** Albums that have at least one file, in the order defined in data/albums.ts. */
+export async function getAlbumsWithItems(): Promise<AlbumContent[]> {
+  return (await loadAlbums()).filter(({ items }) => items.length > 0);
+}
+
+/** One album (even if empty). Undefined for an unknown slug. */
+export async function getAlbum(slug: string): Promise<AlbumContent | undefined> {
+  if (!getAlbumBySlug(slug)) return undefined;
+  return (await loadAlbums()).find((content) => content.album.slug === slug);
 }

@@ -1,15 +1,11 @@
 import Link from "next/link";
-import { Play } from "lucide-react";
-import MemoryImage from "@/components/MemoryImage";
-import { getMemories } from "@/lib/memories";
+import AlbumCover from "@/components/AlbumCover";
+import { getAlbumsWithItems } from "@/lib/memories";
 
-const PREVIEW_COUNT = 6;
-
-/** Home-page teaser for the Memories gallery (photos and videos). Renders nothing if empty. */
+/** Home-page teaser for Memories: one tile per album that has files. Renders nothing if there are none. */
 export default async function MemoriesPreview() {
-  const memories = await getMemories();
-  const preview = memories.slice(0, PREVIEW_COUNT);
-  if (preview.length === 0) return null;
+  const albums = await getAlbumsWithItems();
+  if (albums.length === 0) return null;
 
   return (
     <section
@@ -23,37 +19,37 @@ export default async function MemoriesPreview() {
               [MEMORIES]
             </p>
             <h2 className="font-sans text-5xl font-black uppercase leading-none tracking-tighter text-slate-950 sm:text-7xl md:text-8xl">
-              OTHER{" "}
+              THE{" "}
               <span className="bg-gradient-to-b from-slate-950 via-slate-700 to-slate-400 bg-clip-text font-black italic text-transparent filter drop-shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
-                MOMENTS
+                ALBUMS
               </span>
             </h2>
           </div>
           <p className="max-w-sm text-xs leading-relaxed text-slate-600 sm:text-sm">
-            Random photos and clips from around the department that didn&rsquo;t fit anywhere else.
+            Photos and clips from events around the department, grouped by album.
           </p>
         </header>
 
-        <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
-          {preview.map((item) => (
-            <li key={item.id}>
+        <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+          {albums.map(({ album, items }) => (
+            <li key={album.slug}>
               <Link
-                href="/memories"
-                aria-label={item.type === "video" ? "Watch video in memories" : "View photo in memories"}
+                href={`/memories/${album.slug}`}
                 className="group relative block aspect-[4/5] overflow-hidden rounded-sm bg-slate-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
               >
-                <MemoryImage
-                  item={item}
-                  sizes="(min-width: 768px) 33vw, 50vw"
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                <AlbumCover
+                  album={album}
+                  item={items[0]}
+                  sizes="(min-width: 768px) 25vw, 50vw"
                 />
-                {item.type === "video" && (
-                  <span className="absolute inset-0 flex items-center justify-center bg-black/20">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-black shadow-lg">
-                      <Play className="ml-0.5 h-5 w-5 fill-current" aria-hidden />
-                    </span>
+                <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-4 pb-4 pt-12 text-white">
+                  <span className="block font-mono text-xs font-bold uppercase tracking-widest sm:text-sm">
+                    {album.title}
                   </span>
-                )}
+                  <span className="mt-1 block font-mono text-[10px] uppercase tracking-widest text-white/70">
+                    {items.length} {items.length === 1 ? "item" : "items"}
+                  </span>
+                </span>
               </Link>
             </li>
           ))}
@@ -64,7 +60,7 @@ export default async function MemoriesPreview() {
             href="/memories"
             className="rounded-full border border-slate-950 px-8 py-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-slate-950 transition-colors hover:bg-slate-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
           >
-            View all memories &rarr;
+            View all albums &rarr;
           </Link>
         </div>
       </div>

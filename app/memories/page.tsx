@@ -3,8 +3,8 @@ import MemoriesGallery from "@/components/MemoriesGallery";
 import Navbar from "@/components/Navbar";
 import { getMemories } from "@/lib/memories";
 
-// Re-read the Cloudinary list at most every 10 minutes.
-export const revalidate = 600;
+// Re-read the Cloudinary list at most every 2 minutes (keep in sync with lib/memories.ts).
+export const revalidate = 120;
 
 export const metadata: Metadata = {
   title: "Memories",

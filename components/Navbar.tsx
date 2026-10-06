@@ -9,6 +9,7 @@ import { Menu, X } from "lucide-react";
 const links = [
   { href: "/", label: "Home" },
   { href: "/yearbook", label: "Yearbook" },
+  { href: "/memories", label: "Memories" },
 ];
 
 /** Floating pill-shaped "island" nav: logo, title and a hamburger that opens the page links. */

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function YearbookPage() {
   return (
-    <div className="bg-zinc-50 dark:bg-black">
+    <div className="bg-zinc-50 dark:bg-[#0a0a0a]">
       <Navbar />
       <Yearbook />
     </div>

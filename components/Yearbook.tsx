@@ -72,9 +72,9 @@ export default function Yearbook() {
               <li key={student.slug}>
                 <Link
                   href={`/student/${student.slug}`}
-                  className="group block overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-zinc-400 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:border-white/10 dark:bg-zinc-900/60 dark:shadow-none dark:hover:border-white/30 dark:hover:shadow-[0_10px_40px_-10px_rgba(255,255,255,0.15)]"
+                  className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-zinc-400 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:border-white/10 dark:bg-zinc-900/60 dark:shadow-none dark:hover:border-white/30 dark:hover:shadow-[0_10px_40px_-10px_rgba(255,255,255,0.15)]"
                 >
-                  <div className="relative aspect-[4/5] w-full overflow-hidden bg-zinc-800">
+                  <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden bg-zinc-800">
                     <Avatar
                       name={student.name}
                       src={student.profilePic}
@@ -84,19 +84,22 @@ export default function Yearbook() {
                     <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent" />
                   </div>
 
-                  <div className="p-4">
-                    <h2 className="line-clamp-2 text-base font-semibold leading-snug text-zinc-900 dark:text-white">
+                  {/* Fixed-height text slots keep every card the same size. */}
+                  <div className="flex flex-1 flex-col gap-1 p-4">
+                    <h2 className="line-clamp-2 h-11 text-base font-semibold leading-snug text-zinc-900 dark:text-white">
                       {student.name}
                     </h2>
-                    {hasValue(student.nickname) && (
-                      <p className="mt-0.5 text-sm text-zinc-500 dark:text-zinc-400">&ldquo;{student.nickname}&rdquo;</p>
-                    )}
-                    {hasValue(student.igHandle) && (
-                      <p className="mt-2 flex items-center gap-1.5 text-xs text-zinc-500 transition-colors group-hover:text-zinc-800 dark:group-hover:text-zinc-300">
-                        <FaInstagram aria-hidden />
-                        <span className="truncate">{cleanHandle(student.igHandle)}</span>
-                      </p>
-                    )}
+                    <p className="h-5 truncate text-sm text-zinc-500 dark:text-zinc-400">
+                      {hasValue(student.nickname) ? `“${student.nickname}”` : " "}
+                    </p>
+                    <p className="mt-1 flex h-4 items-center gap-1.5 text-xs text-zinc-500 transition-colors group-hover:text-zinc-800 dark:group-hover:text-zinc-300">
+                      {hasValue(student.igHandle) && (
+                        <>
+                          <FaInstagram aria-hidden />
+                          <span className="truncate">{cleanHandle(student.igHandle)}</span>
+                        </>
+                      )}
+                    </p>
                   </div>
                 </Link>
               </li>

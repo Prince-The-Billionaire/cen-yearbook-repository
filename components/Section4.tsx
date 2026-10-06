@@ -176,14 +176,14 @@ export default function LetsGetThatBread() {
 
         {/* TOP FLOATING TAG UNDER LOGO */}
         <p className="floating-tag font-mono text-[10px] sm:text-xs tracking-[0.3em] uppercase text-zinc-400 mb-6">
-          [*ENTHUSIASTIC]
+          [*TOGETHER]
         </p>
 
         {/* HEADLINE WITH SIDE FLOATING TAGS */}
         <div ref={tagsRef} className="relative w-full">
           {/* LEFT FLOATING TAG (DESKTOP) */}
           <span className="floating-tag hidden lg:block absolute -left-12 top-1/2 -translate-y-1/2 font-mono text-xs tracking-widest uppercase text-zinc-400">
-            [*CHARISMATIC]
+            [*FAMILY]
           </span>
 
           {/* MAIN HEADLINE WITH TOP-TO-BOTTOM SILVERY BLUE "BREAD" GRADIENT */}
@@ -200,14 +200,14 @@ export default function LetsGetThatBread() {
 
           {/* RIGHT FLOATING TAG (DESKTOP) */}
           <span className="floating-tag hidden lg:block absolute -right-12 top-1/2 -translate-y-1/2 font-mono text-xs tracking-widest uppercase text-zinc-400">
-            [*SYSTEMATIC]
+            [*FOREVER]
           </span>
         </div>
 
         {/* MOBILE FLOATING TAGS ROW */}
         <div className="flex lg:hidden items-center justify-center gap-6 mt-4 mb-2 font-mono text-[10px] sm:text-xs tracking-widest uppercase text-zinc-400">
-          <span className="floating-tag">[*CHARISMATIC]</span>
-          <span className="floating-tag">[*SYSTEMATIC]</span>
+          <span className="floating-tag">[*FAMILY]</span>
+          <span className="floating-tag">[*FOREVER]</span>
         </div>
 
         {/* LIQUID BLOB CTA BUTTON WITH LUXURY AUDIO SHEEN */}

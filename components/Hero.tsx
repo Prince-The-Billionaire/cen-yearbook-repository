@@ -232,7 +232,7 @@ export default function Hero() {
 
     const ctx = gsap.context(() => {
       gsap.set(".sub-tag", { opacity: 0, y: 15 });
-      gsap.set([".word-we", ".word-are", ".word-cen", ".word-year"], {
+      gsap.set([".word-we", ".word-are", ".word-cen"], {
         opacity: 0,
         y: 40,
         scale: 0.9,
@@ -278,18 +278,6 @@ export default function Hero() {
         duration: 0.55,
         ease: "back.out(1.5)",
       });
-
-      mainTl.to(
-        ".word-year",
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.6,
-          ease: "power3.out",
-        },
-        "-=0.1"
-      );
 
       // Photo drop sequence
       mainTl.to(
@@ -399,13 +387,6 @@ export default function Hero() {
               </span>
             </h1>
 
-            <div className="word-year mt-6 sm:mt-10 flex items-center justify-center gap-3 sm:gap-6">
-              <span className="h-px w-10 sm:w-24 bg-gradient-to-r from-transparent to-white/60" />
-              <span className="bg-gradient-to-b from-white via-slate-200 to-zinc-500 bg-clip-text text-transparent font-display italic font-bold text-3xl sm:text-5xl md:text-6xl tracking-[0.2em] sm:tracking-[0.3em] filter drop-shadow-[0_2px_12px_rgba(255,255,255,0.25)]">
-                2025/2026
-              </span>
-              <span className="h-px w-10 sm:w-24 bg-gradient-to-l from-transparent to-white/60" />
-            </div>
           </main>
 
           {/* RADIAL 3D PHOTOS */}

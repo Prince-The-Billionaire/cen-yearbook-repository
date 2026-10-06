@@ -83,11 +83,11 @@ export default function WhoWeAre() {
 
         {/* MAIN HEADLINE */}
         <h2 className="w-full font-sans font-black tracking-tight leading-[0.92] uppercase text-4xl sm:text-6xl md:text-8xl lg:text-[7.2rem] mb-12 sm:mb-20">
-          <span className="sec2-title-1 block text-slate-950">Systematic</span>
+          <span className="sec2-title-1 block text-slate-950">Five Years,</span>
           <span className="sec2-title-2 block text-slate-950 mt-1 sm:mt-2">
-            Charismatic{" "}
+            One Family{" "}
             <span className="italic bg-gradient-to-b from-slate-950 via-slate-700 to-slate-400 bg-clip-text text-transparent filter drop-shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
-              & Enthusiastic
+              & Forever
             </span>
           </span>
         </h2>
@@ -96,23 +96,23 @@ export default function WhoWeAre() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 text-left text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed tracking-wide font-normal">
           <div className="sec2-col">
             <p>
-              Before the gesture, there is a sound. Before the form, an echo.
-              Indigo gathers these invisible traces and transforms them into
-              jewelry: five tales exploring matter, time and intimacy.
+              From our first lecture to our final exam, the Computer
+              Engineering set of 2025/2026 learned together, struggled together
+              and celebrated together.
             </p>
           </div>
           <div className="sec2-col">
             <p>
-              Before the gesture, there is a sound. Before the form, an echo.
-              Indigo gathers these invisible traces and transforms them into
-              jewelry: five tales exploring matter, time and intimacy.
+              Late nights in the lab, group projects that ran past midnight and
+              friendships that outlasted every deadline. This is how a class
+              became a family.
             </p>
           </div>
           <div className="sec2-col">
             <p>
-              Before the gesture, there is a sound. Before the form, an echo.
-              Indigo gathers these invisible traces and transforms them into
-              jewelry: five tales exploring matter, time and intimacy.
+              This yearbook keeps the faces, the favourite moments and the
+              words we want to be remembered by: one profile for every
+              graduate.
             </p>
           </div>
         </div>

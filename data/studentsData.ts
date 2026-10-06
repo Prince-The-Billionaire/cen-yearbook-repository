@@ -1,4 +1,4 @@
-// lib/studentsData.ts
+// data/studentsData.ts
 
 export interface StudentData {
   name: string;

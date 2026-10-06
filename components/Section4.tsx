@@ -24,11 +24,12 @@ export default function LetsGetThatBread() {
   // Web Audio API Synthesized Luxury Sheen Chime (Zero external audio asset needed)
   const playLuxurySheenSound = () => {
     try {
-      const AudioContext =
-        window.AudioContext || (window as any).webkitAudioContext;
-      if (!AudioContext) return;
+      const AudioContextCtor =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (!AudioContextCtor) return;
 
-      const audioCtx = new AudioContext();
+      const audioCtx = new AudioContextCtor();
 
       // Dual crystal oscillators for harmonic shimmer
       const osc1 = audioCtx.createOscillator();

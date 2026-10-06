@@ -11,16 +11,15 @@ import {
   ChevronLeft,
   ChevronRight,
   GraduationCap,
-  Moon,
   Phone,
   Share2,
-  Sun,
   X,
 } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
 import { PiXLogo } from "react-icons/pi";
 import Avatar from "@/components/Avatar";
 import { cleanHandle, hasValue, type Student } from "@/lib/students";
+import { useTheme } from "@/lib/theme";
 
 interface NeighbourLink {
   slug: string;
@@ -58,7 +57,7 @@ function Section({ label, children, className = "" }: { label: string; children:
 }
 
 export default function StudentProfile({ student, previous, next }: StudentProfileProps) {
-  const [isDark, setIsDark] = useState(true);
+  const isDark = useTheme() === "dark";
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [shareState, setShareState] = useState<"idle" | "copied">("idle");
 
@@ -115,7 +114,6 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
   return (
     <MotionConfig reducedMotion="user">
       <div
-        data-theme={isDark ? "dark" : "light"}
         className="min-h-screen bg-zinc-50 font-[family-name:var(--font-ui)] text-zinc-900 transition-colors duration-300 dark:bg-[#0a0a0a] dark:text-zinc-100"
       >
         {/* TOP BAR */}
@@ -141,14 +139,6 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
                   <Share2 className="h-4 w-4" aria-hidden />
                 )}
                 <span aria-live="polite">{shareState === "copied" ? "Link copied" : "Share"}</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsDark((value) => !value)}
-                aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-                className={`rounded-full p-2.5 text-zinc-600 transition-colors hover:bg-zinc-200/70 dark:text-zinc-300 dark:hover:bg-white/10 ${FOCUS}`}
-              >
-                {isDark ? <Sun className="h-5 w-5" aria-hidden /> : <Moon className="h-5 w-5" aria-hidden />}
               </button>
             </div>
           </div>

@@ -8,6 +8,11 @@
   --foreground: #ededed;
 }
 
+html[data-theme="light"] {
+  --background: #fafafa;
+  --foreground: #171717;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -34,4 +39,23 @@ body {
   html {
     scroll-behavior: auto;
   }
+}
+
+/*
+ * The home page is built from hard-coded black/white sections, so its light
+ * theme is the dark design colour-inverted. Filters on the root element don't
+ * affect fixed positioning. Photos, video and anything marked .keep-colors are
+ * inverted back so they look normal.
+ */
+html[data-theme="light"]:has(.landing-root) {
+  --background: #050505;
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html[data-theme="light"]:has(.landing-root) :is(img, video, .keep-colors) {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html[data-theme="light"]:has(.landing-root) .keep-colors img {
+  filter: none;
 }

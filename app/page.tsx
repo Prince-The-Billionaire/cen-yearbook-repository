@@ -8,7 +8,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className="bg-black">
+    <div className="landing-root bg-black">
       <Navbar/>
       <Hero/>
       <WhoWeAre/>

@@ -103,9 +103,8 @@ export default function WhoWeAre() {
           </div>
           <div className="sec2-col">
             <p>
-              Late nights in the lab, group projects that ran past midnight and
-              friendships that outlasted every deadline. This is how a class
-              became a family.
+              Practicals in the lab, group projects that included work past midnight and
+              friendships that outlasted every deadline.
             </p>
           </div>
           <div className="sec2-col">

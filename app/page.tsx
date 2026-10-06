@@ -7,8 +7,8 @@ import LetsGetThatBread from '@/components/Section4'
 import MemoriesPreview from '@/components/MemoriesPreview'
 import React from 'react'
 
-// Re-read the Cloudinary memories list at most every 10 minutes.
-export const revalidate = 600
+// Re-read the Cloudinary memories list at most every 2 minutes (keep in sync with lib/memories.ts).
+export const revalidate = 120
 
 const page = () => {
   return (

@@ -85,9 +85,9 @@ export default function WhoWeAre() {
         <h2 className="w-full font-sans font-black tracking-tight leading-[0.92] uppercase text-4xl sm:text-6xl md:text-8xl lg:text-[7.2rem] mb-12 sm:mb-20">
           <span className="sec2-title-1 block text-slate-950">Five Years,</span>
           <span className="sec2-title-2 block text-slate-950 mt-1 sm:mt-2">
-            One Family{" "}
+            Engineered{" "}
             <span className="italic bg-gradient-to-b from-slate-950 via-slate-700 to-slate-400 bg-clip-text text-transparent filter drop-shadow-[0_2px_10px_rgba(0,0,0,0.12)]">
-              & Forever
+              & Delivered
             </span>
           </span>
         </h2>

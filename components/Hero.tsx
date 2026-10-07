@@ -16,7 +16,7 @@ const photosData = [
     rotZ: -72,
     rotX: -18,
     rotY: 14,
-    size: "w-20 h-20 sm:w-32 sm:h-32 md:w-44 md:h-44",
+    size: "w-17 h-17 sm:w-27 sm:h-27 md:w-37 md:h-37",
     top: "2%",
     left: "42%",
   },
@@ -27,7 +27,7 @@ const photosData = [
     rotZ: 34,
     rotX: 22,
     rotY: -16,
-    size: "w-24 h-24 sm:w-36 sm:h-36 md:w-52 md:h-52",
+    size: "w-20 h-20 sm:w-31 sm:h-31 md:w-44 md:h-44",
     top: "5%",
     left: "75%",
   },
@@ -38,7 +38,7 @@ const photosData = [
     rotZ: -55,
     rotX: -12,
     rotY: 22,
-    size: "w-18 h-18 sm:w-28 sm:h-28 md:w-40 md:h-40",
+    size: "w-15 h-15 sm:w-24 sm:h-24 md:w-34 md:h-34",
     top: "42%",
     left: "80%",
   },
@@ -49,7 +49,7 @@ const photosData = [
     rotZ: 68,
     rotX: 18,
     rotY: -12,
-    size: "w-28 h-28 sm:w-40 sm:h-40 md:w-56 md:h-56",
+    size: "w-24 h-24 sm:w-34 sm:h-34 md:w-48 md:h-48",
     top: "72%",
     left: "72%",
   },
@@ -60,7 +60,7 @@ const photosData = [
     rotZ: -25,
     rotX: -14,
     rotY: 15,
-    size: "w-22 h-22 sm:w-34 sm:h-34 md:w-48 md:h-48",
+    size: "w-19 h-19 sm:w-29 sm:h-29 md:w-41 md:h-41",
     top: "78%",
     left: "40%",
   },
@@ -71,7 +71,7 @@ const photosData = [
     rotZ: 82,
     rotX: 20,
     rotY: -20,
-    size: "w-20 h-20 sm:w-30 sm:h-30 md:w-42 md:h-42",
+    size: "w-17 h-17 sm:w-26 sm:h-26 md:w-36 md:h-36",
     top: "70%",
     left: "8%",
   },
@@ -82,7 +82,7 @@ const photosData = [
     rotZ: -40,
     rotX: -22,
     rotY: 18,
-    size: "w-26 h-26 sm:w-38 sm:h-38 md:w-50 md:h-50",
+    size: "w-22 h-22 sm:w-32 sm:h-32 md:w-42 md:h-42",
     top: "35%",
     left: "2%",
   },
@@ -93,31 +93,9 @@ const photosData = [
     rotZ: 50,
     rotX: 16,
     rotY: -14,
-    size: "w-22 h-22 sm:w-32 sm:h-32 md:w-44 md:h-44",
+    size: "w-19 h-19 sm:w-27 sm:h-27 md:w-37 md:h-37",
     top: "6%",
     left: "10%",
-  },
-  {
-    id: 9,
-    src: "/course_trad.jpg",
-    alt: "Photo 9",
-    rotZ: -30,
-    rotX: 14,
-    rotY: -18,
-    size: "w-20 h-20 sm:w-30 sm:h-30 md:w-40 md:h-40",
-    top: "22%",
-    left: "87%",
-  },
-  {
-    id: 10,
-    src: "/course_girls.jpg",
-    alt: "Photo 10",
-    rotZ: 44,
-    rotX: -16,
-    rotY: 20,
-    size: "w-20 h-20 sm:w-30 sm:h-30 md:w-42 md:h-42",
-    top: "58%",
-    left: "24%",
   },
 ];
 
@@ -128,13 +106,14 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
   const [isSoundOn, setIsSoundOn] = useState(true);
   const router = useRouter();
 
-  // The scatter positions above are fixed; the pictures are the album covers plus one
-  // person (see lib/hero-photos.ts), one per slot. Without them the first 8 slots show
-  // the built-in course photos.
+  // Always eight pictures: the scatter positions above are fixed, and the pictures are the
+  // album covers plus one person (see lib/hero-photos.ts). Without them the slots show the
+  // built-in course photos. They are grey until hovered (touch screens can't hover, so
+  // there they stay in colour).
   const slots =
     photos && photos.length > 0
       ? photos.slice(0, photosData.length).map((photo, index) => ({ ...photosData[index], ...photo }))
-      : photosData.slice(0, 8).map((slot) => ({ ...slot, href: "/memories" }));
+      : photosData.map((slot) => ({ ...slot, href: "/memories" }));
 
   const heroRef = useRef<HTMLDivElement>(null);
   const loaderTextRef = useRef<HTMLDivElement>(null);
@@ -433,7 +412,7 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
                       ? "z-40 grayscale-0 ring-4 ring-white/50 shadow-[0_0_50px_rgba(255,255,255,0.5)]"
                       : isAnyHovered
                       ? "grayscale opacity-20 z-0"
-                      : "grayscale-0 opacity-95 z-10"
+                      : "[@media(hover:hover)]:grayscale opacity-95 z-10"
                   }`}
                 >
                   <div className={`${photo.size} bg-black overflow-hidden`}>

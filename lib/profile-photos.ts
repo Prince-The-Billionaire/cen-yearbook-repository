@@ -14,6 +14,9 @@ const PAGE_SIZE = 100;
 const MAX_PAGES = 5; // up to 500 photos
 const REVALIDATE_SECONDS = 120; // keep in sync with the pages' `revalidate`
 
+// Files uploaded under an old spelling of a name still reach the right student.
+const SLUG_ALIASES: Record<string, string> = { "egere-joshua-chubugom": "egere-joshua-chibugom" };
+
 export interface ProfilePhotos {
   main?: string;
   gallery: string[];
@@ -41,7 +44,7 @@ export function parsePhotoName(raw: string): { slug: string; index: number } | n
   const withoutCode = raw.trim().replace(/_[a-z0-9]{6}$/i, "");
   const match = withoutCode.match(/^(.+?)(?:[_\s]+(\d{1,2}))?$/);
   if (!match) return null;
-  const slug = slugify(match[1]);
+  const slug = SLUG_ALIASES[slugify(match[1])] ?? slugify(match[1]);
   if (!slug) return null;
   const index = match[2] ? Number(match[2]) : 1;
   return { slug, index: index >= 1 ? index : 1 };

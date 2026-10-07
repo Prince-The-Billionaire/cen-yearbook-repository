@@ -487,8 +487,8 @@ export const students: Record<string, StudentData> = {
     passionGif: "",
     finalquote: "Bye by Altare"
   },
-  "EGERE JOSHUA CHUBUGOM": {
-    name: "EGERE JOSHUA CHUBUGOM",
+  "EGERE JOSHUA CHIBUGOM": {
+    name: "EGERE JOSHUA CHIBUGOM",
     nickname: "Eggzzz or DIRECTOR J (DJ3)",
     profilePic: "",
     orbitImages: [],

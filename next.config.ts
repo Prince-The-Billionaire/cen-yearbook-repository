@@ -10,7 +10,12 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  /* config options here */
+  async redirects() {
+    return [
+      // The "Funny" album was renamed "After Hours": keep old links working.
+      { source: "/memories/funny", destination: "/memories/after-hours", permanent: false },
+    ];
+  },
 };
 
 export default nextConfig;

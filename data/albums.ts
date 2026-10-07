@@ -78,9 +78,9 @@ export const albums: Album[] = [
     layout: "photos",
   },
   {
-    slug: "funny",
-    title: "Funny",
-    description: "The funny moments.",
+    slug: "after-hours",
+    title: "After Hours",
+    description: "Moments from after class, away from the lecture hall.",
     // The original Memories folder.
     folder: "memories",
     layout: "photos",

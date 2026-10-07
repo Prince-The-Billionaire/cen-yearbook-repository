@@ -16,7 +16,6 @@ export default function LetsGetThatBread() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
   const tagsRef = useRef<HTMLDivElement>(null);
-  const footerNavRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const [isClicked, setIsClicked] = useState(false);
@@ -74,7 +73,6 @@ export default function LetsGetThatBread() {
       gsap.set(titleRef.current, { y: 50, opacity: 0 });
       gsap.set(".floating-tag", { opacity: 0, scale: 0.8 });
       gsap.set(buttonRef.current, { y: 30, opacity: 0 });
-      gsap.set(".footer-nav-item", { y: 20, opacity: 0 });
 
       // Trigger reveal timeline when section hits 70% viewport
       const tl = gsap.timeline({
@@ -125,18 +123,6 @@ export default function LetsGetThatBread() {
             ease: "power2.out",
           },
           "-=0.3"
-        )
-        // 5. Footer Links Fade In
-        .to(
-          ".footer-nav-item",
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: "power2.out",
-          },
-          "-=0.2"
         );
     }, sectionRef);
 
@@ -233,38 +219,8 @@ export default function LetsGetThatBread() {
         </div>
       </div>
 
-      {/* FOOTER NAVIGATION LINKS */}
-      <footer
-        ref={footerNavRef}
-        className="w-full max-w-6xl mx-auto pt-12 border-t border-white/10 z-10"
-      >
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center font-mono text-xs sm:text-sm tracking-widest uppercase">
-          <a
-            href="#people"
-            className="footer-nav-item text-zinc-400 hover:text-white transition-colors duration-300 py-2"
-          >
-            THE PEOPLE
-          </a>
-          <a
-            href="#moments"
-            className="footer-nav-item text-zinc-400 hover:text-white transition-colors duration-300 py-2"
-          >
-            THE MOMENT
-          </a>
-          <a
-            href="#class"
-            className="footer-nav-item text-zinc-400 hover:text-white transition-colors duration-300 py-2"
-          >
-            THE CLASS
-          </a>
-          <a
-            href="#after-hours"
-            className="footer-nav-item text-zinc-400 hover:text-white transition-colors duration-300 py-2"
-          >
-            AFTER HOURS
-          </a>
-        </div>
-      </footer>
+      {/* Spacer: keeps the content centred now that the footer lives in the site layout (components/SiteFooter.tsx). */}
+      <div aria-hidden />
     </section>
   );
 }

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Trophy } from "lucide-react";
-import { ArrowRightIcon } from "@/components/icons";
 import { awardViews } from "@/lib/highlights";
 import { getClassStats } from "@/lib/stats";
 
@@ -49,7 +48,7 @@ export default function ClassTeasers() {
 
         <div className="mt-10 flex justify-center">
           <Link href="/stats" className={BUTTON}>
-            See all the numbers <ArrowRightIcon className="h-4 w-4" aria-hidden />
+            See all the numbers
           </Link>
         </div>
 
@@ -73,7 +72,7 @@ export default function ClassTeasers() {
             </ul>
             <div className="mt-10 flex justify-center">
               <Link href="/highlights" className={BUTTON}>
-                See all highlights <ArrowRightIcon className="h-4 w-4" aria-hidden />
+                See all highlights
               </Link>
             </div>
           </>

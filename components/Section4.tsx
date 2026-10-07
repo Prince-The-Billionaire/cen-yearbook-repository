@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRouter } from "next/navigation";
-import { ArrowRightIcon } from "@/components/icons";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -229,9 +228,6 @@ export default function LetsGetThatBread() {
             {/* BUTTON TEXT */}
             <span className="relative z-10 font-mono text-xs sm:text-sm font-bold tracking-[0.25em] uppercase text-white group-hover:text-black transition-colors duration-300 flex items-center gap-3">
               VIEW YEARBOOK NOW
-              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5">
-                <ArrowRightIcon className="h-4 w-4" aria-hidden />
-              </span>
             </span>
           </motion.button>
         </div>

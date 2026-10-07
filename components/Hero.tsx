@@ -6,6 +6,7 @@ import { gsap } from "gsap";
 import { useRouter } from "next/navigation";
 import { AudioWaveform, VolumeX } from "lucide-react";
 import { ArrowDownIcon } from "@/components/icons";
+import type { HeroPhoto } from "@/lib/hero-photos";
 
 const photosData = [
   {
@@ -98,12 +99,21 @@ const photosData = [
   },
 ];
 
-export default function Hero() {
+export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const [hoveredPhotoId, setHoveredPhotoId] = useState<number | null>(null);
   const [isSoundOn, setIsSoundOn] = useState(true);
   const router = useRouter();
+
+  // The scatter positions above are fixed; the pictures come from the Memories albums
+  // (random mix, see lib/hero-photos.ts). Any slot without one keeps the built-in photo.
+  const slots = photosData.map((slot, index) => ({
+    ...slot,
+    src: photos?.[index]?.src ?? slot.src,
+    alt: photos?.[index]?.alt ?? slot.alt,
+    href: photos?.[index]?.href ?? "/memories",
+  }));
 
   const heroRef = useRef<HTMLDivElement>(null);
   const loaderTextRef = useRef<HTMLDivElement>(null);
@@ -372,14 +382,14 @@ export default function Hero() {
 
           {/* RADIAL 3D PHOTOS */}
           <div className="absolute inset-0 pointer-events-none z-10 [transform-style:preserve-3d]">
-            {photosData.map((photo) => {
+            {slots.map((photo) => {
               const isCurrentHovered = hoveredPhotoId === photo.id;
               const isAnyHovered = hoveredPhotoId !== null;
 
               return (
                 <motion.div
                   key={photo.id}
-                  onClick={() => router.push(`/yearbook#photo-${photo.id}`)}
+                  onClick={() => router.push(photo.href)}
                   onMouseEnter={() => setHoveredPhotoId(photo.id)}
                   onMouseLeave={() => setHoveredPhotoId(null)}
                   animate={

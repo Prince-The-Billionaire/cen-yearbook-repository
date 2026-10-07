@@ -7,6 +7,7 @@ import LetsGetThatBread from '@/components/Section4'
 import MemoriesPreview from '@/components/MemoriesPreview'
 import ClassTeasers from '@/components/ClassTeasers'
 import { hasValue } from '@/lib/student-utils'
+import { getHeroPhotos } from '@/lib/hero-photos'
 import { getProfilePhotos, withPhotos } from '@/lib/profile-photos'
 import { allStudents } from '@/lib/students'
 import React from 'react'
@@ -17,6 +18,7 @@ export const revalidate = 120
 const page = async () => {
   // Real graduates: everyone in the yearbook who has a profile photo.
   const photos = await getProfilePhotos()
+  const heroPhotos = await getHeroPhotos()
   const people = allStudents
     .map((student) => withPhotos(student, photos))
     .filter((student) => hasValue(student.profilePic))
@@ -30,7 +32,7 @@ const page = async () => {
   return (
     <div className="landing-root bg-black">
       <Navbar/>
-      <Hero/>
+      <Hero photos={heroPhotos}/>
       <WhoWeAre/>
       <TheYearsWeRemember/>
       <ThePeople people={people}/>

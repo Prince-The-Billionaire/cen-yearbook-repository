@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { imageProps } from "@/lib/cloudinary-image";
 import { getInitials, hasValue } from "@/lib/student-utils";
 
 interface AvatarProps {
@@ -27,6 +30,7 @@ export default function Avatar({
         fill
         sizes={sizes}
         priority={priority}
+        {...imageProps(src)}
         className={`object-cover ${className}`}
       />
     );

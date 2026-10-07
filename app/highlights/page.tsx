@@ -4,13 +4,19 @@ import { Trophy } from "lucide-react";
 import Avatar from "@/components/Avatar";
 import Navbar from "@/components/Navbar";
 import { awardViews } from "@/lib/highlights";
+import { getProfilePhotos } from "@/lib/profile-photos";
 
 export const metadata: Metadata = {
   title: "Highlights",
   description: "Most likely to... the fun awards for the Computer Engineering Class of 2026.",
 };
 
-export default function HighlightsPage() {
+// Re-read the Cloudinary photos at most every 2 minutes.
+export const revalidate = 120;
+
+export default async function HighlightsPage() {
+  const photos = await getProfilePhotos();
+
   return (
     <div className="bg-zinc-50 dark:bg-[#0a0a0a]">
       <Navbar />
@@ -57,7 +63,7 @@ export default function HighlightsPage() {
                         className="group flex items-center gap-3 rounded-full border border-zinc-200 py-1.5 pl-1.5 pr-4 transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:border-white/15 dark:hover:bg-white/10"
                       >
                         <span className="relative block h-9 w-9 shrink-0 overflow-hidden rounded-full bg-zinc-800">
-                          <Avatar name={winner.name} src={winner.profilePic} sizes="36px" initialsClassName="text-sm" />
+                          <Avatar name={winner.name} src={photos.get(winner.slug)?.main ?? winner.profilePic} sizes="36px" initialsClassName="text-sm" />
                         </span>
                         <span className="text-sm font-medium text-zinc-800 dark:text-zinc-100">{winner.name}</span>
                       </Link>

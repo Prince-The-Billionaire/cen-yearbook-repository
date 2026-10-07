@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { imageProps } from "@/lib/cloudinary-image";
 import { motion } from "framer-motion";
 
 export interface Person {
@@ -91,6 +92,7 @@ export default function ThePeople({ people }: { people: Person[] }) {
                   >
                     <Image
                       src={person.image}
+                      {...imageProps(person.image)}
                       alt={person.name}
                       fill
                       sizes="(min-width: 768px) 320px, (min-width: 640px) 260px, 200px"

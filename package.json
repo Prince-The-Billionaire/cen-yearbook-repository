@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "photos:names": "node scripts/photo-names.mjs",
+    "photos:plan": "node scripts/upload-profile-photos.mjs",
+    "photos:upload": "node scripts/upload-profile-photos.mjs --apply"
   },
   "dependencies": {
     "framer-motion": "^13.1.1",

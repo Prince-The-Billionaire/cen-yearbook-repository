@@ -7,23 +7,26 @@ import LetsGetThatBread from '@/components/Section4'
 import MemoriesPreview from '@/components/MemoriesPreview'
 import ClassTeasers from '@/components/ClassTeasers'
 import { hasValue } from '@/lib/student-utils'
+import { getProfilePhotos, withPhotos } from '@/lib/profile-photos'
 import { allStudents } from '@/lib/students'
 import React from 'react'
 
 // Re-read the Cloudinary memories list at most every 2 minutes (keep in sync with lib/memories.ts).
 export const revalidate = 120
 
-// Real graduates: everyone in the yearbook who has a profile photo.
-const people = allStudents
-  .filter((student) => hasValue(student.profilePic))
-  .map((student) => ({
-    id: student.slug,
-    name: student.name.toUpperCase(),
-    image: student.profilePic,
-    href: `/student/${student.slug}`,
-  }))
+const page = async () => {
+  // Real graduates: everyone in the yearbook who has a profile photo.
+  const photos = await getProfilePhotos()
+  const people = allStudents
+    .map((student) => withPhotos(student, photos))
+    .filter((student) => hasValue(student.profilePic))
+    .map((student) => ({
+      id: student.slug,
+      name: student.name.toUpperCase(),
+      image: student.profilePic,
+      href: `/student/${student.slug}`,
+    }))
 
-const page = () => {
   return (
     <div className="landing-root bg-black">
       <Navbar/>

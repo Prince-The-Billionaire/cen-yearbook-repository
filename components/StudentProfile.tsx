@@ -15,6 +15,7 @@ import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { PiXLogo } from "react-icons/pi";
 import Avatar from "@/components/Avatar";
 import ShareMenu from "@/components/ShareMenu";
+import { imageProps } from "@/lib/cloudinary-image";
 import { cleanHandle, formatLevel, hasValue, linkedinLink, type PublicStudent } from "@/lib/student-utils";
 import PhoneReveal from "@/components/PhoneReveal";
 import { useTheme } from "@/lib/theme";
@@ -38,9 +39,6 @@ const LABEL = "mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-5
 const FOCUS =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500";
 
-/** Remote images (e.g. GIPHY) can come from any host, so skip the optimizer for them. */
-const isRemote = (src: string) => /^https?:\/\//.test(src);
-
 /** Small round/rounded image that quietly disappears if its URL is broken. */
 function Thumb({ src, className, sizes }: { src: string; className: string; sizes: string }) {
   const [failed, setFailed] = useState(false);
@@ -52,7 +50,7 @@ function Thumb({ src, className, sizes }: { src: string; className: string; size
         alt=""
         fill
         sizes={sizes}
-        unoptimized={isRemote(src)}
+        {...imageProps(src)}
         onError={() => setFailed(true)}
         className="object-cover object-top"
       />
@@ -372,7 +370,7 @@ export default function StudentProfile({ student, previous, next, awards = [] }:
                       alt={`${student.name}'s favourite food on campus`}
                       fill
                       sizes="(min-width: 768px) 440px, 90vw"
-                      unoptimized={isRemote(student.favFoodImg)}
+                      {...imageProps(student.favFoodImg)}
                       className="object-cover"
                     />
                   </div>
@@ -392,7 +390,7 @@ export default function StudentProfile({ student, previous, next, awards = [] }:
                       alt={`${student.name}'s core passion`}
                       fill
                       sizes="(min-width: 768px) 440px, 90vw"
-                      unoptimized={isRemote(student.passionGif)}
+                      {...imageProps(student.passionGif)}
                       className="object-cover"
                     />
                   </div>
@@ -421,7 +419,7 @@ export default function StudentProfile({ student, previous, next, awards = [] }:
                         alt={`${student.name}, photo ${index + 1}`}
                         fill
                         sizes="(min-width: 640px) 33vw, 50vw"
-                        unoptimized={isRemote(src)}
+                        {...imageProps(src)}
                         className="object-cover transition duration-500 group-hover:scale-105"
                       />
                     </button>
@@ -554,7 +552,7 @@ export default function StudentProfile({ student, previous, next, awards = [] }:
                   alt={`${student.name}, photo ${lightboxIndex + 1} of ${gallery.length}`}
                   fill
                   sizes="(min-width: 1024px) 896px, 100vw"
-                  unoptimized={isRemote(gallery[lightboxIndex])}
+                  {...imageProps(gallery[lightboxIndex])}
                   className="rounded-2xl object-contain"
                 />
               </div>

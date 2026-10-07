@@ -1,7 +1,6 @@
 import Link from "next/link";
 import AlbumCover from "@/components/AlbumCover";
 import AlbumSlider from "@/components/AlbumSlider";
-import { ArrowRightIcon } from "@/components/icons";
 import { getAlbumsWithItems } from "@/lib/memories";
 
 /** Home-page teaser for Memories: one tile per album that has files. Renders nothing if there are none. */

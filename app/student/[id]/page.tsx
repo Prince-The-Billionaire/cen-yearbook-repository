@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import StudentProfile from "@/components/StudentProfile";
+import { shareImageUrl } from "@/lib/cloudinary-image";
 import { hasValue } from "@/lib/student-utils";
+import { getProfilePhotos, withPhotos } from "@/lib/profile-photos";
 import { getAwardTitlesFor } from "@/lib/highlights";
 import { allStudents, getAdjacentStudents, getStudentBySlug } from "@/lib/students";
+
+// Re-read the Cloudinary photos at most every 2 minutes.
+export const revalidate = 120;
 
 export function generateStaticParams() {
   return allStudents.map((student) => ({ id: student.slug }));
@@ -11,8 +16,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/student/[id]">): Promise<Metadata> {
   const { id } = await params;
-  const student = getStudentBySlug(id);
-  if (!student) return { title: "Profile not found" };
+  const base = getStudentBySlug(id);
+  if (!base) return { title: "Profile not found" };
+  const student = withPhotos(base, await getProfilePhotos());
 
   const description = hasValue(student.quote)
     ? `“${student.quote}” — ${student.name}, Computer Engineering Class of 2026.`
@@ -24,15 +30,16 @@ export async function generateMetadata({ params }: PageProps<"/student/[id]">): 
     openGraph: {
       title: student.name,
       description,
-      images: hasValue(student.profilePic) ? [student.profilePic] : undefined,
+      images: hasValue(student.profilePic) ? [shareImageUrl(student.profilePic)] : undefined,
     },
   };
 }
 
 export default async function StudentPage({ params }: PageProps<"/student/[id]">) {
   const { id } = await params;
-  const student = getStudentBySlug(id);
-  if (!student) notFound();
+  const base = getStudentBySlug(id);
+  if (!base) notFound();
+  const student = withPhotos(base, await getProfilePhotos());
 
   const { previous, next } = getAdjacentStudents(student.slug);
 

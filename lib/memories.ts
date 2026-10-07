@@ -44,14 +44,9 @@ export interface AlbumContent {
 
 /** Shown in development only, so the layout can be reviewed before Cloudinary is set up. */
 const SAMPLE_ITEMS: MemoryItem[] = [
-  ["course_group1.png", 1280, 960],
-  ["prince_group_1.png", 1086, 1448],
   ["course_trad.jpg", 1280, 960],
-  ["shalom_3.jpg", 960, 1280],
   ["course_girls.jpg", 1280, 960],
-  ["gerald_2.jpg", 1920, 2560],
   ["course_guys.jpg", 1280, 960],
-  ["bright_3.jpg", 960, 1280],
 ].map(([file, width, height], index) => ({
   id: `sample-${index}`,
   type: "image" as const,

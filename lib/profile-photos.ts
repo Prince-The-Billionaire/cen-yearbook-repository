@@ -73,7 +73,12 @@ export async function getProfilePhotos(): Promise<Map<string, ProfilePhotos>> {
     }
   } catch (error) {
     console.error("[profile-photos] Could not load from Cloudinary:", error);
-    return result; // fall back to the local photos
+    // While the live site refreshes a page in the background, throwing makes Next
+    // keep serving the last good page (with photos) instead of replacing it with
+    // one without. A deployment must still succeed if Cloudinary is briefly down,
+    // so during the build we fall back to whatever local photos exist.
+    if (process.env.NODE_ENV === "production" && process.env.NEXT_PHASE !== "phase-production-build") throw error;
+    return result;
   }
 
   // Newest first, so if a name was uploaded twice the latest copy wins.

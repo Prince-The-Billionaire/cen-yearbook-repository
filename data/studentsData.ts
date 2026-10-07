@@ -178,8 +178,8 @@ export const students: Record<string, StudentData> = {
   "Ngorka Uchechukwu Gerald": {
     name: "Ngorka Uchechukwu Gerald",
     nickname: "Jerry-Z",
-    profilePic: "/gerald_1.jpg",
-    orbitImages: ['/gerald_2.jpg', '/gerald_3.jpg', '/gerald_4.jpg', '/gerald_5.jpg', '/gerald_6.jpg'],
+    profilePic: "",
+    orbitImages: [],
     audioUrl: "",
     spotifyTrackId: "0FB5ILDICqwK6xj7W1RP9u",
     phoneDisplay: "Nil",
@@ -230,8 +230,8 @@ export const students: Record<string, StudentData> = {
   "Ekundayo Shalom Chuwkuma": {
     name: "Ekundayo Shalom Chuwkuma",
     nickname: "Shalibosco",
-    profilePic: "/shalom_1.jpg",
-    orbitImages: ['/shalom_2.jpg', '/shalom_3.jpg', '/shalom_4.jpg', '/shalom_5.jpg'],
+    profilePic: "",
+    orbitImages: [],
     audioUrl: "",
     spotifyTrackId: "",
     phoneDisplay: "09137893056",
@@ -256,14 +256,8 @@ export const students: Record<string, StudentData> = {
   "Inim Bright Kudos": {
     name: "Inim Bright Kudos",
     nickname: "Bright",
-    profilePic: "/bright_1.jpg",
-    orbitImages: [
-      "/bright_1.jpg",
-      "/bright_2.jpg",
-      "/bright_3.jpg",
-      "/bright_4.jpg",
-      "/bright_5.jpg"
-    ],
+    profilePic: "",
+    orbitImages: [],
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
     spotifyTrackId: "7L11sChfu9a3OmthtWszaz",
     phoneDisplay: "+234",
@@ -340,15 +334,8 @@ export const students: Record<string, StudentData> = {
   "Princewill Daniel": {
       name: "Princewill Daniel",
       nickname: "Prince D ",
-      profilePic: "/prince_yearbook.png",
-      orbitImages: [
-        "/prince_1.jpg",
-        "/prince_2.jpg",
-        "/prince_3.jpg",
-        "/prince_4.png",
-        "/prince_group_1.png",
-        "/prince_6.png",
-      ],
+      profilePic: "",
+      orbitImages: [],
       audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
       spotifyTrackId: "6HidGH3rmgyk47386l4p37",
       phoneDisplay: "091 598 226 19",
@@ -815,14 +802,8 @@ export const students: Record<string, StudentData> = {
   "Onuoha Udonwa": {
     name: "Onuoha Udonwa",
     nickname: "Udo",
-    profilePic: "/udo_3.JPG",
-    orbitImages: [
-      "/udo_1.JPG",
-      "/udo_2.JPG",
-      "/udo_3.JPG",
-      "/udo_4.JPG",
-      "/udo_5.JPG"
-    ],
+    profilePic: "",
+    orbitImages: [],
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
     spotifyTrackId: "7L11sChfu9a3OmthtWszaz",
     phoneDisplay: "08157649715",

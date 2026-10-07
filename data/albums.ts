@@ -45,7 +45,8 @@ export const albums: Album[] = [
     slug: "portrait",
     title: "Portrait Day",
     description: "Photos and clips from portrait day.",
-    folder: "portrait",
+    // Spelled to match the Cloudinary folder.
+    folder: "potrait",
     layout: "photos",
   },
   {
@@ -70,9 +71,16 @@ export const albums: Album[] = [
     layout: "photos",
   },
   {
-    slug: "others",
-    title: "Others",
-    description: "Everything else from around the department.",
+    slug: "classroom",
+    title: "Classroom",
+    description: "Photos and clips from the classroom.",
+    folder: "classroom",
+    layout: "photos",
+  },
+  {
+    slug: "funny",
+    title: "Funny",
+    description: "The funny moments.",
     // The original Memories folder.
     folder: "memories",
     layout: "photos",

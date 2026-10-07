@@ -137,10 +137,10 @@ async function loadAlbums(): Promise<AlbumContent[]> {
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
 
   if (!cloudName || !apiKey || !apiSecret) {
-    // Production hides everything; dev shows sample photos in the "others" album.
+    // Production hides everything; dev shows sample photos in the "funny" album.
     return albums.map((album) => ({
       album,
-      items: process.env.NODE_ENV !== "production" && album.slug === "others" ? SAMPLE_ITEMS : [],
+      items: process.env.NODE_ENV !== "production" && album.slug === "funny" ? SAMPLE_ITEMS : [],
     }));
   }
 

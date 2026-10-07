@@ -32,9 +32,14 @@ interface Resource {
 
 const NON_PHOTO_FORMATS = new Set(["pdf", "psd", "ai", "eps"]);
 
-/** "amos-ibala_2" -> { slug: "amos-ibala", index: 2 }; "amos-ibala" -> index 1 (main photo). */
+/**
+ * "amos-ibala_2" -> { slug: "amos-ibala", index: 2 }; "amos-ibala" -> index 1 (main photo).
+ * Cloudinary sometimes adds a random 6-character code to a file's name
+ * ("amos-ibala_2_yvdoiy"); it is ignored.
+ */
 export function parsePhotoName(raw: string): { slug: string; index: number } | null {
-  const match = raw.trim().match(/^(.+?)(?:[_\s]+(\d{1,2}))?$/);
+  const withoutCode = raw.trim().replace(/_[a-z0-9]{6}$/i, "");
+  const match = withoutCode.match(/^(.+?)(?:[_\s]+(\d{1,2}))?$/);
   if (!match) return null;
   const slug = slugify(match[1]);
   if (!slug) return null;

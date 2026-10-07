@@ -16,6 +16,11 @@ export const revalidate = 120;
 
 export default async function HighlightsPage() {
   const photos = await getProfilePhotos();
+  // The awards under their group headings, in the order they are written in data/highlights.ts.
+  const groups = [...new Set(awardViews.map((award) => award.group))].map((name) => ({
+    name,
+    awards: awardViews.filter((award) => award.group === name),
+  }));
 
   return (
     <div className="bg-zinc-50 dark:bg-[#0a0a0a]">
@@ -34,8 +39,18 @@ export default async function HighlightsPage() {
             </p>
           </header>
 
+          {groups.map((group) => (
+          <section key={group.name} className="mb-14" aria-labelledby={`group-${group.name}`}>
+          <h2
+            id={`group-${group.name}`}
+            className="mb-6 flex items-center gap-4 font-display text-3xl font-bold text-zinc-900 dark:text-white"
+          >
+            {group.name}
+            <span className="h-px flex-1 bg-zinc-200 dark:bg-white/10" aria-hidden />
+            <span className="font-[family-name:var(--font-ui)] text-sm font-medium text-zinc-500">{group.awards.length}</span>
+          </h2>
           <ul className="grid gap-5 md:grid-cols-2">
-            {awardViews.map((award) => (
+            {group.awards.map((award) => (
               <li
                 key={award.id}
                 className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-zinc-900/70 dark:shadow-none"
@@ -44,9 +59,9 @@ export default async function HighlightsPage() {
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white">
                     <Trophy className="h-6 w-6" aria-hidden />
                   </span>
-                  <h2 className="font-display text-2xl font-bold leading-snug text-zinc-900 dark:text-white">
+                  <h3 className="font-display text-2xl font-bold leading-snug text-zinc-900 dark:text-white">
                     {award.title}
-                  </h2>
+                  </h3>
                 </div>
 
                 {award.winners.length === 0 && (
@@ -77,6 +92,8 @@ export default async function HighlightsPage() {
               </li>
             ))}
           </ul>
+          </section>
+          ))}
 
           <p className="mx-auto mt-12 max-w-2xl text-center text-sm text-zinc-500 dark:text-zinc-400">
             Want to see the numbers behind the class? Check{" "}

@@ -12,6 +12,7 @@ export interface AwardWinner {
 export interface AwardView {
   id: string;
   title: string;
+  group: string;
   reason?: string;
   winners: AwardWinner[];
 }
@@ -21,6 +22,7 @@ const byName = new Map(allStudents.map((student) => [student.name, student]));
 export const awardViews: AwardView[] = awards.map((award) => ({
   id: award.id,
   title: award.title,
+  group: award.group,
   reason: award.reason,
   winners: award.winners.map((name) => {
     const student = byName.get(name);

@@ -9,7 +9,7 @@ export const revalidate = 120;
 
 export const metadata: Metadata = {
   title: "Memories",
-  description: "Photo and video albums from around the Computer Engineering department.",
+  description: "Photo and video albums from the Computer Engineering program.",
 };
 
 export default async function MemoriesPage() {
@@ -30,7 +30,7 @@ export default async function MemoriesPage() {
               </span>
             </h1>
             <p className="mx-auto mt-4 max-w-xl text-lg text-zinc-600 dark:text-zinc-400">
-              Photos and clips from around the department, grouped by album.
+              Photos and clips from the program, grouped by album.
             </p>
           </header>
 

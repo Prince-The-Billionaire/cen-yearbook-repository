@@ -26,7 +26,7 @@ export default async function MemoriesPreview() {
             </h2>
           </div>
           <p className="max-w-sm text-xs leading-relaxed text-slate-600 sm:text-sm">
-            Photos and clips from events around the department, grouped by album.
+            Photos and clips from program events, grouped by album.
           </p>
         </header>
 

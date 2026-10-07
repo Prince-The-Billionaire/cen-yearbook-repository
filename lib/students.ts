@@ -14,6 +14,21 @@ export const formatLevel = (raw: string) => {
   return match ? `${match[1]}00 Level` : raw.trim();
 };
 
+/** Turns whatever someone typed for LinkedIn (URL, profile slug or just a name) into a link. */
+export function linkedinLink(value?: string | null): { href: string; label: string } | null {
+  if (!hasValue(value)) return null;
+  const text = value.trim();
+  if (/^(https?:\/\/)?(www\.)?linkedin\.com\//i.test(text)) {
+    const href = /^https?:\/\//i.test(text) ? text : `https://${text}`;
+    return { href, label: text.replace(/\/+$/, "").split("/").pop() || text };
+  }
+  if (/\s/.test(text)) {
+    // A name with spaces can't be a profile slug, so search for it instead.
+    return { href: `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(text)}`, label: text };
+  }
+  return { href: `https://www.linkedin.com/in/${encodeURIComponent(text)}`, label: text };
+}
+
 export const slugify = (name: string) =>
   name
     .toLowerCase()

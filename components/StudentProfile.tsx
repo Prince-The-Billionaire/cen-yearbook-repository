@@ -16,10 +16,10 @@ import {
   Share2,
   X,
 } from "lucide-react";
-import { FaInstagram } from "react-icons/fa";
+import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { PiXLogo } from "react-icons/pi";
 import Avatar from "@/components/Avatar";
-import { cleanHandle, formatLevel, hasValue, type Student } from "@/lib/students";
+import { cleanHandle, formatLevel, hasValue, linkedinLink, type Student } from "@/lib/students";
 import { useTheme } from "@/lib/theme";
 
 interface NeighbourLink {
@@ -89,8 +89,10 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
     hasValue(student.phoneDisplay) &&
     hasValue(student.phoneLink) &&
     student.phoneLink.replace(/\D/g, "").length >= 7; // ignore stubs like "+234"
-  const hasSong = hasValue(student.spotifyTrackId) || hasValue(student.audioUrl);
-  const hasSocials = igHandle || xHandle || hasPhone;
+  const linkedin = linkedinLink(student.linkedin);
+  const favSongs = (student.favSongs ?? []).filter(hasValue);
+  const hasSong = hasValue(student.spotifyTrackId) || hasValue(student.audioUrl) || favSongs.length > 0;
+  const hasSocials = igHandle || xHandle || linkedin || hasPhone;
   const hasEmbeds = student.igPosts.some(hasValue) || hasValue(student.xTweetId);
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
@@ -237,6 +239,17 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
                       {xHandle}
                     </a>
                   )}
+                  {linkedin && (
+                    <a
+                      href={linkedin.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex items-center gap-2 rounded-full border border-zinc-300 px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-zinc-200/60 dark:border-white/20 dark:hover:bg-white/10 ${FOCUS}`}
+                    >
+                      <FaLinkedinIn className="h-4 w-4" aria-hidden />
+                      <span className="max-w-[12rem] truncate">{linkedin.label}</span>
+                    </a>
+                  )}
                 </div>
               )}
             </motion.div>
@@ -275,6 +288,16 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
                 {!hasValue(student.spotifyTrackId) && hasValue(student.audioUrl) && (
                   <audio controls preload="none" src={student.audioUrl} className="w-full" />
                 )}
+                {favSongs.length > 0 && (
+                  <ul className={`flex flex-col gap-2 ${hasValue(student.spotifyTrackId) ? "mt-4" : ""}`}>
+                    {favSongs.map((song) => (
+                      <li key={song} className="flex items-center gap-3 text-lg font-medium">
+                        <Music className="h-4 w-4 shrink-0 text-indigo-500" aria-hidden />
+                        {song}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </Section>
             )}
 
@@ -301,6 +324,18 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
                     </li>
                   ))}
                 </ul>
+              </Section>
+            )}
+
+            {hasValue(student.threeWords) && (
+              <Section label="In three words">
+                <p className="font-display text-2xl font-bold leading-snug sm:text-3xl">{student.threeWords}</p>
+              </Section>
+            )}
+
+            {hasValue(student.rememberedFor) && (
+              <Section label="Remember me for">
+                <p className="text-xl font-semibold leading-snug sm:text-2xl">{student.rememberedFor}</p>
               </Section>
             )}
 
@@ -348,33 +383,43 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
               </Section>
             )}
 
-            {hasValue(student.favFoodImg) && (
+            {(hasValue(student.favFood) || hasValue(student.favFoodImg)) && (
               <Section label="Favourite CU food">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-                  <Image
-                    src={student.favFoodImg}
-                    alt={`${student.name}'s favourite food on campus`}
-                    fill
-                    sizes="(min-width: 768px) 440px, 90vw"
-                    unoptimized={isRemote(student.favFoodImg)}
-                    className="object-cover"
-                  />
-                </div>
+                {hasValue(student.favFood) && (
+                  <p className="text-xl font-semibold leading-snug sm:text-2xl">{student.favFood}</p>
+                )}
+                {hasValue(student.favFoodImg) && (
+                  <div className={`relative aspect-[4/3] overflow-hidden rounded-2xl ${hasValue(student.favFood) ? "mt-4" : ""}`}>
+                    <Image
+                      src={student.favFoodImg}
+                      alt={`${student.name}'s favourite food on campus`}
+                      fill
+                      sizes="(min-width: 768px) 440px, 90vw"
+                      unoptimized={isRemote(student.favFoodImg)}
+                      className="object-cover"
+                    />
+                  </div>
+                )}
               </Section>
             )}
 
-            {hasValue(student.passionGif) && (
-              <Section label="Core passion">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-                  <Image
-                    src={student.passionGif}
-                    alt={`${student.name}'s core passion`}
-                    fill
-                    sizes="(min-width: 768px) 440px, 90vw"
-                    unoptimized={isRemote(student.passionGif)}
-                    className="object-cover"
-                  />
-                </div>
+            {(hasValue(student.passion) || hasValue(student.passionGif)) && (
+              <Section label={hasValue(student.passion) ? "Passionate about" : "Core passion"}>
+                {hasValue(student.passion) && (
+                  <p className="text-xl font-semibold leading-snug sm:text-2xl">{student.passion}</p>
+                )}
+                {hasValue(student.passionGif) && (
+                  <div className={`relative aspect-[4/3] overflow-hidden rounded-2xl ${hasValue(student.passion) ? "mt-4" : ""}`}>
+                    <Image
+                      src={student.passionGif}
+                      alt={`${student.name}'s core passion`}
+                      fill
+                      sizes="(min-width: 768px) 440px, 90vw"
+                      unoptimized={isRemote(student.passionGif)}
+                      className="object-cover"
+                    />
+                  </div>
+                )}
               </Section>
             )}
           </div>

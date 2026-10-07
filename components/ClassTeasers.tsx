@@ -53,8 +53,8 @@ export default function ClassTeasers() {
         </div>
 
         {featured.length > 0 && (
-          <>
-            <p className="mb-6 mt-20 font-mono text-xs uppercase tracking-[0.3em] text-slate-500 sm:text-sm">
+          <div className="mt-24 border-t border-slate-200 pt-20 sm:mt-32 sm:pt-24">
+            <p className="mb-8 font-mono text-xs uppercase tracking-[0.3em] text-slate-500 sm:text-sm">
               [MOST LIKELY TO&hellip;]
             </p>
             <ul className="grid gap-4 sm:grid-cols-3">
@@ -75,7 +75,7 @@ export default function ClassTeasers() {
                 See all highlights
               </Link>
             </div>
-          </>
+          </div>
         )}
       </div>
     </section>

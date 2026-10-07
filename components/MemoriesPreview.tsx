@@ -32,7 +32,7 @@ export default async function MemoriesPreview() {
         </header>
 
         <AlbumSlider>
-          {albums.map(({ album, items, cover }) => (
+          {albums.map(({ album, items, covers }, albumIndex) => (
             <li key={album.slug} className="w-64 shrink-0 snap-start sm:w-72 md:w-80">
               <Link
                 href={`/memories/${album.slug}`}
@@ -40,7 +40,8 @@ export default async function MemoriesPreview() {
               >
                 <AlbumCover
                   album={album}
-                  item={cover}
+                  items={covers}
+                  position={albumIndex}
                   sizes="(min-width: 768px) 320px, 288px"
                 />
                 <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-4 pb-4 pt-12 text-white">

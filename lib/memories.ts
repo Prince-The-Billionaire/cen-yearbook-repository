@@ -38,8 +38,10 @@ interface SearchResponse {
 export interface AlbumContent {
   album: Album;
   items: MemoryItem[];
-  /** The file named "00_cover" if the album has one, otherwise its first file. */
+  /** The album's main cover: the file named "00_cover" if there is one, otherwise its first file. */
   cover?: MemoryItem;
+  /** All cover pictures in order: 00_cover, 00_cover_2, 00_cover_3 ... (just the cover if there are no extras). */
+  covers: MemoryItem[];
 }
 
 /** Shown in development only, so the layout can be reviewed before Cloudinary is set up. */
@@ -68,8 +70,12 @@ interface Entry {
 // Cloudinary files documents like PDFs under resource_type "image"; they aren't memories.
 const NON_MEDIA_FORMATS = new Set(["pdf", "psd", "ai", "eps"]);
 
-// An album's cover is the file whose original name starts with "00_cover".
-const COVER_NAME = /^00[ _-]?cover/i;
+// An album's cover pictures are named 00_cover, 00_cover_2, 00_cover_3 ... (up to _9).
+// 00_cover is the main cover, used wherever a single picture is shown; the numbered
+// ones take turns with it on the album cards. The name must match exactly (a trailing
+// " (1)" from a re-download is tolerated), so something like "00_cover_old" is just
+// a normal photo and never competes for the cover.
+const COVER_NAME = /^00[ _-]?cover(?:[ _-]?([2-9]))?(?:\s*\(\d+\))?$/i;
 
 const nameCollator = new Intl.Collator("en", { numeric: true, sensitivity: "base" });
 
@@ -127,15 +133,21 @@ export function arrangeMemories(entries: Entry[]): MemoryItem[] {
 }
 
 /**
- * Picks the cover before duplicates are removed, so a cover that is also
- * uploaded elsewhere in the album isn't lost. If several files are named
- * 00_cover, the most recent upload wins.
+ * Picks the cover pictures before duplicates are removed, so a cover that is
+ * also uploaded elsewhere in the album isn't lost. They come back in order
+ * (00_cover, then _2, _3 ...). If several files share a name, the most recent
+ * upload wins. With no cover files, the album's first file is the only cover.
  */
-function pickCover(entries: Entry[], items: MemoryItem[]): MemoryItem | undefined {
-  const named = entries
-    .filter((entry) => COVER_NAME.test(entry.name))
-    .sort((a, b) => b.item.createdAt.localeCompare(a.item.createdAt));
-  return named[0]?.item ?? items[0];
+function pickCovers(entries: Entry[], items: MemoryItem[]): MemoryItem[] {
+  const byNumber = new Map<number, MemoryItem>();
+  for (const entry of [...entries].sort((a, b) => b.item.createdAt.localeCompare(a.item.createdAt))) {
+    const match = entry.name.match(COVER_NAME);
+    if (!match) continue;
+    const number = match[1] ? Number(match[1]) : 1;
+    if (!byNumber.has(number)) byNumber.set(number, entry.item);
+  }
+  const covers = [...byNumber.entries()].sort(([a], [b]) => a - b).map(([, item]) => item);
+  return covers.length > 0 ? covers : items.slice(0, 1);
 }
 
 /** The folder a resource lives in: dynamic-folder accounts set asset_folder, fixed-folder ones prefix the public_id. */
@@ -152,7 +164,7 @@ async function loadAlbums(): Promise<AlbumContent[]> {
     // Production hides everything; dev shows sample photos in the "funny" album.
     return albums.map((album) => {
       const items = process.env.NODE_ENV !== "production" && album.slug === "funny" ? SAMPLE_ITEMS : [];
-      return { album, items, cover: items[0] };
+      return { album, items, cover: items[0], covers: items.slice(0, 1) };
     });
   }
 
@@ -169,7 +181,8 @@ async function loadAlbums(): Promise<AlbumContent[]> {
     albums.map((album) => {
       const entries = entriesByFolder.get(album.folder.toLowerCase()) ?? [];
       const items = arrangeMemories(entries);
-      return { album, items, cover: pickCover(entries, items) };
+      const covers = pickCovers(entries, items);
+      return { album, items, cover: covers[0], covers };
     });
 
   try {

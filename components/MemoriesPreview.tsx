@@ -62,7 +62,7 @@ export default async function MemoriesPreview() {
             href="/memories"
             className="inline-flex items-center gap-3 rounded-full border border-slate-950 px-8 py-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-slate-950 transition-colors hover:bg-slate-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
           >
-            View all albums <ArrowRightIcon className="h-4 w-4" aria-hidden />
+            View all albums
           </Link>
         </div>
       </div>

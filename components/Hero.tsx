@@ -476,8 +476,8 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
                           alt={photo.alt}
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
-                          exit={{ opacity: 1, transition: { duration: 1 } }}
-                          transition={{ duration: 1 }}
+                          exit={{ opacity: 1, transition: { duration: 2.5 } }}
+                          transition={{ duration: 2.5 }}
                           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                         />
                       </AnimatePresence>

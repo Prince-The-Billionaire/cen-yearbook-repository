@@ -56,7 +56,7 @@ export default function Navbar() {
             height={40}
             className="h-9 w-9 shrink-0 rounded-full bg-black object-contain p-1 transition-transform duration-300 hover:scale-105"
           />
-          <span className="truncate bg-gradient-to-b from-zinc-900 via-zinc-600 to-zinc-500 bg-clip-text font-display text-base font-bold uppercase tracking-widest text-transparent dark:from-slate-100 dark:via-gray-400 dark:to-zinc-500">
+          <span className="truncate bg-gradient-to-b from-zinc-900 via-zinc-600 to-zinc-500 bg-clip-text font-display text-base font-bold uppercase tracking-widest text-transparent dark:bg-none dark:text-white">
             Computer Engineering
           </span>
         </Link>

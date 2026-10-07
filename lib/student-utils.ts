@@ -17,6 +17,20 @@ export const formatLevel = (raw: string) => {
   return match ? `${match[1]}00 Level` : raw.trim();
 };
 
+/** Turns a website address (with or without https://) into a link; null if it is empty or not a web address. */
+export function portfolioLink(value?: string | null): { href: string; label: string } | null {
+  const text = value?.trim();
+  if (!text) return null;
+  const href = /^https?:\/\//i.test(text) ? text : `https://${text}`;
+  try {
+    const url = new URL(href);
+    if (!url.hostname.includes(".")) return null;
+    return { href: url.href, label: url.hostname.replace(/^www\./i, "") };
+  } catch {
+    return null;
+  }
+}
+
 /** Turns whatever someone typed for LinkedIn (URL, profile slug or just a name) into a link. */
 export function linkedinLink(value?: string | null): { href: string; label: string } | null {
   if (!hasValue(value)) return null;

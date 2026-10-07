@@ -15,6 +15,8 @@ export interface StudentData {
   xTweetId: string;
   /** LinkedIn URL, profile slug, or just the name. */
   linkedin?: string;
+  /** Personal website or portfolio (with or without https://). */
+  portfolio?: string;
   favFoodImg: string;
   /** Favourite CU food as text (the photo above is optional). */
   favFood?: string;
@@ -419,6 +421,7 @@ export const students: Record<string, StudentData> = {
     phoneDisplay: "Computer Engineering",
     phoneLink: "",
     igHandle: "Oluwapelumikadeba",
+    portfolio: "www.pelumikadeba.xyz",
     igPosts: [],
     xHandle: "Nil",
     xTweetId: "",

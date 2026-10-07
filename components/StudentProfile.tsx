@@ -12,11 +12,11 @@ import {
 } from "lucide-react";
 import { ArrowLeftIcon, ArrowRightIcon, ChevronLeftIcon, ChevronRightIcon } from "@/components/icons";
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import { PiXLogo } from "react-icons/pi";
+import { PiGlobe, PiXLogo } from "react-icons/pi";
 import Avatar from "@/components/Avatar";
 import ShareMenu from "@/components/ShareMenu";
 import { imageProps } from "@/lib/cloudinary-image";
-import { cleanHandle, formatLevel, hasValue, linkedinLink, type PublicStudent } from "@/lib/student-utils";
+import { cleanHandle, formatLevel, hasValue, linkedinLink, portfolioLink, type PublicStudent } from "@/lib/student-utils";
 import PhoneReveal from "@/components/PhoneReveal";
 import { useTheme } from "@/lib/theme";
 
@@ -83,9 +83,10 @@ export default function StudentProfile({ student, previous, next, awards = [] }:
   const xHandle = hasValue(student.xHandle) ? cleanHandle(student.xHandle) : null;
   const hasPhone = student.hasPhone;
   const linkedin = linkedinLink(student.linkedin);
+  const portfolio = portfolioLink(student.portfolio);
   const favSongs = (student.favSongs ?? []).filter(hasValue);
   const hasSong = hasValue(student.spotifyTrackId) || hasValue(student.audioUrl) || favSongs.length > 0;
-  const hasSocials = igHandle || xHandle || linkedin || hasPhone;
+  const hasSocials = igHandle || xHandle || linkedin || portfolio || hasPhone;
   const hasEmbeds = student.igPosts.some(hasValue) || hasValue(student.xTweetId);
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
@@ -223,6 +224,17 @@ export default function StudentProfile({ student, previous, next, awards = [] }:
                     >
                       <FaLinkedinIn className="h-4 w-4" aria-hidden />
                       <span className="max-w-[12rem] truncate">{linkedin.label}</span>
+                    </a>
+                  )}
+                  {portfolio && (
+                    <a
+                      href={portfolio.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex items-center gap-2 rounded-full border border-zinc-300 px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-zinc-200/60 dark:border-white/20 dark:hover:bg-white/10 ${FOCUS}`}
+                    >
+                      <PiGlobe className="h-4 w-4" aria-hidden />
+                      <span className="max-w-[12rem] truncate">{portfolio.label}</span>
                     </a>
                   )}
                 </div>

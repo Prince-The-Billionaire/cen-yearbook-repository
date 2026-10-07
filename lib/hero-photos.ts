@@ -1,24 +1,21 @@
-// Server-only: the pictures scattered around "WE ARE CEN" on the home page.
+// Server-only: the pool of pictures that rotate around "WE ARE CEN" on the home page.
 //
-// Always eight: the album covers (each album's 00_cover, or its first file; never
-// Stickers) with Inim Bright's photo fixed as the 8th.
+// Every student who has a main photo in Cloudinary is in the pool (people without a
+// photo are skipped). The hero shows eight of them at a time and swaps them for others
+// every few seconds (see components/Hero.tsx).
 import "server-only";
-import { getAlbumsWithItems } from "@/lib/memories";
-import { memoryImageUrl, memoryPosterUrl } from "@/lib/memory-media";
+import { allStudents } from "@/lib/students";
 import { getProfilePhotos } from "@/lib/profile-photos";
 
 export interface HeroPhoto {
   src: string;
-  /** Where clicking the picture goes: the album, or the person's profile. */
+  /** Where clicking the picture goes: the person's profile. */
   href: string;
   alt: string;
 }
 
-/** The hero always shows exactly this many pictures. */
+/** The hero always has exactly this many spots. */
 export const HERO_PHOTO_COUNT = 8;
-
-// The 8th picture: Inim Bright's third photo (the file named inim-bright-kudos_3).
-const FIXED_EIGHTH = { slug: "inim-bright-kudos", name: "Inim Bright Kudos", photoNumber: 3 };
 
 const WIDTH = 560; // the biggest slot is under 200px wide, so this stays sharp on retina screens
 
@@ -32,58 +29,21 @@ function shuffle<T>(list: T[]): T[] {
 }
 
 /**
- * Exactly eight pictures (fewer only if Cloudinary has too few photos):
- * - up to seven album covers, shuffled between the slots each time the page
- *   refreshes. If there are more than seven albums, a different seven are shown
- *   each time; if fewer, the gap is topped up with random photos from the albums.
- * - Inim Bright's photo, always in the 8th slot.
- * Returns [] if Cloudinary has nothing yet, and the hero then falls back to its
- * built-in pictures.
+ * Every student with a main profile photo, in random order (a different order each time
+ * the page refreshes). Returns [] if Cloudinary has nothing, and the hero then falls
+ * back to its built-in pictures.
  */
 export async function getHeroPhotos(): Promise<HeroPhoto[]> {
-  const albums = (await getAlbumsWithItems()).filter(({ album }) => album.layout !== "stickers");
-
-  const covers = shuffle(
-    albums.map(({ album, cover }) => ({
-      id: cover.id,
-      photo: {
-        src: cover.type === "video" ? memoryPosterUrl(cover, WIDTH) : memoryImageUrl(cover, WIDTH),
-        href: `/memories/${album.slug}`,
-        alt: `Cover of the ${album.title} album`,
-      } satisfies HeroPhoto,
-    })),
-  );
-  if (covers.length === 0) return [];
-
-  const profile = (await getProfilePhotos()).get(FIXED_EIGHTH.slug);
-  const fixedUrl = profile?.byIndex[FIXED_EIGHTH.photoNumber];
-  const fixed: HeroPhoto | null = fixedUrl
-    ? {
-        src: fixedUrl.replace("/image/upload/", `/image/upload/f_auto,q_auto,c_limit,w_${WIDTH}/`),
-        href: `/student/${FIXED_EIGHTH.slug}`,
-        alt: `A photo of ${FIXED_EIGHTH.name}`,
-      }
-    : null;
-
-  const wanted = fixed ? HERO_PHOTO_COUNT - 1 : HERO_PHOTO_COUNT;
-  const picks = covers.slice(0, wanted).map((cover) => cover.photo);
-
-  if (picks.length < wanted) {
-    // Fewer albums than slots: top up with random photos (not videos) from the albums.
-    const coverIds = new Set(covers.map((cover) => cover.id));
-    const extras = shuffle(
-      albums.flatMap(({ album, items }) =>
-        items
-          .filter((item) => item.type === "image" && !coverIds.has(item.id))
-          .map((item) => ({
-            src: memoryImageUrl(item, WIDTH),
-            href: `/memories/${album.slug}`,
-            alt: `A photo from the ${album.title} album`,
-          })),
-      ),
-    );
-    picks.push(...extras.slice(0, wanted - picks.length));
+  const photos = await getProfilePhotos();
+  const pool: HeroPhoto[] = [];
+  for (const student of allStudents) {
+    const main = photos.get(student.slug)?.main;
+    if (!main) continue;
+    pool.push({
+      src: main.replace("/image/upload/", `/image/upload/f_auto,q_auto,c_limit,w_${WIDTH}/`),
+      href: `/student/${student.slug}`,
+      alt: `A photo of ${student.name}`,
+    });
   }
-
-  return fixed ? [...picks, fixed] : picks;
+  return shuffle(pool);
 }

@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { useRouter } from "next/navigation";
 import { AudioWaveform, VolumeX } from "lucide-react";
 import { ArrowDownIcon } from "@/components/icons";
 import type { HeroPhoto } from "@/lib/hero-photos";
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 
 const photosData = [
   {
@@ -106,14 +107,65 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
   const [isSoundOn, setIsSoundOn] = useState(true);
   const router = useRouter();
 
-  // Always eight pictures: the scatter positions above are fixed, and the pictures are the
-  // album covers plus one person (see lib/hero-photos.ts). Without them the slots show the
-  // built-in course photos. They are grey until hovered (touch screens can't hover, so
-  // there they stay in colour).
-  const slots =
-    photos && photos.length > 0
-      ? photos.slice(0, photosData.length).map((photo, index) => ({ ...photosData[index], ...photo }))
-      : photosData.map((slot) => ({ ...slot, href: "/memories" }));
+  // Always eight spots (the scatter positions above are fixed). `pool` is every student
+  // with a profile photo (lib/hero-photos.ts); `shown[i]` is the pool index spot i shows.
+  // Spots without a student (pool smaller than eight) keep a built-in course photo.
+  // Pictures are grey until hovered (touch screens can't hover, so there they stay in colour).
+  const pool = useMemo(() => photos ?? [], [photos]);
+  const reducedMotion = useReducedMotion();
+  const [shown, setShown] = useState<number[]>(() => photosData.map((_, i) => i));
+  const hoveredRef = useRef<number | null>(null);
+  useEffect(() => {
+    hoveredRef.current = hoveredPhotoId;
+  }, [hoveredPhotoId]);
+
+  const slots = photosData.map((slot, index) => {
+    const photo = pool.length > 0 ? pool[shown[index]] : undefined;
+    return photo ? { ...slot, ...photo } : { ...slot, href: "/memories" };
+  });
+
+  // Every spot swaps to a different student every 4-5 seconds, each on its own schedule.
+  // Nobody appears twice at once; if all students are already on screen, two spots swap.
+  useEffect(() => {
+    if (!isLoaded || reducedMotion || pool.length < 2) return;
+    const spots = Math.min(pool.length, photosData.length);
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    const cancelled = { current: false };
+
+    const change = (spot: number) => {
+      if (hoveredRef.current !== null) return;
+      setShown((current) => {
+        const onScreen = new Set(current.slice(0, spots));
+        const free = pool.map((_, i) => i).filter((i) => !onScreen.has(i));
+        const next = [...current];
+        if (free.length > 0) {
+          const pick = free[Math.floor(Math.random() * free.length)];
+          next[spot] = pick;
+        } else {
+          const other = (spot + 1 + Math.floor(Math.random() * (spots - 1))) % spots;
+          [next[spot], next[other]] = [next[other], next[spot]];
+        }
+        return next;
+      });
+    };
+
+    const schedule = (spot: number, first: boolean) => {
+      const wait = first ? 1500 + spot * 600 + Math.random() * 1500 : 4000 + Math.random() * 1000;
+      timers.push(
+        setTimeout(() => {
+          if (cancelled.current) return;
+          change(spot);
+          schedule(spot, false);
+        }, wait),
+      );
+    };
+    for (let spot = 0; spot < spots; spot++) schedule(spot, true);
+
+    return () => {
+      cancelled.current = true;
+      timers.forEach(clearTimeout);
+    };
+  }, [isLoaded, reducedMotion, pool]);
 
   const heroRef = useRef<HTMLDivElement>(null);
   const loaderTextRef = useRef<HTMLDivElement>(null);
@@ -416,11 +468,20 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
                   }`}
                 >
                   <div className={`${photo.size} bg-black overflow-hidden`}>
-                    <img
-                      src={photo.src}
-                      alt={photo.alt}
-                      className="w-full h-full object-cover pointer-events-none"
-                    />
+                    <div className="relative w-full h-full">
+                      <AnimatePresence initial={false}>
+                        <motion.img
+                          key={photo.src}
+                          src={photo.src}
+                          alt={photo.alt}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 1, transition: { duration: 1 } }}
+                          transition={{ duration: 1 }}
+                          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                        />
+                      </AnimatePresence>
+                    </div>
                   </div>
                 </motion.div>
               );

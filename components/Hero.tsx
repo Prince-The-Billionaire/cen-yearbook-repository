@@ -150,7 +150,7 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
     };
 
     const schedule = (spot: number, first: boolean) => {
-      const wait = first ? 1500 + spot * 600 + Math.random() * 1500 : 7000 + Math.random() * 2000;
+      const wait = first ? 4000 + spot * 1200 + Math.random() * 2000 : 12000 + Math.random() * 3000;
       timers.push(
         setTimeout(() => {
           if (cancelled.current) return;
@@ -476,8 +476,8 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
                           alt={photo.alt}
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
-                          exit={{ opacity: 1, transition: { duration: 4 } }}
-                          transition={{ duration: 4 }}
+                          exit={{ opacity: 1, transition: { duration: 6 } }}
+                          transition={{ duration: 6 }}
                           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                         />
                       </AnimatePresence>

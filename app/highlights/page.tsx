@@ -24,7 +24,7 @@ export default function HighlightsPage() {
               </span>
             </h1>
             <p className="mx-auto mt-4 max-w-xl text-lg text-zinc-600 dark:text-zinc-400">
-              Most likely to&hellip; Awards based on what graduates said about themselves in the survey.
+              Most likely to&hellip; The class awards, announced here as they are decided.
             </p>
           </header>
 
@@ -43,6 +43,12 @@ export default function HighlightsPage() {
                   </h2>
                 </div>
 
+                {award.winners.length === 0 && (
+                  <p className="mt-5 inline-block rounded-full border border-dashed border-zinc-300 px-4 py-2 text-sm text-zinc-500 dark:border-white/20 dark:text-zinc-400">
+                    Winner to be announced
+                  </p>
+                )}
+
                 <ul className="mt-5 flex flex-wrap gap-3">
                   {award.winners.map((winner) => (
                     <li key={winner.slug}>
@@ -59,7 +65,9 @@ export default function HighlightsPage() {
                   ))}
                 </ul>
 
-                <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{award.reason}</p>
+                {award.reason && (
+                  <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{award.reason}</p>
+                )}
               </li>
             ))}
           </ul>

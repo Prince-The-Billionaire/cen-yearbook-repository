@@ -63,7 +63,9 @@ export default function ClassTeasers() {
                   <Trophy className="mb-4 h-6 w-6 text-amber-500" aria-hidden />
                   <h3 className="font-sans text-xl font-black uppercase leading-tight tracking-tight">{award.title}</h3>
                   <p className="mt-2 font-mono text-xs uppercase tracking-widest text-slate-500">
-                    {award.winners.map((winner) => winner.name.split(" ")[0]).join(" & ")}
+                    {award.winners.length > 0
+                      ? award.winners.map((winner) => winner.name.split(" ")[0]).join(" & ")
+                      : "Winner to be announced"}
                   </p>
                 </li>
               ))}

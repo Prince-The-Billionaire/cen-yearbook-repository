@@ -12,7 +12,7 @@ export interface AwardWinner {
 export interface AwardView {
   id: string;
   title: string;
-  reason: string;
+  reason?: string;
   winners: AwardWinner[];
 }
 

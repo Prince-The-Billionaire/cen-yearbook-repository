@@ -10,6 +10,8 @@ const links = [
   { href: "/", label: "Home" },
   { href: "/yearbook", label: "Yearbook" },
   { href: "/memories", label: "Memories" },
+  { href: "/highlights", label: "Highlights" },
+  { href: "/stats", label: "By the Numbers" },
 ];
 
 /** Floating pill-shaped "island" nav: logo, title and a hamburger that opens the page links. */
@@ -95,6 +97,15 @@ export default function Navbar() {
               </li>
             );
           })}
+          <li>
+            <Link
+              href="/privacy"
+              onClick={() => setOpen(false)}
+              className="mt-1 block rounded-2xl px-5 py-2 text-sm text-zinc-500 transition-colors hover:text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:text-zinc-400 dark:hover:text-white"
+            >
+              Privacy
+            </Link>
+          </li>
         </ul>
       )}
     </nav>

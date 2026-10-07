@@ -5,10 +5,23 @@ import TheYearsWeRemember from '@/components/Section2'
 import ThePeople from '@/components/Section3'
 import LetsGetThatBread from '@/components/Section4'
 import MemoriesPreview from '@/components/MemoriesPreview'
+import ClassTeasers from '@/components/ClassTeasers'
+import { hasValue } from '@/lib/student-utils'
+import { allStudents } from '@/lib/students'
 import React from 'react'
 
 // Re-read the Cloudinary memories list at most every 2 minutes (keep in sync with lib/memories.ts).
 export const revalidate = 120
+
+// Real graduates: everyone in the yearbook who has a profile photo.
+const people = allStudents
+  .filter((student) => hasValue(student.profilePic))
+  .map((student) => ({
+    id: student.slug,
+    name: student.name.toUpperCase(),
+    image: student.profilePic,
+    href: `/student/${student.slug}`,
+  }))
 
 const page = () => {
   return (
@@ -17,8 +30,9 @@ const page = () => {
       <Hero/>
       <WhoWeAre/>
       <TheYearsWeRemember/>
-      <ThePeople/>
+      <ThePeople people={people}/>
       <MemoriesPreview/>
+      <ClassTeasers/>
       <LetsGetThatBread/>
     </div>
   )

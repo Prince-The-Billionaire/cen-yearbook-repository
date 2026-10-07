@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getInitials, hasValue } from "@/lib/students";
+import { getInitials, hasValue } from "@/lib/student-utils";
 
 interface AvatarProps {
   name: string;

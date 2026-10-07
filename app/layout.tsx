@@ -23,6 +23,8 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  // Ask search engines not to list any page (this is a class site, not a public one).
+  robots: { index: false, follow: false, nocache: true },
   // Needed to resolve absolute Open Graph image URLs for profile pages.
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ??

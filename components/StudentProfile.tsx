@@ -11,14 +11,15 @@ import {
   ChevronRight,
   GraduationCap,
   Music,
-  Phone,
   X,
+  Trophy,
 } from "lucide-react";
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { PiXLogo } from "react-icons/pi";
 import Avatar from "@/components/Avatar";
 import ShareMenu from "@/components/ShareMenu";
-import { cleanHandle, formatLevel, hasValue, linkedinLink, type Student } from "@/lib/students";
+import { cleanHandle, formatLevel, hasValue, linkedinLink, type PublicStudent } from "@/lib/student-utils";
+import PhoneReveal from "@/components/PhoneReveal";
 import { useTheme } from "@/lib/theme";
 
 interface NeighbourLink {
@@ -27,7 +28,9 @@ interface NeighbourLink {
 }
 
 interface StudentProfileProps {
-  student: Student;
+  /** Titles of the highlight awards this student won. */
+  awards?: string[];
+  student: PublicStudent;
   previous?: NeighbourLink;
   next?: NeighbourLink;
 }
@@ -75,7 +78,7 @@ function Section({ label, children, className = "" }: { label: string; children:
   );
 }
 
-export default function StudentProfile({ student, previous, next }: StudentProfileProps) {
+export default function StudentProfile({ student, previous, next, awards = [] }: StudentProfileProps) {
   const isDark = useTheme() === "dark";
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -83,10 +86,7 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
   const eras = [...new Set(student.bestEraArray.filter(hasValue).map(formatLevel))];
   const igHandle = hasValue(student.igHandle) ? cleanHandle(student.igHandle) : null;
   const xHandle = hasValue(student.xHandle) ? cleanHandle(student.xHandle) : null;
-  const hasPhone =
-    hasValue(student.phoneDisplay) &&
-    hasValue(student.phoneLink) &&
-    student.phoneLink.replace(/\D/g, "").length >= 7; // ignore stubs like "+234"
+  const hasPhone = student.hasPhone;
   const linkedin = linkedinLink(student.linkedin);
   const favSongs = (student.favSongs ?? []).filter(hasValue);
   const hasSong = hasValue(student.spotifyTrackId) || hasValue(student.audioUrl) || favSongs.length > 0;
@@ -178,17 +178,25 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
                 </p>
               )}
 
+              {awards.length > 0 && (
+                <ul className="mt-4 flex flex-wrap justify-center gap-2 md:justify-start" aria-label="Highlight awards">
+                  {awards.map((title) => (
+                    <li key={title}>
+                      <Link
+                        href="/highlights"
+                        className={`inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-700 transition-colors hover:bg-amber-500/20 dark:bg-amber-400/15 dark:text-amber-300 ${FOCUS}`}
+                      >
+                        <Trophy className="h-3.5 w-3.5" aria-hidden />
+                        {title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
               {hasSocials && (
                 <div className="mt-6 flex flex-wrap justify-center gap-3 md:justify-start">
-                  {hasPhone && (
-                    <a
-                      href={`tel:${student.phoneLink}`}
-                      className={`flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-700 dark:bg-white dark:text-black dark:hover:bg-zinc-200 ${FOCUS}`}
-                    >
-                      <Phone className="h-4 w-4" aria-hidden />
-                      {student.phoneDisplay}
-                    </a>
-                  )}
+                  {hasPhone && <PhoneReveal slug={student.slug} />}
                   {igHandle && (
                     <a
                       href={`https://instagram.com/${igHandle}`}

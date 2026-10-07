@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import StudentProfile from "@/components/StudentProfile";
-import { allStudents, getAdjacentStudents, getStudentBySlug, hasValue } from "@/lib/students";
+import { hasValue } from "@/lib/student-utils";
+import { getAwardTitlesFor } from "@/lib/highlights";
+import { allStudents, getAdjacentStudents, getStudentBySlug } from "@/lib/students";
 
 export function generateStaticParams() {
   return allStudents.map((student) => ({ id: student.slug }));
@@ -37,6 +39,7 @@ export default async function StudentPage({ params }: PageProps<"/student/[id]">
   return (
     <StudentProfile
       student={student}
+      awards={getAwardTitlesFor(student.slug)}
       previous={previous && { slug: previous.slug, name: previous.name }}
       next={next && { slug: next.slug, name: next.name }}
     />

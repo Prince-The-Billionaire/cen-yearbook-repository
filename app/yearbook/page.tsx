@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Yearbook from "@/components/Yearbook";
+import { allStudents } from "@/lib/students";
 
 export const metadata: Metadata = {
   title: "Yearbook",
@@ -11,7 +12,7 @@ export default function YearbookPage() {
   return (
     <div className="bg-zinc-50 dark:bg-[#0a0a0a]">
       <Navbar />
-      <Yearbook />
+      <Yearbook students={allStudents} />
     </div>
   );
 }

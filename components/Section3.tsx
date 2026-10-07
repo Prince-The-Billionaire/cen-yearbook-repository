@@ -4,29 +4,18 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { allStudents, hasValue } from "@/lib/students";
 
-interface Person {
+export interface Person {
   id: string;
   name: string;
   image: string;
   href: string;
 }
 
-// Real graduates: everyone in the yearbook who has a profile photo.
-const peopleData: Person[] = allStudents
-  .filter((student) => hasValue(student.profilePic))
-  .map((student) => ({
-    id: student.slug,
-    name: student.name.toUpperCase(),
-    image: student.profilePic,
-    href: `/student/${student.slug}`,
-  }));
 
-// Triplicated array for seamless infinite marquee loop
-const marqueeList = [...peopleData, ...peopleData, ...peopleData];
-
-export default function ThePeople() {
+export default function ThePeople({ people }: { people: Person[] }) {
+  // Triplicated array for seamless infinite marquee loop
+  const marqueeList = [...people, ...people, ...people];
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (

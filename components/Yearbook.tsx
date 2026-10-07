@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Search, X } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
 import Avatar from "@/components/Avatar";
-import { allStudents, cleanHandle, hasValue, type Student } from "@/lib/students";
+import { cleanHandle, hasValue, type PublicStudent } from "@/lib/student-utils";
 
 type Range = "all" | "a-i" | "j-z";
 
@@ -23,12 +23,12 @@ const GROUPS = [
 const FOCUS = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500";
 
 /** Which alphabet group a name belongs to. Names are already sorted A to Z. */
-const groupOf = (student: Student): "a-i" | "j-z" => {
+const groupOf = (student: PublicStudent): "a-i" | "j-z" => {
   const first = student.name.trim().charAt(0).toUpperCase();
   return first <= "I" ? "a-i" : "j-z";
 };
 
-function StudentCard({ student }: { student: Student }) {
+function StudentCard({ student }: { student: PublicStudent }) {
   return (
     <Link
       href={`/student/${student.slug}`}
@@ -65,27 +65,27 @@ function StudentCard({ student }: { student: Student }) {
   );
 }
 
-export default function Yearbook() {
+export default function Yearbook({ students }: { students: PublicStudent[] }) {
   const [query, setQuery] = useState("");
   const [range, setRange] = useState<Range>("all");
 
   const counts = useMemo(
     () => ({
-      all: allStudents.length,
-      "a-i": allStudents.filter((student) => groupOf(student) === "a-i").length,
-      "j-z": allStudents.filter((student) => groupOf(student) === "j-z").length,
+      all: students.length,
+      "a-i": students.filter((student) => groupOf(student) === "a-i").length,
+      "j-z": students.filter((student) => groupOf(student) === "j-z").length,
     }),
-    [],
+    [students],
   );
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return allStudents.filter(
+    return students.filter(
       (student) =>
         (range === "all" || groupOf(student) === range) &&
         (!q || student.name.toLowerCase().includes(q) || student.nickname.toLowerCase().includes(q)),
     );
-  }, [query, range]);
+  }, [students, query, range]);
 
   // "All" shows two labelled sections; a single range shows just that one.
   const sections = GROUPS.map((group) => ({

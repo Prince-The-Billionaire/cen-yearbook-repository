@@ -28,6 +28,7 @@ The site picks new photos up within about 2 minutes. Re-uploading the same name 
 | Etta Queendolin-Effa Emmanuel | `etta-queendolin-effa-emmanuel` | `etta-queendolin-effa-emmanuel_2`, `etta-queendolin-effa-emmanuel_3` |
 | Ezenwa Eberechukwu Jennifer | `ezenwa-eberechukwu-jennifer` | `ezenwa-eberechukwu-jennifer_2`, `ezenwa-eberechukwu-jennifer_3` |
 | Ezinwa-Obi Chidimma | `ezinwa-obi-chidimma` | `ezinwa-obi-chidimma_2`, `ezinwa-obi-chidimma_3` |
+| Fatai Ayomide Samuel | `fatai-ayomide-samuel` | `fatai-ayomide-samuel_2`, `fatai-ayomide-samuel_3` |
 | Forun Ebitimi Megan | `forun-ebitimi-megan` | `forun-ebitimi-megan_2`, `forun-ebitimi-megan_3` |
 | Genesis Oghenetejiri Ighomwaye | `genesis-oghenetejiri-ighomwaye` | `genesis-oghenetejiri-ighomwaye_2`, `genesis-oghenetejiri-ighomwaye_3` |
 | Igboegwu Chidiebere Raul Jude | `igboegwu-chidiebere-raul-jude` | `igboegwu-chidiebere-raul-jude_2`, `igboegwu-chidiebere-raul-jude_3` |

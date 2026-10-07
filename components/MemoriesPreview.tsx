@@ -31,7 +31,7 @@ export default async function MemoriesPreview() {
         </header>
 
         <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
-          {albums.map(({ album, items }) => (
+          {albums.map(({ album, items, cover }) => (
             <li key={album.slug}>
               <Link
                 href={`/memories/${album.slug}`}
@@ -39,7 +39,7 @@ export default async function MemoriesPreview() {
               >
                 <AlbumCover
                   album={album}
-                  item={items[0]}
+                  item={cover}
                   sizes="(min-width: 768px) 25vw, 50vw"
                 />
                 <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-4 pb-4 pt-12 text-white">

@@ -40,7 +40,7 @@ export default async function MemoriesPage() {
             </p>
           ) : (
             <ul className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
-              {albums.map(({ album, items }) => (
+              {albums.map(({ album, items, cover }) => (
                 <li key={album.slug}>
                   <Link
                     href={`/memories/${album.slug}`}
@@ -53,7 +53,7 @@ export default async function MemoriesPage() {
                     >
                       <AlbumCover
                         album={album}
-                        item={items[0]}
+                        item={cover}
                         sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                       />
                     </div>

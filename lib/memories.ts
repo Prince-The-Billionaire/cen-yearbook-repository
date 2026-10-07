@@ -38,6 +38,8 @@ interface SearchResponse {
 export interface AlbumContent {
   album: Album;
   items: MemoryItem[];
+  /** The file named "00_cover" if the album has one, otherwise its first file. */
+  cover?: MemoryItem;
 }
 
 /** Shown in development only, so the layout can be reviewed before Cloudinary is set up. */
@@ -70,6 +72,9 @@ interface Entry {
 
 // Cloudinary files documents like PDFs under resource_type "image"; they aren't memories.
 const NON_MEDIA_FORMATS = new Set(["pdf", "psd", "ai", "eps"]);
+
+// An album's cover is the file whose original name starts with "00_cover".
+const COVER_NAME = /^00[ _-]?cover/i;
 
 const nameCollator = new Intl.Collator("en", { numeric: true, sensitivity: "base" });
 
@@ -126,6 +131,18 @@ export function arrangeMemories(entries: Entry[]): MemoryItem[] {
     .map((entry) => entry.item);
 }
 
+/**
+ * Picks the cover before duplicates are removed, so a cover that is also
+ * uploaded elsewhere in the album isn't lost. If several files are named
+ * 00_cover, the most recent upload wins.
+ */
+function pickCover(entries: Entry[], items: MemoryItem[]): MemoryItem | undefined {
+  const named = entries
+    .filter((entry) => COVER_NAME.test(entry.name))
+    .sort((a, b) => b.item.createdAt.localeCompare(a.item.createdAt));
+  return named[0]?.item ?? items[0];
+}
+
 /** The folder a resource lives in: dynamic-folder accounts set asset_folder, fixed-folder ones prefix the public_id. */
 const folderOf = (resource: CloudinaryResource) =>
   (resource.asset_folder ?? resource.public_id.split("/").slice(0, -1).join("/")).toLowerCase();
@@ -138,10 +155,10 @@ async function loadAlbums(): Promise<AlbumContent[]> {
 
   if (!cloudName || !apiKey || !apiSecret) {
     // Production hides everything; dev shows sample photos in the "funny" album.
-    return albums.map((album) => ({
-      album,
-      items: process.env.NODE_ENV !== "production" && album.slug === "funny" ? SAMPLE_ITEMS : [],
-    }));
+    return albums.map((album) => {
+      const items = process.env.NODE_ENV !== "production" && album.slug === "funny" ? SAMPLE_ITEMS : [];
+      return { album, items, cover: items[0] };
+    });
   }
 
   // `asset_folder` is the folder in Cloudinary's dynamic-folder mode; the
@@ -154,10 +171,11 @@ async function loadAlbums(): Promise<AlbumContent[]> {
   let cursor: string | undefined;
 
   const collect = () =>
-    albums.map((album) => ({
-      album,
-      items: arrangeMemories(entriesByFolder.get(album.folder.toLowerCase()) ?? []),
-    }));
+    albums.map((album) => {
+      const entries = entriesByFolder.get(album.folder.toLowerCase()) ?? [];
+      const items = arrangeMemories(entries);
+      return { album, items, cover: pickCover(entries, items) };
+    });
 
   try {
     for (let page = 0; page < MAX_PAGES; page++) {
@@ -196,8 +214,10 @@ async function loadAlbums(): Promise<AlbumContent[]> {
 }
 
 /** Albums that have at least one file, in the order defined in data/albums.ts. */
-export async function getAlbumsWithItems(): Promise<AlbumContent[]> {
-  return (await loadAlbums()).filter(({ items }) => items.length > 0);
+export async function getAlbumsWithItems(): Promise<(AlbumContent & { cover: MemoryItem })[]> {
+  return (await loadAlbums()).filter(
+    (content): content is AlbumContent & { cover: MemoryItem } => content.items.length > 0 && !!content.cover,
+  );
 }
 
 /** One album (even if empty). Undefined for an unknown slug. */

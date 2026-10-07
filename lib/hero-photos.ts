@@ -1,17 +1,24 @@
-// Server-only: random photos from the Memories albums for the home page hero.
+// Server-only: the pictures scattered around "WE ARE CEN" on the home page.
+//
+// They are the album covers (each album's 00_cover, or its first file), one per
+// album except Stickers, plus one fixed picture of Inim Bright as the 8th.
 import "server-only";
 import { getAlbumsWithItems } from "@/lib/memories";
-import { memoryImageUrl } from "@/lib/memory-media";
-
-/** How many photos the hero scatters (matches the slots in components/Hero.tsx). */
-export const HERO_PHOTO_COUNT = 8;
+import { memoryImageUrl, memoryPosterUrl } from "@/lib/memory-media";
+import { getProfilePhotos } from "@/lib/profile-photos";
 
 export interface HeroPhoto {
   src: string;
-  /** The album the photo comes from; clicking the photo opens it. */
+  /** Where clicking the picture goes: the album, or the person's profile. */
   href: string;
   alt: string;
 }
+
+// The 8th picture: Inim Bright's third photo (the file named inim-bright-kudos_3).
+const FIXED_EIGHTH = { slug: "inim-bright-kudos", name: "Inim Bright Kudos", photoNumber: 3 };
+const FIXED_POSITION = 7; // zero-based: the 8th slot
+
+const WIDTH = 560; // the biggest slot is about 224px wide, so this stays sharp on retina screens
 
 function shuffle<T>(list: T[]): T[] {
   const copy = [...list];
@@ -23,32 +30,34 @@ function shuffle<T>(list: T[]): T[] {
 }
 
 /**
- * A fresh random mix of photos (not videos or stickers), taken in turn from
- * different albums so they don't all come from one event. The home page is
- * rebuilt every couple of minutes, so the mix changes over time. Returns fewer
- * than `count` (or none) if there aren't enough photos; the hero then falls back
- * to its built-in pictures.
+ * One picture per album (never Stickers), shuffled between the slots each time
+ * the page refreshes, with Inim Bright's photo fixed in the 8th slot. An album
+ * added later gets its own extra slot. Returns [] if Cloudinary has nothing yet,
+ * and the hero then falls back to its built-in pictures.
  */
-export async function getHeroPhotos(count = HERO_PHOTO_COUNT): Promise<HeroPhoto[]> {
+export async function getHeroPhotos(): Promise<HeroPhoto[]> {
   const albums = await getAlbumsWithItems();
-  const pools = shuffle(
+  const covers: HeroPhoto[] = shuffle(
     albums
       .filter(({ album }) => album.layout !== "stickers")
-      .map(({ album, items }) => ({ album, photos: shuffle(items.filter((item) => item.type === "image")) }))
-      .filter((pool) => pool.photos.length > 0),
+      .map(({ album, cover }) => ({
+        src: cover.type === "video" ? memoryPosterUrl(cover, WIDTH) : memoryImageUrl(cover, WIDTH),
+        href: `/memories/${album.slug}`,
+        alt: `Cover of the ${album.title} album`,
+      })),
   );
+  if (covers.length === 0) return [];
 
-  const picks: HeroPhoto[] = [];
-  for (let round = 0; picks.length < count && pools.some((pool) => pool.photos.length > round); round++) {
-    for (const pool of pools) {
-      const item = pool.photos[round];
-      if (!item || picks.length >= count) continue;
-      picks.push({
-        src: memoryImageUrl(item, 560),
-        href: `/memories/${pool.album.slug}`,
-        alt: `A photo from the ${pool.album.title} album`,
-      });
-    }
-  }
-  return picks;
+  const profile = (await getProfilePhotos()).get(FIXED_EIGHTH.slug);
+  const url = profile?.byIndex[FIXED_EIGHTH.photoNumber];
+  if (!url) return covers; // photo not uploaded: just the covers
+
+  const fixed: HeroPhoto = {
+    src: url.replace("/image/upload/", `/image/upload/f_auto,q_auto,c_limit,w_${WIDTH}/`),
+    href: `/student/${FIXED_EIGHTH.slug}`,
+    alt: `A photo of ${FIXED_EIGHTH.name}`,
+  };
+
+  const position = Math.min(FIXED_POSITION, covers.length);
+  return [...covers.slice(0, position), fixed, ...covers.slice(position)];
 }

@@ -17,6 +17,8 @@ const REVALIDATE_SECONDS = 120; // keep in sync with the pages' `revalidate`
 export interface ProfilePhotos {
   main?: string;
   gallery: string[];
+  /** Every photo by its number: 1 is the main photo, 2 is `<slug>_2`, and so on. */
+  byIndex: Record<number, string>;
 }
 
 interface Resource {
@@ -100,7 +102,7 @@ export async function getProfilePhotos(): Promise<Map<string, ProfilePhotos>> {
       .filter(([index]) => index >= 2)
       .sort(([a], [b]) => a - b)
       .map(([, url]) => url);
-    result.set(slug, { main: byIndex.get(1), gallery });
+    result.set(slug, { main: byIndex.get(1), gallery, byIndex: Object.fromEntries(byIndex) });
   }
   return result;
 }

@@ -97,6 +97,28 @@ const photosData = [
     top: "6%",
     left: "10%",
   },
+  {
+    id: 9,
+    src: "/course_trad.jpg",
+    alt: "Photo 9",
+    rotZ: -30,
+    rotX: 14,
+    rotY: -18,
+    size: "w-20 h-20 sm:w-30 sm:h-30 md:w-40 md:h-40",
+    top: "22%",
+    left: "87%",
+  },
+  {
+    id: 10,
+    src: "/course_girls.jpg",
+    alt: "Photo 10",
+    rotZ: 44,
+    rotX: -16,
+    rotY: 20,
+    size: "w-20 h-20 sm:w-30 sm:h-30 md:w-42 md:h-42",
+    top: "58%",
+    left: "24%",
+  },
 ];
 
 export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
@@ -106,14 +128,13 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
   const [isSoundOn, setIsSoundOn] = useState(true);
   const router = useRouter();
 
-  // The scatter positions above are fixed; the pictures come from the Memories albums
-  // (random mix, see lib/hero-photos.ts). Any slot without one keeps the built-in photo.
-  const slots = photosData.map((slot, index) => ({
-    ...slot,
-    src: photos?.[index]?.src ?? slot.src,
-    alt: photos?.[index]?.alt ?? slot.alt,
-    href: photos?.[index]?.href ?? "/memories",
-  }));
+  // The scatter positions above are fixed; the pictures are the album covers plus one
+  // person (see lib/hero-photos.ts), one per slot. Without them the first 8 slots show
+  // the built-in course photos.
+  const slots =
+    photos && photos.length > 0
+      ? photos.slice(0, photosData.length).map((photo, index) => ({ ...photosData[index], ...photo }))
+      : photosData.slice(0, 8).map((slot) => ({ ...slot, href: "/memories" }));
 
   const heroRef = useRef<HTMLDivElement>(null);
   const loaderTextRef = useRef<HTMLDivElement>(null);

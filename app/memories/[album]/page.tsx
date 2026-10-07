@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import MemoriesGallery from "@/components/MemoriesGallery";
+import ShareMenu from "@/components/ShareMenu";
 import Navbar from "@/components/Navbar";
 import { albums, getAlbumBySlug } from "@/data/albums";
 import { getAlbum } from "@/lib/memories";
@@ -33,13 +34,16 @@ export default async function AlbumPage({ params }: PageProps<"/memories/[album]
       <Navbar />
       <main className="min-h-screen px-4 pb-24 pt-12 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <Link
-            href="/memories"
-            className="mb-8 inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-200/70 hover:text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:text-zinc-300 dark:hover:bg-white/10 dark:hover:text-white"
-          >
-            <ArrowLeft className="h-4 w-4" aria-hidden />
-            All albums
-          </Link>
+          <div className="mb-8 flex items-center justify-between gap-4">
+            <Link
+              href="/memories"
+              className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-200/70 hover:text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:text-zinc-300 dark:hover:bg-white/10 dark:hover:text-white"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden />
+              All albums
+            </Link>
+            <ShareMenu title={`${album.title} album`} />
+          </div>
 
           <header className="mb-12 text-center">
             <h1 className="font-display text-5xl font-bold tracking-tight sm:text-6xl">

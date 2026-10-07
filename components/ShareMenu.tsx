@@ -117,7 +117,7 @@ export default function ShareMenu({ title }: { title: string }) {
       {open && (
         <div
           role="menu"
-          aria-label="Share this profile"
+          aria-label="Share this page"
           className="absolute right-0 top-full z-50 mt-2 w-56 rounded-2xl border border-zinc-200 bg-white p-2 shadow-xl dark:border-white/15 dark:bg-zinc-900"
         >
           <button type="button" role="menuitem" onClick={onCopy} className={itemClass}>

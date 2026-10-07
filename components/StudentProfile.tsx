@@ -7,18 +7,17 @@ import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import {
   ArrowLeft,
   ArrowRight,
-  Check,
   ChevronLeft,
   ChevronRight,
   GraduationCap,
   Music,
   Phone,
-  Share2,
   X,
 } from "lucide-react";
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { PiXLogo } from "react-icons/pi";
 import Avatar from "@/components/Avatar";
+import ShareMenu from "@/components/ShareMenu";
 import { cleanHandle, formatLevel, hasValue, linkedinLink, type Student } from "@/lib/students";
 import { useTheme } from "@/lib/theme";
 
@@ -79,7 +78,6 @@ function Section({ label, children, className = "" }: { label: string; children:
 export default function StudentProfile({ student, previous, next }: StudentProfileProps) {
   const isDark = useTheme() === "dark";
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const [shareState, setShareState] = useState<"idle" | "copied">("idle");
 
   const gallery = student.orbitImages.filter(hasValue);
   const eras = [...new Set(student.bestEraArray.filter(hasValue).map(formatLevel))];
@@ -121,21 +119,6 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
     };
   }, [lightboxIndex, closeLightbox, stepLightbox]);
 
-  const share = async () => {
-    const url = window.location.href;
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: student.name, url });
-        return;
-      }
-      await navigator.clipboard.writeText(url);
-      setShareState("copied");
-      setTimeout(() => setShareState("idle"), 2000);
-    } catch {
-      // User dismissed the share sheet or clipboard access was denied; nothing to recover.
-    }
-  };
-
   return (
     <MotionConfig reducedMotion="user">
       <div
@@ -153,18 +136,7 @@ export default function StudentProfile({ student, previous, next }: StudentProfi
             </Link>
 
             <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={share}
-                className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-200/70 dark:text-zinc-300 dark:hover:bg-white/10 ${FOCUS}`}
-              >
-                {shareState === "copied" ? (
-                  <Check className="h-4 w-4 text-emerald-500" aria-hidden />
-                ) : (
-                  <Share2 className="h-4 w-4" aria-hidden />
-                )}
-                <span aria-live="polite">{shareState === "copied" ? "Link copied" : "Share"}</span>
-              </button>
+              <ShareMenu title={student.name} />
             </div>
           </div>
         </header>

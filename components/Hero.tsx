@@ -124,7 +124,7 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
     return photo ? { ...slot, ...photo } : { ...slot, href: "/memories" };
   });
 
-  // Every spot swaps to a different student every 4-5 seconds, each on its own schedule.
+  // Every spot swaps to a different student every 7-9 seconds, each on its own schedule.
   // Nobody appears twice at once; if all students are already on screen, two spots swap.
   useEffect(() => {
     if (!isLoaded || reducedMotion || pool.length < 2) return;
@@ -150,7 +150,7 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
     };
 
     const schedule = (spot: number, first: boolean) => {
-      const wait = first ? 1500 + spot * 600 + Math.random() * 1500 : 4000 + Math.random() * 1000;
+      const wait = first ? 1500 + spot * 600 + Math.random() * 1500 : 7000 + Math.random() * 2000;
       timers.push(
         setTimeout(() => {
           if (cancelled.current) return;
@@ -476,8 +476,8 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
                           alt={photo.alt}
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
-                          exit={{ opacity: 1, transition: { duration: 2.5 } }}
-                          transition={{ duration: 2.5 }}
+                          exit={{ opacity: 1, transition: { duration: 4 } }}
+                          transition={{ duration: 4 }}
                           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                         />
                       </AnimatePresence>

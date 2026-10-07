@@ -9,4 +9,6 @@ export {
   PiArrowLineUp as BackToTopIcon,
   PiCaretLeft as ChevronLeftIcon,
   PiCaretRight as ChevronRightIcon,
+  PiPause as PauseIcon,
+  PiPlay as PlayIcon,
 } from "react-icons/pi";

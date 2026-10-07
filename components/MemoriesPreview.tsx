@@ -1,5 +1,6 @@
 import Link from "next/link";
 import AlbumCover from "@/components/AlbumCover";
+import AlbumSlider from "@/components/AlbumSlider";
 import { getAlbumsWithItems } from "@/lib/memories";
 
 /** Home-page teaser for Memories: one tile per album that has files. Renders nothing if there are none. */
@@ -30,9 +31,9 @@ export default async function MemoriesPreview() {
           </p>
         </header>
 
-        <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+        <AlbumSlider>
           {albums.map(({ album, items, cover }) => (
-            <li key={album.slug}>
+            <li key={album.slug} className="w-64 shrink-0 snap-start sm:w-72 md:w-80">
               <Link
                 href={`/memories/${album.slug}`}
                 className="group relative block aspect-[4/5] overflow-hidden rounded-sm bg-slate-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
@@ -40,7 +41,7 @@ export default async function MemoriesPreview() {
                 <AlbumCover
                   album={album}
                   item={cover}
-                  sizes="(min-width: 768px) 25vw, 50vw"
+                  sizes="(min-width: 768px) 320px, 288px"
                 />
                 <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-4 pb-4 pt-12 text-white">
                   <span className="block font-mono text-xs font-bold uppercase tracking-widest sm:text-sm">
@@ -53,7 +54,7 @@ export default async function MemoriesPreview() {
               </Link>
             </li>
           ))}
-        </ul>
+        </AlbumSlider>
 
         <div className="mt-16 flex justify-center sm:mt-20">
           <Link

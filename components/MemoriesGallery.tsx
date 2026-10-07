@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Download, Play, X } from "lucide-react";
+import { Download, Play, X } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/components/icons";
 import MemoryImage from "@/components/MemoryImage";
 import {
   memoryDownloadUrl,
@@ -226,7 +227,7 @@ export default function MemoriesGallery({ items, layout = "photos", downloadable
                   aria-label="Previous"
                   className="absolute left-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/15 p-3 text-white transition-colors hover:bg-white/30 focus-visible:outline-2 focus-visible:outline-white"
                 >
-                  <ChevronLeft className="h-6 w-6" aria-hidden />
+                  <ChevronLeftIcon className="h-6 w-6" aria-hidden />
                 </button>
                 <button
                   type="button"
@@ -237,7 +238,7 @@ export default function MemoriesGallery({ items, layout = "photos", downloadable
                   aria-label="Next"
                   className="absolute right-3 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/15 p-3 text-white transition-colors hover:bg-white/30 focus-visible:outline-2 focus-visible:outline-white"
                 >
-                  <ChevronRight className="h-6 w-6" aria-hidden />
+                  <ChevronRightIcon className="h-6 w-6" aria-hidden />
                 </button>
               </>
             )}

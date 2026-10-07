@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeftIcon } from "@/components/icons";
 import MemoriesGallery from "@/components/MemoriesGallery";
 import ShareMenu from "@/components/ShareMenu";
 import Navbar from "@/components/Navbar";
@@ -39,7 +39,7 @@ export default async function AlbumPage({ params }: PageProps<"/memories/[album]
               href="/memories"
               className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-200/70 hover:text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:text-zinc-300 dark:hover:bg-white/10 dark:hover:text-white"
             >
-              <ArrowLeft className="h-4 w-4" aria-hidden />
+              <ArrowLeftIcon className="h-4 w-4" aria-hidden />
               All albums
             </Link>
             <ShareMenu title={`${album.title} album`} />

@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { Trophy } from "lucide-react";
+import { ArrowRightIcon } from "@/components/icons";
 import { awardViews } from "@/lib/highlights";
 import { getClassStats } from "@/lib/stats";
 
 const BUTTON =
-  "rounded-full border border-slate-950 px-8 py-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-slate-950 transition-colors hover:bg-slate-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950";
+  "inline-flex items-center gap-3 rounded-full border border-slate-950 px-8 py-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-slate-950 transition-colors hover:bg-slate-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950";
 
 /** Home-page teaser for Class by the Numbers and the Highlights awards. */
 export default function ClassTeasers() {
@@ -48,7 +49,7 @@ export default function ClassTeasers() {
 
         <div className="mt-10 flex justify-center">
           <Link href="/stats" className={BUTTON}>
-            See all the numbers &rarr;
+            See all the numbers <ArrowRightIcon className="h-4 w-4" aria-hidden />
           </Link>
         </div>
 
@@ -72,7 +73,7 @@ export default function ClassTeasers() {
             </ul>
             <div className="mt-10 flex justify-center">
               <Link href="/highlights" className={BUTTON}>
-                See all highlights &rarr;
+                See all highlights <ArrowRightIcon className="h-4 w-4" aria-hidden />
               </Link>
             </div>
           </>

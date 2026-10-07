@@ -4,7 +4,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { useRouter } from "next/navigation";
-import { AudioWaveform, VolumeX, ArrowDown } from "lucide-react";
+import { AudioWaveform, VolumeX } from "lucide-react";
+import { ArrowDownIcon } from "@/components/icons";
 
 const photosData = [
   {
@@ -436,7 +437,7 @@ export default function Hero() {
 
             <div className="flex items-center gap-2 opacity-80 font-mono text-xs">
               <span>SCROLL DOWN</span>
-              <ArrowDown className="w-4 h-4 animate-bounce text-white" />
+              <ArrowDownIcon className="w-4 h-4 animate-bounce text-white" />
             </div>
           </footer>
         </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import AlbumCover from "@/components/AlbumCover";
 import AlbumSlider from "@/components/AlbumSlider";
+import { ArrowRightIcon } from "@/components/icons";
 import { getAlbumsWithItems } from "@/lib/memories";
 
 /** Home-page teaser for Memories: one tile per album that has files. Renders nothing if there are none. */
@@ -59,9 +60,9 @@ export default async function MemoriesPreview() {
         <div className="mt-16 flex justify-center sm:mt-20">
           <Link
             href="/memories"
-            className="rounded-full border border-slate-950 px-8 py-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-slate-950 transition-colors hover:bg-slate-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
+            className="inline-flex items-center gap-3 rounded-full border border-slate-950 px-8 py-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-slate-950 transition-colors hover:bg-slate-950 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950"
           >
-            View all albums &rarr;
+            View all albums <ArrowRightIcon className="h-4 w-4" aria-hidden />
           </Link>
         </div>
       </div>

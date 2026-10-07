@@ -5,15 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import {
-  ArrowLeft,
-  ArrowRight,
-  ChevronLeft,
-  ChevronRight,
   GraduationCap,
   Music,
   X,
   Trophy,
 } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon, ChevronLeftIcon, ChevronRightIcon } from "@/components/icons";
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { PiXLogo } from "react-icons/pi";
 import Avatar from "@/components/Avatar";
@@ -131,7 +128,7 @@ export default function StudentProfile({ student, previous, next, awards = [] }:
               href="/yearbook"
               className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-200/70 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-white/10 dark:hover:text-white ${FOCUS}`}
             >
-              <ArrowLeft className="h-4 w-4" aria-hidden />
+              <ArrowLeftIcon className="h-4 w-4" aria-hidden />
               Yearbook
             </Link>
 
@@ -473,7 +470,7 @@ export default function StudentProfile({ student, previous, next, awards = [] }:
                 className={`group flex flex-col rounded-2xl p-4 transition-colors hover:bg-zinc-200/60 dark:hover:bg-white/5 ${FOCUS}`}
               >
                 <span className="flex items-center gap-1 text-xs uppercase tracking-widest text-zinc-500">
-                  <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" aria-hidden />
+                  <ArrowLeftIcon className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" aria-hidden />
                   Previous
                 </span>
                 <span className="mt-1 truncate font-semibold">{previous.name}</span>
@@ -488,7 +485,7 @@ export default function StudentProfile({ student, previous, next, awards = [] }:
               >
                 <span className="flex items-center gap-1 text-xs uppercase tracking-widest text-zinc-500">
                   Next
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" aria-hidden />
+                  <ArrowRightIcon className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" aria-hidden />
                 </span>
                 <span className="mt-1 max-w-full truncate font-semibold">{next.name}</span>
               </Link>
@@ -532,7 +529,7 @@ export default function StudentProfile({ student, previous, next, awards = [] }:
                     aria-label="Previous photo"
                     className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-white/15 p-3 text-white transition-colors hover:bg-white/30 focus-visible:outline-2 focus-visible:outline-white"
                   >
-                    <ChevronLeft className="h-6 w-6" aria-hidden />
+                    <ChevronLeftIcon className="h-6 w-6" aria-hidden />
                   </button>
                   <button
                     type="button"
@@ -543,7 +540,7 @@ export default function StudentProfile({ student, previous, next, awards = [] }:
                     aria-label="Next photo"
                     className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-white/15 p-3 text-white transition-colors hover:bg-white/30 focus-visible:outline-2 focus-visible:outline-white"
                   >
-                    <ChevronRight className="h-6 w-6" aria-hidden />
+                    <ChevronRightIcon className="h-6 w-6" aria-hidden />
                   </button>
                 </>
               )}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/components/icons";
 
 /**
  * Horizontal scroll-snap slider. Swipe on touch, use the arrows, or Tab through
@@ -62,7 +62,7 @@ export default function AlbumSlider({ children }: { children: ReactNode }) {
         aria-label="Previous albums"
         className={`${arrow} left-1 sm:left-3`}
       >
-        <ChevronLeft className="h-6 w-6" aria-hidden />
+        <ChevronLeftIcon className="h-6 w-6" aria-hidden />
       </button>
       <button
         type="button"
@@ -71,7 +71,7 @@ export default function AlbumSlider({ children }: { children: ReactNode }) {
         aria-label="Next albums"
         className={`${arrow} right-1 sm:right-3`}
       >
-        <ChevronRight className="h-6 w-6" aria-hidden />
+        <ChevronRightIcon className="h-6 w-6" aria-hidden />
       </button>
     </div>
   );

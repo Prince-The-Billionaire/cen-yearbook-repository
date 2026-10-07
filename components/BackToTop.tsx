@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUp } from "lucide-react";
+import { BackToTopIcon } from "@/components/icons";
 
 const SHOW_AFTER_PX = 400;
 
@@ -32,7 +32,7 @@ export default function BackToTop() {
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"
       }`}
     >
-      <ArrowUp className="h-5 w-5" aria-hidden />
+      <BackToTopIcon className="h-5 w-5" aria-hidden />
     </button>
   );
 }

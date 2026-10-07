@@ -124,23 +124,26 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
     return photo ? { ...slot, ...photo } : { ...slot, href: "/memories" };
   });
 
-  // Every spot swaps to a different student every 7-9 seconds, each on its own schedule.
-  // Nobody appears twice at once; if all students are already on screen, two spots swap.
+  // One spot at a time: every 5-6 seconds a random spot (never the one that just changed)
+  // fades to a student who isn't on screen. If everyone is already on screen, two spots
+  // swap instead. Paused while hovering or when the tab is in the background.
   useEffect(() => {
     if (!isLoaded || reducedMotion || pool.length < 2) return;
     const spots = Math.min(pool.length, photosData.length);
-    const timers: ReturnType<typeof setTimeout>[] = [];
-    const cancelled = { current: false };
+    let timer: ReturnType<typeof setTimeout>;
+    let last = -1;
 
-    const change = (spot: number) => {
-      if (hoveredRef.current !== null) return;
+    const change = () => {
+      if (hoveredRef.current !== null || document.hidden) return;
+      let spot = Math.floor(Math.random() * spots);
+      if (spot === last) spot = (spot + 1) % spots;
+      last = spot;
       setShown((current) => {
         const onScreen = new Set(current.slice(0, spots));
         const free = pool.map((_, i) => i).filter((i) => !onScreen.has(i));
         const next = [...current];
         if (free.length > 0) {
-          const pick = free[Math.floor(Math.random() * free.length)];
-          next[spot] = pick;
+          next[spot] = free[Math.floor(Math.random() * free.length)];
         } else {
           const other = (spot + 1 + Math.floor(Math.random() * (spots - 1))) % spots;
           [next[spot], next[other]] = [next[other], next[spot]];
@@ -149,22 +152,15 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
       });
     };
 
-    const schedule = (spot: number, first: boolean) => {
-      const wait = first ? 4000 + spot * 1200 + Math.random() * 2000 : 12000 + Math.random() * 3000;
-      timers.push(
-        setTimeout(() => {
-          if (cancelled.current) return;
-          change(spot);
-          schedule(spot, false);
-        }, wait),
-      );
+    const schedule = (wait: number) => {
+      timer = setTimeout(() => {
+        change();
+        schedule(5000 + Math.random() * 1000);
+      }, wait);
     };
-    for (let spot = 0; spot < spots; spot++) schedule(spot, true);
+    schedule(4000);
 
-    return () => {
-      cancelled.current = true;
-      timers.forEach(clearTimeout);
-    };
+    return () => clearTimeout(timer);
   }, [isLoaded, reducedMotion, pool]);
 
   const heroRef = useRef<HTMLDivElement>(null);
@@ -476,8 +472,8 @@ export default function Hero({ photos }: { photos?: HeroPhoto[] }) {
                           alt={photo.alt}
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
-                          exit={{ opacity: 1, transition: { duration: 6 } }}
-                          transition={{ duration: 6 }}
+                          exit={{ opacity: 1, transition: { duration: 3 } }}
+                          transition={{ duration: 3 }}
                           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                         />
                       </AnimatePresence>

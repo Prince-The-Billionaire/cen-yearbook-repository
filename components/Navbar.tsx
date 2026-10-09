@@ -11,6 +11,7 @@ const links = [
   { href: "/yearbook", label: "Yearbook" },
   { href: "/memories", label: "Memories" },
   { href: "/highlights", label: "Highlights" },
+  { href: "/leaders", label: "Leaders & Roles" },
   { href: "/stats", label: "By the Numbers" },
 ];
 

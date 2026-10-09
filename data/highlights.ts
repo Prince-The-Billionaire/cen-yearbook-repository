@@ -59,4 +59,5 @@ export const awards: Award[] = [
   { id: "glow-up-of-the-year-girl", group: CAMPUS, title: "Glow-Up of the Year (Girl)", winners: [] },
   { id: "most-punctual-boy", group: CAMPUS, title: "Most Punctual (Boy)", winners: [] },
   { id: "most-punctual-girl", group: CAMPUS, title: "Most Punctual (Girl)", winners: [] },
+  { id: "sportsman-of-the-year", group: CAMPUS, title: "Sportsman of the Year", winners: ["Vem Rinji Silas"] },
 ];

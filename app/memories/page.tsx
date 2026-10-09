@@ -25,21 +25,21 @@ export default async function MemoriesPage() {
       <main className="relative z-10 min-h-screen px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <header className="mb-12 text-center">
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-zinc-500">
+            <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-zinc-700 dark:text-zinc-200">
               Computer Engineering
             </p>
             <h1 className="font-display text-5xl font-bold tracking-tight sm:text-6xl">
-              <span className="bg-gradient-to-b from-zinc-900 to-zinc-500 bg-clip-text text-transparent dark:from-white">
+              <span className="bg-gradient-to-b from-zinc-900 to-zinc-600 bg-clip-text text-transparent dark:from-white dark:to-zinc-300">
                 Memories
               </span>
             </h1>
-            <p className="mx-auto mt-4 max-w-xl text-lg text-zinc-600 dark:text-zinc-400">
+            <p className="mx-auto mt-4 max-w-xl text-lg font-medium text-zinc-800 dark:text-zinc-100">
               Photos and clips from the program, grouped by album.
             </p>
           </header>
 
           {albums.length === 0 ? (
-            <p className="py-24 text-center text-zinc-500" role="status">
+            <p className="py-24 text-center text-zinc-700 dark:text-zinc-300" role="status">
               No albums have been added yet. Check back soon.
             </p>
           ) : (

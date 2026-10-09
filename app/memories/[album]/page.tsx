@@ -51,11 +51,11 @@ export default async function AlbumPage({ params }: PageProps<"/memories/[album]
 
           <header className="mb-12 text-center">
             <h1 className="font-display text-5xl font-bold tracking-tight sm:text-6xl">
-              <span className="bg-gradient-to-b from-zinc-900 to-zinc-500 bg-clip-text text-transparent dark:from-white">
+              <span className="bg-gradient-to-b from-zinc-900 to-zinc-600 bg-clip-text text-transparent dark:from-white dark:to-zinc-300">
                 {album.title}
               </span>
             </h1>
-            <p className="mx-auto mt-4 max-w-xl text-lg text-zinc-600 dark:text-zinc-400">{album.description}</p>
+            <p className="mx-auto mt-4 max-w-xl text-lg font-medium text-zinc-800 dark:text-zinc-100">{album.description}</p>
           </header>
 
           <MemoriesGallery items={items} layout={album.layout} downloadable={album.downloadable} />

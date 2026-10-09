@@ -35,13 +35,13 @@ export default async function LeadersPage() {
       <main className="relative z-10 min-h-screen px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
         <div className="mx-auto max-w-5xl">
           <header className="mb-12 text-center">
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-zinc-500">Computer Engineering</p>
+            <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-zinc-700 dark:text-zinc-200">Computer Engineering</p>
             <h1 className="font-display text-5xl font-bold tracking-tight sm:text-6xl">
-              <span className="bg-gradient-to-b from-zinc-900 to-zinc-500 bg-clip-text text-transparent dark:from-white">
+              <span className="bg-gradient-to-b from-zinc-900 to-zinc-600 bg-clip-text text-transparent dark:from-white dark:to-zinc-300">
                 Leaders &amp; Roles
               </span>
             </h1>
-            <p className="mx-auto mt-4 max-w-xl text-lg text-zinc-600 dark:text-zinc-400">
+            <p className="mx-auto mt-4 max-w-xl text-lg font-medium text-zinc-800 dark:text-zinc-100">
               The people who led the class, the association and the campus.
             </p>
           </header>
@@ -54,7 +54,7 @@ export default async function LeadersPage() {
               >
                 {group.name}
                 <span className="h-px flex-1 bg-zinc-200 dark:bg-white/10" aria-hidden />
-                <span className="font-[family-name:var(--font-ui)] text-sm font-medium text-zinc-500">{group.roles.length}</span>
+                <span className="font-[family-name:var(--font-ui)] text-sm font-medium text-zinc-700 dark:text-zinc-300">{group.roles.length}</span>
               </h2>
               <ul className="grid gap-5 md:grid-cols-2">
                 {group.roles.map((role) => (
@@ -105,7 +105,7 @@ export default async function LeadersPage() {
             </section>
           ))}
 
-          <p className="mx-auto mt-12 max-w-2xl text-center text-sm text-zinc-500 dark:text-zinc-400">
+          <p className="mx-auto mt-12 max-w-2xl text-center text-sm font-medium text-zinc-700 dark:text-zinc-300">
             Looking for the fun awards instead? See the{" "}
             <Link href="/highlights" className="font-medium underline underline-offset-4">
               Highlights

@@ -129,11 +129,11 @@ export default function StudentProfile({ student, previous, next, awards = [], r
         <ProfileBackdrop images={backdropImages} />
 
         {/* TOP BAR */}
-        <header className="relative z-10 border-b border-zinc-200 bg-zinc-50/60 backdrop-blur-xl dark:border-white/10 dark:bg-[#0a0a0a]/60">
+        <header className="relative z-10">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:px-6">
             <Link
               href="/yearbook"
-              className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-200/70 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-white/10 dark:hover:text-white ${FOCUS}`}
+              className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-900/10 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-white/15 dark:hover:text-white ${FOCUS}`}
             >
               <ArrowLeftIcon className="h-4 w-4" aria-hidden />
               Yearbook

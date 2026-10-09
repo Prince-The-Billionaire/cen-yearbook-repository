@@ -102,7 +102,7 @@ export default function ShareMenu({ title }: { title: string }) {
         onClick={onButtonClick}
         aria-haspopup="menu"
         aria-expanded={open}
-        className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-200/70 dark:text-zinc-300 dark:hover:bg-white/10 ${FOCUS}`}
+        className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-900/10 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-white/15 dark:hover:text-white ${FOCUS}`}
       >
         {copy === "copied" ? (
           <Check className="h-4 w-4 text-emerald-500" aria-hidden />

@@ -35,7 +35,7 @@ export default function ProfileBackdrop({ images }: { images: string[] }) {
 
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-      <div className="absolute inset-0 scale-110 opacity-35 blur-2xl grayscale dark:opacity-45">
+      <div className="absolute inset-0 scale-110 opacity-55 blur-xl grayscale dark:opacity-65">
         <AnimatePresence initial={false}>
           <motion.img
             key={src}

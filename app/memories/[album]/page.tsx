@@ -5,6 +5,8 @@ import { ArrowLeftIcon } from "@/components/icons";
 import MemoriesGallery from "@/components/MemoriesGallery";
 import ShareMenu from "@/components/ShareMenu";
 import Navbar from "@/components/Navbar";
+import ProfileBackdrop from "@/components/ProfileBackdrop";
+import { getAlbumBackdrop } from "@/lib/backdrop-images";
 import { albums, getAlbumBySlug } from "@/data/albums";
 import { getAlbum } from "@/lib/memories";
 
@@ -28,16 +30,18 @@ export default async function AlbumPage({ params }: PageProps<"/memories/[album]
   if (!content) notFound();
 
   const { album, items } = content;
+  const images = getAlbumBackdrop(items, album.layout);
 
   return (
-    <div className="bg-zinc-50 dark:bg-[#0a0a0a]">
+    <div className="relative bg-zinc-50 dark:bg-[#0a0a0a]">
+      <ProfileBackdrop images={images} />
       <Navbar />
-      <main className="min-h-screen px-4 pb-24 pt-12 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
+      <main className="relative z-10 min-h-screen px-4 pb-24 pt-12 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 flex items-center justify-between gap-4">
             <Link
               href="/memories"
-              className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-200/70 hover:text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:text-zinc-300 dark:hover:bg-white/10 dark:hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-900/10 hover:text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:text-zinc-300 dark:hover:bg-white/15 dark:hover:text-white"
             >
               <ArrowLeftIcon className="h-4 w-4" aria-hidden />
               All albums

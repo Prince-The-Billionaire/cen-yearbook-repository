@@ -1,19 +1,26 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import ProfileBackdrop from "@/components/ProfileBackdrop";
+import { getPeopleBackdrop } from "@/lib/backdrop-images";
 
 export const metadata: Metadata = {
   title: "Privacy",
   description: "What this yearbook shows about each graduate and how to ask for a change or removal.",
 };
 
-export default function PrivacyPage() {
+// Re-read the Cloudinary photos (page background) at most every 2 minutes.
+export const revalidate = 120;
+
+export default async function PrivacyPage() {
   // Optional: set PRIVACY_CONTACT (for example "WhatsApp 080... or name@example.com") in the environment.
   const contact = process.env.PRIVACY_CONTACT?.trim();
+  const images = await getPeopleBackdrop();
 
   return (
-    <div className="bg-zinc-50 dark:bg-[#0a0a0a]">
+    <div className="relative bg-zinc-50 dark:bg-[#0a0a0a]">
+      <ProfileBackdrop images={images} />
       <Navbar />
-      <main className="min-h-screen px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
+      <main className="relative z-10 min-h-screen px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
         <article className="mx-auto max-w-2xl">
           <h1 className="mb-8 font-display text-5xl font-bold tracking-tight text-zinc-900 dark:text-white">Privacy</h1>
 

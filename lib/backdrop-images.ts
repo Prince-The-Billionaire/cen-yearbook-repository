@@ -1,7 +1,7 @@
 // Server-only: pictures for the blurred, greyed-out page backgrounds (components/ProfileBackdrop.tsx).
 import "server-only";
 import { getAlbumsWithItems } from "@/lib/memories";
-import { memoryImageUrl } from "@/lib/memory-media";
+import { memoryImageUrl, type MemoryItem } from "@/lib/memory-media";
 import { getProfilePhotos } from "@/lib/profile-photos";
 
 const COUNT = 6;
@@ -30,4 +30,10 @@ export async function getMemoriesBackdrop(): Promise<string[]> {
       covers.filter((cover) => cover.type === "image").map((cover) => memoryImageUrl(cover, WIDTH)),
     ),
   );
+}
+
+/** A few random photos from one album (for that album's page); none for the transparent stickers. */
+export function getAlbumBackdrop(items: MemoryItem[], layout?: string): string[] {
+  if (layout === "stickers") return [];
+  return pick(items.filter((item) => item.type === "image").map((item) => memoryImageUrl(item, WIDTH)));
 }

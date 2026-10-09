@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import AlbumCover from "@/components/AlbumCover";
 import Navbar from "@/components/Navbar";
+import ProfileBackdrop from "@/components/ProfileBackdrop";
+import { getMemoriesBackdrop } from "@/lib/backdrop-images";
 import { getAlbumsWithItems } from "@/lib/memories";
 
 // Re-read the Cloudinary albums at most every 2 minutes (keep in sync with lib/memories.ts).
@@ -14,11 +16,13 @@ export const metadata: Metadata = {
 
 export default async function MemoriesPage() {
   const albums = await getAlbumsWithItems();
+  const images = await getMemoriesBackdrop();
 
   return (
-    <div className="bg-zinc-50 dark:bg-[#0a0a0a]">
+    <div className="relative bg-zinc-50 dark:bg-[#0a0a0a]">
+      <ProfileBackdrop images={images} />
       <Navbar />
-      <main className="min-h-screen px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
+      <main className="relative z-10 min-h-screen px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <header className="mb-12 text-center">
             <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-zinc-500">

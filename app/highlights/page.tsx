@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Trophy } from "lucide-react";
 import Avatar from "@/components/Avatar";
 import Navbar from "@/components/Navbar";
+import ProfileBackdrop from "@/components/ProfileBackdrop";
+import { getPeopleBackdrop } from "@/lib/backdrop-images";
 import { awardViews } from "@/lib/highlights";
 import { getProfilePhotos } from "@/lib/profile-photos";
 
@@ -16,6 +18,7 @@ export const revalidate = 120;
 
 export default async function HighlightsPage() {
   const photos = await getProfilePhotos();
+  const images = await getPeopleBackdrop();
   // The awards under their group headings, in the order they are written in data/highlights.ts.
   const groups = [...new Set(awardViews.map((award) => award.group))].map((name) => ({
     name,
@@ -23,9 +26,10 @@ export default async function HighlightsPage() {
   }));
 
   return (
-    <div className="bg-zinc-50 dark:bg-[#0a0a0a]">
+    <div className="relative bg-zinc-50 dark:bg-[#0a0a0a]">
+      <ProfileBackdrop images={images} />
       <Navbar />
-      <main className="min-h-screen px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
+      <main className="relative z-10 min-h-screen px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
         <div className="mx-auto max-w-5xl">
           <header className="mb-12 text-center">
             <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-zinc-500">Computer Engineering</p>

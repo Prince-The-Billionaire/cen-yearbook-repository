@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import ProfileBackdrop from "@/components/ProfileBackdrop";
+import { getPeopleBackdrop } from "@/lib/backdrop-images";
 import StatCard from "@/components/StatCard";
 import { getClassStats } from "@/lib/stats";
 
@@ -9,13 +11,18 @@ export const metadata: Metadata = {
   description: "Slang, lecturers, courses and dream paths of the Computer Engineering Class of 2026, counted from the survey.",
 };
 
-export default function StatsPage() {
+// Re-read the Cloudinary photos (page background) at most every 2 minutes.
+export const revalidate = 120;
+
+export default async function StatsPage() {
   const { total, facts, groups } = getClassStats();
+  const images = await getPeopleBackdrop();
 
   return (
-    <div className="bg-zinc-50 dark:bg-[#0a0a0a]">
+    <div className="relative bg-zinc-50 dark:bg-[#0a0a0a]">
+      <ProfileBackdrop images={images} />
       <Navbar />
-      <main className="min-h-screen px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
+      <main className="relative z-10 min-h-screen px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
         <div className="mx-auto max-w-5xl">
           <header className="mb-12 text-center">
             <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-zinc-500">Computer Engineering</p>

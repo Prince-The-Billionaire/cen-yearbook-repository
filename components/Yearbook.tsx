@@ -94,7 +94,7 @@ export default function Yearbook({ students }: { students: PublicStudent[] }) {
   })).filter((section) => section.students.length > 0);
 
   return (
-    <main className="min-h-screen bg-zinc-50 px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8 dark:bg-[#0a0a0a]">
+    <main className="relative z-10 min-h-screen px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <header className="mb-12 text-center">
           <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-zinc-500">

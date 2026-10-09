@@ -3,6 +3,8 @@ import Link from "next/link";
 import { BadgeCheck } from "lucide-react";
 import Avatar from "@/components/Avatar";
 import Navbar from "@/components/Navbar";
+import ProfileBackdrop from "@/components/ProfileBackdrop";
+import { getPeopleBackdrop } from "@/lib/backdrop-images";
 import { roleViews } from "@/lib/leaders";
 import { getProfilePhotos } from "@/lib/profile-photos";
 
@@ -19,6 +21,7 @@ const PILL =
 
 export default async function LeadersPage() {
   const photos = await getProfilePhotos();
+  const images = await getPeopleBackdrop();
   // The roles under their group headings, in the order they are written in data/leaders.ts.
   const groups = [...new Set(roleViews.map((role) => role.group))].map((name) => ({
     name,
@@ -26,9 +29,10 @@ export default async function LeadersPage() {
   }));
 
   return (
-    <div className="bg-zinc-50 dark:bg-[#0a0a0a]">
+    <div className="relative bg-zinc-50 dark:bg-[#0a0a0a]">
+      <ProfileBackdrop images={images} />
       <Navbar />
-      <main className="min-h-screen px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
+      <main className="relative z-10 min-h-screen px-4 pb-24 pt-16 font-[family-name:var(--font-ui)] sm:px-6 lg:px-8">
         <div className="mx-auto max-w-5xl">
           <header className="mb-12 text-center">
             <p className="mb-3 text-xs font-medium uppercase tracking-[0.3em] text-zinc-500">Computer Engineering</p>

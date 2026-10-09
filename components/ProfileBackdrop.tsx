@@ -10,7 +10,7 @@ const FADE_SECONDS = 3;
 
 /** Small, cached version of a Cloudinary photo; local photos are used as they are. */
 function small(src: string) {
-  return src.includes("res.cloudinary.com") && src.includes("/image/upload/")
+  return src.includes("res.cloudinary.com") && src.includes("/image/upload/") && !/\/image\/upload\/[a-z]{1,2}_/.test(src)
     ? src.replace("/image/upload/", `/image/upload/f_auto,q_auto,c_limit,w_${WIDTH}/`)
     : src;
 }

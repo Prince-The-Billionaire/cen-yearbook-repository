@@ -12,7 +12,7 @@ const links = [
 /** Site-wide footer, rendered once in the root layout so every page has it. */
 export default function SiteFooter() {
   return (
-    <footer className="keep-colors mt-auto w-full border-t border-zinc-200 bg-zinc-50 px-4 pb-24 pt-12 font-mono text-xs uppercase tracking-widest text-zinc-800 dark:border-white/10 dark:bg-black dark:text-zinc-100 sm:px-8 sm:text-sm">
+    <footer className="keep-colors mt-auto w-full border-t border-zinc-200 bg-zinc-50 px-4 pb-24 pt-12 font-mono text-sm font-semibold uppercase tracking-widest text-zinc-950 dark:border-white/10 dark:bg-black dark:text-white sm:px-8 sm:text-base">
       <nav aria-label="Footer" className="mx-auto w-full max-w-6xl">
         <ul className="grid grid-cols-2 gap-6 text-center sm:grid-cols-4">
           {links.map((link) => (
@@ -28,7 +28,7 @@ export default function SiteFooter() {
         </ul>
       </nav>
 
-      <p className="mt-10 text-center text-[11px] tracking-[0.2em] text-zinc-600 dark:text-zinc-300">
+      <p className="mt-10 text-center text-xs font-medium tracking-[0.2em] text-zinc-800 dark:text-zinc-100">
         Computer Engineering &middot; Class of 2026 &middot;{" "}
         <Link
           href="/privacy"

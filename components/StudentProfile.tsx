@@ -183,7 +183,7 @@ export default function StudentProfile({ student, previous, next, awards = [], r
                     <li key={title}>
                       <Link
                         href="/leaders"
-                        className={`inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-700 transition-colors hover:bg-indigo-500/20 dark:bg-indigo-400/15 dark:text-indigo-300 ${FOCUS}`}
+                        className={`inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-700 transition-colors hover:bg-amber-500/20 dark:bg-amber-400/15 dark:text-amber-300 ${FOCUS}`}
                       >
                         <BadgeCheck className="h-3.5 w-3.5" aria-hidden />
                         {title}

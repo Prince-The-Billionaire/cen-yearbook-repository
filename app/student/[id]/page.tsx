@@ -4,6 +4,7 @@ import StudentProfile from "@/components/StudentProfile";
 import { shareImageUrl } from "@/lib/cloudinary-image";
 import { hasValue } from "@/lib/student-utils";
 import { getProfilePhotos, withPhotos } from "@/lib/profile-photos";
+import Navbar from "@/components/Navbar";
 import { getAwardTitlesFor } from "@/lib/highlights";
 import { getRoleTitlesFor } from "@/lib/leaders";
 import { allStudents, getAdjacentStudents, getStudentBySlug } from "@/lib/students";
@@ -45,12 +46,15 @@ export default async function StudentPage({ params }: PageProps<"/student/[id]">
   const { previous, next } = getAdjacentStudents(student.slug);
 
   return (
-    <StudentProfile
-      student={student}
-      awards={getAwardTitlesFor(student.slug)}
-      roles={getRoleTitlesFor(student.slug)}
-      previous={previous && { slug: previous.slug, name: previous.name }}
-      next={next && { slug: next.slug, name: next.name }}
-    />
+    <div className="bg-zinc-50 dark:bg-[#0a0a0a]">
+      <Navbar />
+      <StudentProfile
+        student={student}
+        awards={getAwardTitlesFor(student.slug)}
+        roles={getRoleTitlesFor(student.slug)}
+        previous={previous && { slug: previous.slug, name: previous.name }}
+        next={next && { slug: next.slug, name: next.name }}
+      />
+    </div>
   );
 }

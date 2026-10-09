@@ -19,6 +19,7 @@ import ShareMenu from "@/components/ShareMenu";
 import { imageProps } from "@/lib/cloudinary-image";
 import { cleanHandle, formatLevel, hasValue, linkedinLink, portfolioLink, type PublicStudent } from "@/lib/student-utils";
 import PhoneReveal from "@/components/PhoneReveal";
+import ProfileBackdrop from "@/components/ProfileBackdrop";
 import { useTheme } from "@/lib/theme";
 
 interface NeighbourLink {
@@ -81,6 +82,8 @@ export default function StudentProfile({ student, previous, next, awards = [], r
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const gallery = student.orbitImages.filter(hasValue);
+  // Behind the page: their own photos, or the main photo if they have no gallery yet.
+  const backdropImages = gallery.length > 0 ? gallery : [student.profilePic].filter(hasValue);
   const eras = [...new Set(student.bestEraArray.filter(hasValue).map(formatLevel))];
   const igHandle = hasValue(student.igHandle) ? cleanHandle(student.igHandle) : null;
   const xHandle = hasValue(student.xHandle) ? cleanHandle(student.xHandle) : null;
@@ -121,10 +124,12 @@ export default function StudentProfile({ student, previous, next, awards = [], r
   return (
     <MotionConfig reducedMotion="user">
       <div
-        className="min-h-screen bg-zinc-50 font-[family-name:var(--font-ui)] text-zinc-900 transition-colors duration-300 dark:bg-[#0a0a0a] dark:text-zinc-100"
+        className="relative min-h-screen bg-zinc-50 font-[family-name:var(--font-ui)] text-zinc-900 transition-colors duration-300 dark:bg-[#0a0a0a] dark:text-zinc-100"
       >
+        <ProfileBackdrop images={backdropImages} />
+
         {/* TOP BAR */}
-        <header className="sticky top-0 z-40 border-b border-zinc-200 bg-zinc-50/80 backdrop-blur-xl dark:border-white/10 dark:bg-[#0a0a0a]/80">
+        <header className="relative z-10 border-b border-zinc-200 bg-zinc-50/60 backdrop-blur-xl dark:border-white/10 dark:bg-[#0a0a0a]/60">
           <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:px-6">
             <Link
               href="/yearbook"
@@ -140,7 +145,7 @@ export default function StudentProfile({ student, previous, next, awards = [], r
           </div>
         </header>
 
-        <main className="mx-auto max-w-5xl px-4 pb-24 sm:px-6">
+        <main className="relative z-10 mx-auto max-w-5xl px-4 pb-24 sm:px-6">
           {/* HERO */}
           <section className="grid items-center gap-8 py-10 md:grid-cols-[minmax(0,360px)_1fr] md:gap-14 md:py-16">
             <motion.div

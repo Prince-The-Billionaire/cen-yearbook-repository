@@ -295,7 +295,7 @@ export const students: Record<string, StudentData> = {
     spotifyTrackId: "",
     phoneDisplay: "08096751622",
     phoneLink: "+2348096751622",
-    igHandle: "yhitsayo",
+    igHandle: "damopesho",
     igPosts: [],
     xHandle: "_ayodamope",
     xTweetId: "",

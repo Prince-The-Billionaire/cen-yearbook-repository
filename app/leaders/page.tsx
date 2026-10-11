@@ -5,6 +5,7 @@ import Avatar from "@/components/Avatar";
 import Navbar from "@/components/Navbar";
 import ProfileBackdrop from "@/components/ProfileBackdrop";
 import { getPeopleBackdrop } from "@/lib/backdrop-images";
+import { groupNotes } from "@/data/leaders";
 import { roleViews } from "@/lib/leaders";
 import { getProfilePhotos } from "@/lib/profile-photos";
 
@@ -56,6 +57,9 @@ export default async function LeadersPage() {
                 <span className="h-px flex-1 bg-zinc-200 dark:bg-white/10" aria-hidden />
                 <span className="font-[family-name:var(--font-ui)] text-sm font-medium text-zinc-700 dark:text-zinc-300">{group.roles.length}</span>
               </h2>
+              {groupNotes[group.name] && (
+                <p className="-mt-3 mb-6 text-sm font-medium text-zinc-700 dark:text-zinc-300">{groupNotes[group.name]}</p>
+              )}
               <ul className="grid gap-5 md:grid-cols-2">
                 {group.roles.map((role) => (
                   <li

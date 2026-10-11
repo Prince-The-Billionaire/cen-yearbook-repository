@@ -26,6 +26,12 @@ const AEIES = "AEIES Executive, 2025/2026 Session";
 const PAST = "Past AEIES Executives";
 const CAMPUS = "Campus Leadership";
 
+/** A line under a group heading on the Leaders page. */
+export const groupNotes: Record<string, string> = {
+  [AEIES]: "AEIES: Association of Electrical and Information Engineering Students, Covenant University",
+  [PAST]: "AEIES: Association of Electrical and Information Engineering Students, Covenant University",
+};
+
 export const roles: Role[] = [
   // ---- The Class
   { id: "course-rep-male", group: CLASS, title: "Male Course Rep", holder: "Oladipupo David" },

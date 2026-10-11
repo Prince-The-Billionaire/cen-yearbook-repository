@@ -22,7 +22,7 @@ export interface Role {
 }
 
 const CLASS = "The Class";
-const AEIES = "AEIES Executive";
+const AEIES = "AEIES Executive, 2025/2026 Session";
 const PAST = "Past AEIES Executives";
 const CAMPUS = "Campus Leadership";
 
@@ -33,12 +33,12 @@ export const roles: Role[] = [
   { id: "course-rep-former", group: CLASS, title: "Former Course Rep", holder: "Kadeba Oluwapelumi Ayobami" },
 
   // ---- AEIES Executive
-  { id: "aeies-president", group: AEIES, title: "AEIES President", holder: "Kadeba Oluwapelumi Ayobami" },
-  { id: "aeies-vp", group: AEIES, title: "AEIES Vice President", holder: "Ayoola Oreofeoluwa Praise" },
-  { id: "aeies-welfare", group: AEIES, title: "AEIES Welfare Officer", holder: "Akinwunmi Naomi" },
-  { id: "aeies-academic", group: AEIES, title: "AEIES Academic Officer", holder: "Genesis Oghenetejiri Ighomwaye" },
-  { id: "aeies-pro", group: AEIES, title: "AEIES PRO", holder: "Toyin-Apata Oluwateniola" },
-  { id: "aeies-financial-secretary", group: AEIES, title: "AEIES Financial Secretary", holder: "Etta Queendolin-Effa Emmanuel" },
+  { id: "aeies-president", group: AEIES, title: "AEIES President (2025/2026)", holder: "Kadeba Oluwapelumi Ayobami" },
+  { id: "aeies-vp", group: AEIES, title: "AEIES Vice President (2025/2026)", holder: "Ayoola Oreofeoluwa Praise" },
+  { id: "aeies-welfare", group: AEIES, title: "AEIES Welfare Officer (2025/2026)", holder: "Akinwunmi Naomi" },
+  { id: "aeies-academic", group: AEIES, title: "AEIES Academic Officer (2025/2026)", holder: "Genesis Oghenetejiri Ighomwaye" },
+  { id: "aeies-pro", group: AEIES, title: "AEIES PRO (2025/2026)", holder: "Toyin-Apata Oluwateniola" },
+  { id: "aeies-financial-secretary", group: AEIES, title: "AEIES Financial Secretary (2025/2026)", holder: "Etta Queendolin-Effa Emmanuel" },
 
   // ---- Past AEIES Executives
   { id: "aeies-exec-secretary-former", group: PAST, title: "Former AEIES Executive Secretary", holder: "Edionwe Osagie Precious" },

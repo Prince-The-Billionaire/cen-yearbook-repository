@@ -12,7 +12,7 @@ const links = [
 /** Site-wide footer, rendered once in the root layout so every page has it. */
 export default function SiteFooter() {
   return (
-    <footer className="keep-colors mt-auto w-full border-t border-zinc-200 bg-zinc-50 px-4 pb-24 pt-12 font-mono text-sm font-semibold uppercase tracking-widest text-zinc-950 dark:border-white/10 dark:bg-black dark:text-white sm:px-8 sm:text-base">
+    <footer className="keep-colors relative z-10 mt-auto w-full border-t border-zinc-200 bg-zinc-50 px-4 pb-24 pt-12 font-mono text-sm font-semibold uppercase tracking-widest text-zinc-950 dark:border-white/10 dark:bg-black dark:text-white sm:px-8 sm:text-base">
       <nav aria-label="Footer" className="mx-auto w-full max-w-6xl">
         <ul className="grid grid-cols-2 gap-6 text-center sm:grid-cols-4">
           {links.map((link) => (

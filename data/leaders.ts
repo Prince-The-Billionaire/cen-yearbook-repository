@@ -51,5 +51,7 @@ export const roles: Role[] = [
   { id: "technical-unit-head", group: CAMPUS, title: "Head of Technical Unit", holder: "Inim Bright Kudos", note: "Covenant University" },
   { id: "student-council-community", group: CAMPUS, title: "Student Council Community Development Officer", holder: "Edionwe Osagie", noProfile: true },
   { id: "basketball-male-coach", group: CAMPUS, title: "CU Basketball Team Male Coach", holder: "Ekundayo Shalom Chuwkuma" },
+  { id: "gdg-robotics-lead", group: CAMPUS, title: "Former Robotics Lead, GDG", holder: "Omeyimi Mustapha" },
+  { id: "rain-robotics-lead", group: CAMPUS, title: "Former Robotics Lead, RAIN", holder: "Omeyimi Mustapha" },
   { id: "rain-in-head", group: CAMPUS, title: "Head of RAIN-IN", holder: "Etta Queendolin-Effa Emmanuel", note: "Covenant University" },
 ];

@@ -41,15 +41,15 @@ export const roles: Role[] = [
   { id: "aeies-financial-secretary", group: AEIES, title: "AEIES Financial Secretary", holder: "Etta Queendolin-Effa Emmanuel" },
 
   // ---- Past AEIES Executives
-  { id: "aeies-exec-secretary-former", group: PAST, title: "Former AEIES Executive Secretary", holder: "Edionwe Osagie", noProfile: true },
-  { id: "aeies-vp-former", group: PAST, title: "Former AEIES Vice President", holder: "Edionwe Osagie", noProfile: true },
+  { id: "aeies-exec-secretary-former", group: PAST, title: "Former AEIES Executive Secretary", holder: "Edionwe Osagie Precious" },
+  { id: "aeies-vp-former", group: PAST, title: "Former AEIES Vice President", holder: "Edionwe Osagie Precious" },
   { id: "aeies-academic-former", group: PAST, title: "Former AEIES Academic Officer", holder: "Ngorka Uchechukwu Gerald" },
 
   // ---- Campus Leadership
   { id: "cuet-head", group: CAMPUS, title: "Head of CUET", holder: "Rhema Teniade Adefarakan", note: "Covenant University Evangelism Team" },
   { id: "cutg-director", group: CAMPUS, title: "Director of CUTG", holder: "EGERE JOSHUA CHIBUGOM", note: "Covenant University Theatre Group" },
   { id: "technical-unit-head", group: CAMPUS, title: "Head of Technical Unit", holder: "Inim Bright Kudos", note: "Covenant University" },
-  { id: "student-council-community", group: CAMPUS, title: "Student Council Community Development Officer", holder: "Edionwe Osagie", noProfile: true },
+  { id: "student-council-community", group: CAMPUS, title: "Student Council Community Development Officer", holder: "Edionwe Osagie Precious" },
   { id: "basketball-male-coach", group: CAMPUS, title: "CU Basketball Team Male Coach", holder: "Ekundayo Shalom Chuwkuma" },
   { id: "gdg-robotics-lead", group: CAMPUS, title: "Former Robotics Lead, GDG", holder: "Omeyimi Mustapha" },
   { id: "rain-robotics-lead", group: CAMPUS, title: "Former Robotics Lead, RAIN", holder: "Omeyimi Mustapha" },

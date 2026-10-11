@@ -18,6 +18,7 @@ The site picks new photos up within about 2 minutes. Re-uploading the same name 
 | Akinwunmi Naomi | `akinwunmi-naomi` | `akinwunmi-naomi_2`, `akinwunmi-naomi_3` |
 | Akubueze Valentine Okechukwu | `akubueze-valentine-okechukwu` | `akubueze-valentine-okechukwu_2`, `akubueze-valentine-okechukwu_3` |
 | Amos Ibala | `amos-ibala` | `amos-ibala_2`, `amos-ibala_3` |
+| Ayininuola Toyin | `ayininuola-toyin` | `ayininuola-toyin_2`, `ayininuola-toyin_3` |
 | Ayoola Olumide | `ayoola-olumide` | `ayoola-olumide_2`, `ayoola-olumide_3` |
 | Ayoola Oreofeoluwa Praise | `ayoola-oreofeoluwa-praise` | `ayoola-oreofeoluwa-praise_2`, `ayoola-oreofeoluwa-praise_3` |
 | Aziegbe Israel Osarumwense | `aziegbe-israel-osarumwense` | `aziegbe-israel-osarumwense_2`, `aziegbe-israel-osarumwense_3` |
@@ -52,6 +53,7 @@ The site picks new photos up within about 2 minutes. Re-uploading the same name 
 | Osemeke Joshua Chukwuemeke | `osemeke-joshua-chukwuemeke` | `osemeke-joshua-chukwuemeke_2`, `osemeke-joshua-chukwuemeke_3` |
 | OYEBANJI JOSUHA | `oyebanji-josuha` | `oyebanji-josuha_2`, `oyebanji-josuha_3` |
 | Princewill Daniel | `princewill-daniel` | `princewill-daniel_2`, `princewill-daniel_3` |
+| Raphael Chinedu Njoku | `raphael-chinedu-njoku` | `raphael-chinedu-njoku_2`, `raphael-chinedu-njoku_3` |
 | Rhema Teniade Adefarakan | `rhema-teniade-adefarakan` | `rhema-teniade-adefarakan_2`, `rhema-teniade-adefarakan_3` |
 | Shokunbi Samuel Ayodamope | `shokunbi-samuel-ayodamope` | `shokunbi-samuel-ayodamope_2`, `shokunbi-samuel-ayodamope_3` |
 | Soye Inemesit Boma A. Itoro Usoroh | `soye-inemesit-boma-a-itoro-usoroh` | `soye-inemesit-boma-a-itoro-usoroh_2`, `soye-inemesit-boma-a-itoro-usoroh_3` |

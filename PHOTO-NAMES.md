@@ -40,6 +40,7 @@ The site picks new photos up within about 2 minutes. Re-uploading the same name 
 | Kadeba Oluwapelumi Ayobami | `kadeba-oluwapelumi-ayobami` | `kadeba-oluwapelumi-ayobami_2`, `kadeba-oluwapelumi-ayobami_3` |
 | Ngorka Uchechukwu Gerald | `ngorka-uchechukwu-gerald` | `ngorka-uchechukwu-gerald_2`, `ngorka-uchechukwu-gerald_3` |
 | Nwanna Majesty Chibuike | `nwanna-majesty-chibuike` | `nwanna-majesty-chibuike_2`, `nwanna-majesty-chibuike_3` |
+| Ogunmola David Oluwakorede | `ogunmola-david-oluwakorede` | `ogunmola-david-oluwakorede_2`, `ogunmola-david-oluwakorede_3` |
 | Ogunwale Olaoluwasubomi David | `ogunwale-olaoluwasubomi-david` | `ogunwale-olaoluwasubomi-david_2`, `ogunwale-olaoluwasubomi-david_3` |
 | Ojo Abisola A. | `ojo-abisola-a` | `ojo-abisola-a_2`, `ojo-abisola-a_3` |
 | Okoyomoh Osholelumhe Itsemhe | `okoyomoh-osholelumhe-itsemhe` | `okoyomoh-osholelumhe-itsemhe_2`, `okoyomoh-osholelumhe-itsemhe_3` |
